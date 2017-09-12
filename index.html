@@ -97,9 +97,9 @@
 记得笔者一次面试的时候被问到：如果忘记MySQL root用户的密码怎么办？我一想，这种问题就该直接谷歌，结果被鄙视一脸。后来查了一下，无非是几个命令。
 在此记录这个比较重要的问题，此处以红帽系统为例（大家先确认自己的Linux系统是不是红帽）：
 1. 重启Linux，在引导界面按“e”
-![](/img/01.png)
+![01](../img/01.png)
 2. 在linux16参数这行的后面追加“rd.break”参数并同时一起按下键盘“ctrl“和“x”按键来执行内核参数
-![](/img/02.png)
+![02](../img/02.png)
 3. 过一会儿便进入系统的紧急求援模式。依次输入一下命令（其中第三行命令的“123456”是你新的root用户密码）：
     * mount -o remount,rw /sysroot
     * chroot /sysroot
@@ -108,7 +108,7 @@
     * exit
     * reboot
    然后等待重启即可
-![](/!img/03.png)
+![03](../!img/03.png)
 
 ***
 
@@ -148,9 +148,19 @@ Yum软件仓库是为了进一步降低软件安装难度和复杂度而设计�
 Linux操作系统开机过程首先从BIOS开始，进入“Boot Loader”，加载系统内核，，内核进行初始化，启动初始化进程。
 初始化进程作为系统第一个进程，它需要完成Linux系统中相关的初始化工作，为用户提供合适的工作环境。
 systemd初始化进程服务采用了并发启动机制，开机速度得到了不小的提升。
-红帽RHEL7系统启动时要做大量的初始化工作，例如挂在文件系统和交换分区。启动各类进程服务等操作，这些都可以看作一个个的单元（Unit），
-</code></pre><p>即用”目标(target)”代替了“运行级别”这个概念，区别如下表所示：<br>    | Sysvinit运行级别        | System目标名称                           | 作用             |<br>    | ———————- |:—————————————-:| —————:|<br>    | 0                      | runlevel0.target, poweroff.target        | 关机            |<br>    | 1                      | runlevel1.target, rescue.target          | 单用户模式       |<br>    | 2                      | runlevel2.target, multi-user.target      | 等同于级别3      |<br>    | 3                      | runlevel3.target, multi-user.target      | 多用户的文本界面 |<br>    | 4                      | runlevel4.target, multi-user.target      | 等同于级别3      |<br>    | 5                      | runlevel5.target, graphical.target       | 多用户的图形界面 |<br>    | 6                      | runlevel6.target, reboot.target          | 重启            |<br>    | emergency              | emergency.target                         | 紧急Shell       |</p>
-<pre><code>红帽RHEL6系统使用service、chkconfig等命令来管理系统服务，红帽RHEL7系统中管理服务使用的是systemctl命令：
+红帽RHEL7系统启动时要做大量的初始化工作，例如挂在文件系统和交换分区。启动各类进程服务等操作，这些都可以看作一个个的单元（Unit），即用&quot;目标(target)&quot;代替了“运行级别”这个概念，区别如下表所示：
+| Sysvinit运行级别        | System目标名称                           | 作用             |
+| ---------------------- |:----------------------------------------:| ---------------:|
+| 0                      | runlevel0.target, poweroff.target        | 关机            |
+| 1                      | runlevel1.target, rescue.target          | 单用户模式       |
+| 2                      | runlevel2.target, multi-user.target      | 等同于级别3      |
+| 3                      | runlevel3.target, multi-user.target      | 多用户的文本界面 |
+| 4                      | runlevel4.target, multi-user.target      | 等同于级别3      |
+| 5                      | runlevel5.target, graphical.target       | 多用户的图形界面 |
+| 6                      | runlevel6.target, reboot.target          | 重启            |
+| emergency              | emergency.target                         | 紧急Shell       |
+
+红帽RHEL6系统使用service、chkconfig等命令来管理系统服务，红帽RHEL7系统中管理服务使用的是systemctl命令：
 **systemctl管理服务的启动、重启、停止、重载、查看状态的命令：**
 | Sysvinit命令(红帽RHEL6系统)        | Systemctl命令（红帽RHEL7系统）            | 作用                         |
 | --------------------------------- |:----------------------------------------:| ---------------------------:|
@@ -170,7 +180,7 @@ systemd初始化进程服务采用了并发启动机制，开机速度得到了�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/12/基础课程01/" data-id="cj7ha5nk9000088vjtqftex6v" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/09/12/基础课程01/" data-id="cj7hdbnx30006bgvjn8tq7wq0" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
@@ -213,7 +223,7 @@ systemd初始化进程服务采用了并发启动机制，开机速度得到了�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/12/标题/" data-id="cj7ha5nkw000688vjpzfltas3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/09/12/标题/" data-id="cj7hdbnwn0001bgvjkbxlr6b3" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
@@ -260,7 +270,7 @@ systemd初始化进程服务采用了并发启动机制，开机速度得到了�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/12/hello-world/" data-id="cj7ha5nkg000188vj13pzsrvn" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/09/12/hello-world/" data-id="cj7hdbnw80000bgvj5nunry07" class="article-share-link">Share</a>
       
       
     </footer>
