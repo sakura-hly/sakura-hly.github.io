@@ -116,11 +116,11 @@
 <meta property="og:image" content="http://yoursite.com/img/08.png">
 <meta property="og:image" content="http://yoursite.com/img/ls-al.png">
 <meta property="og:image" content="http://yoursite.com/img/cat.png">
-<meta property="og:image" content="http://yoursite.com/2017/09/12/基础课程02/more.png">
+<meta property="og:image" content="http://yoursite.com/img/more.png">
 <meta property="og:image" content="http://yoursite.com/img/head.png">
 <meta property="og:image" content="http://yoursite.com/img/tail.png">
 <meta property="og:image" content="http://yoursite.com/img/stat.png">
-<meta property="og:updated_time" content="2017-09-12T14:02:24.860Z">
+<meta property="og:updated_time" content="2017-09-12T14:07:10.643Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基础课程02">
 <meta name="twitter:description" content="#新手必须掌握的Linux命令#">
@@ -220,7 +220,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            Startseite
           </a>
         </li>
       
@@ -230,7 +230,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archives
+            Archiv
           </a>
         </li>
       
@@ -294,7 +294,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-12T19:51:03+08:00">
                 2017-09-12
@@ -315,7 +315,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">In</span>
+                <span class="post-meta-item-text">in</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -478,7 +478,81 @@
 </table>
 <hr>
 <h3 id="常用系统工作命令"><a href="#常用系统工作命令" class="headerlink" title="常用系统工作命令"></a>常用系统工作命令</h3><p><strong>echo命令用于在终端显示字符串或输出变量提取后的值，格式为：“echo [字符串 | $变量]”。</strong><br>把指定字符串输出到终端屏幕：<br><img src="/img/06.png" alt=""><br>使用$变量的方式提取变量值并输出到屏幕：<br><img src="/img/07.png" alt=""></p>
-<p><strong>date命令用于显示及设置系统的时间或日期，格式为：”date [选项] [+指定的格式]”。</strong><br>date命令参数常见的格式如下：<br>| 参数 | 作用                        |<br>| —- | ————————— |<br>| %t   | 跳格（tab键）               |<br>| %H   | 小时（00-23）               |<br>| %I   | 小时（00-12）               |<br>| %M   | 分钟（00-59）               |<br>| %S   | 秒（00-59）                 |<br>| %p   | 显示本地AM或PM              |<br>| %X   | 相当于%I:%M:%S %p           |<br>| %Z   | 显示时区                    |<br>| %A   | 星期几 (Sunday-Saturday)    |<br>| %a   | 星期几 (Sun-Sat)            |<br>| %B   | 完整月份 (January-December) |<br>| %b   | 缩写月份 (Jan-Dec)          |<br>| %d   | 日(01-31)                   |<br>| %j   | 一年中的第几天(001-366)     |<br>| %m   | 月份(01-12)                 |<br>| %Y   | 完整的年份                  |</p>
+<p><strong>date命令用于显示及设置系统的时间或日期，格式为：”date [选项] [+指定的格式]”。</strong><br>date命令参数常见的格式如下：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>%t</td>
+<td>跳格（tab键）</td>
+</tr>
+<tr>
+<td>%H</td>
+<td>小时（00-23）</td>
+</tr>
+<tr>
+<td>%I</td>
+<td>小时（00-12）</td>
+</tr>
+<tr>
+<td>%M</td>
+<td>分钟（00-59）</td>
+</tr>
+<tr>
+<td>%S</td>
+<td>秒（00-59）</td>
+</tr>
+<tr>
+<td>%p</td>
+<td>显示本地AM或PM</td>
+</tr>
+<tr>
+<td>%X</td>
+<td>相当于%I:%M:%S %p</td>
+</tr>
+<tr>
+<td>%Z</td>
+<td>显示时区</td>
+</tr>
+<tr>
+<td>%A</td>
+<td>星期几 (Sunday-Saturday)</td>
+</tr>
+<tr>
+<td>%a</td>
+<td>星期几 (Sun-Sat)</td>
+</tr>
+<tr>
+<td>%B</td>
+<td>完整月份 (January-December)</td>
+</tr>
+<tr>
+<td>%b</td>
+<td>缩写月份 (Jan-Dec)</td>
+</tr>
+<tr>
+<td>%d</td>
+<td>日(01-31)</td>
+</tr>
+<tr>
+<td>%j</td>
+<td>一年中的第几天(001-366)</td>
+</tr>
+<tr>
+<td>%m</td>
+<td>月份(01-12)</td>
+</tr>
+<tr>
+<td>%Y</td>
+<td>完整的年份</td>
+</tr>
+</tbody>
+</table>
 <p>按照默认的格式查看当前的系统时间：<br><code>[caijy@localhost Desktop]$ date
 Tue Sep 12 20:33:37 CST 2017</code><br>按照”年-月-日 小时:分钟:秒”的格式查看当前的系统时间：<br><code>[caijy@localhost Desktop]$ date &quot;+%Y-%m-%d %H:%M:%S&quot;
 2017-09-12 20:35:30</code><br>设置当前的系统时间为2017年9月12日21点00分：<br><code>[caijy@localhost Desktop]$ sudo date -s &quot;20170912 21:00:00&quot;
@@ -591,7 +665,7 @@ Red Hat Enterprise Linux Server release 7.0 (Maipo)</code></p>
 [caijy@localhost ~]$</code></p>
 <p><strong>ls命令用于显示目录中的文件信息，格式为：“ls [选项] [文件] ”。</strong><br>当咱们处在不同的工作目录下时，能够看到当前目录下的文件也在发生变化，ls命令的“-a”参数看到全部文件（包括隐藏文件），再结合“-l”参数来查看文件的属性、大小等详细信息。整合之后的命令即可实现查看当前目录中所有文件列表并输出这些文件的属性信息：<br><img src="/img/ls-al.png" alt=""><br>需要看目录属性信息的话，需要额外添加一个-d参数才可以，例如查看/etc目录的权限与属性信息：<br><code>[caijy@localhost ~]$ ls -ld /etc
 drwxr-xr-x. 132 root root 8192 Sep 12 20:48 /etc</code></p>
-<h3 id="文本文件编辑命令"><a href="#文本文件编辑命令" class="headerlink" title="文本文件编辑命令"></a>文本文件编辑命令</h3><p>在Linux系统中一切都是文件，而对于服务程序的配置自然也就是在编辑程序的配置文件，如果不能熟练的查阅数据，那以后工作时可就真的要尴尬了。接下来学习几条用于查看文本文件内容的命令吧<br><strong>cat命令用于查看纯文本文件（较短的），格式为：“cat [选项] [文件]”。</strong><br>Linux系统中有需要用于查看文本内容的命令，但其中每个命令又都有自己的特色特点，比如这个cat命令就是用于查看比较精简的文本内容的。这个其实是最好记的命令之一，因为cat在英语中是猫的意思，小猫咪是不是总给您一种娇小、可爱的感觉呢？另外如果您想看文本内容时还顺便显示行号的话，不妨再追加一个“-n”参数试试吧：<br><img src="/img/cat.png" alt=""><br><strong>more命令用于查看纯文本文件（较长的），格式为：“more [选项] 文件”。</strong><br>对于长篇的文本内容，推荐使用more命令来查看文本内容，不仅可以提示您已经阅读了百分之多少，还可以使用空格或回车键向下翻页：<br><img src="more.png" alt=""><br><strong>head命令用于查看纯文本文档的前N行，格式为：“head [选项] [文件]”。</strong><br><img src="/img/head.png" alt=""><br><strong>tail命令用于查看纯文本文档的后N行或持续刷新内容，格式为：“tail [选项] [文件]”。</strong><br>当然咱们还会遇到一种更奇葩的情况，比如需要去查看文本内容的最后20行，那么操作方法其实跟head命令是非常相似的，只需要执行“tail -n 20 文件名”命令就可以达到这样的效果。而tail命令最强悍的功能是用于持续刷新一个文件的内容，尤其是对于想要实时看到最新日志文件的时候特别有用：<br><img src="/img/tail.png" alt=""><br><strong>tr命令用于替换文本文件中的字符，格式为:“tr [原始字符] [目标字符]”。</strong><br>例如试试把某个文本内容完整替换成大写英文吧：<br><code>[caijy@localhost Desktop]$ cat 2.txt
+<h3 id="文本文件编辑命令"><a href="#文本文件编辑命令" class="headerlink" title="文本文件编辑命令"></a>文本文件编辑命令</h3><p>在Linux系统中一切都是文件，而对于服务程序的配置自然也就是在编辑程序的配置文件，如果不能熟练的查阅数据，那以后工作时可就真的要尴尬了。接下来学习几条用于查看文本文件内容的命令吧<br><strong>cat命令用于查看纯文本文件（较短的），格式为：“cat [选项] [文件]”。</strong><br>Linux系统中有需要用于查看文本内容的命令，但其中每个命令又都有自己的特色特点，比如这个cat命令就是用于查看比较精简的文本内容的。这个其实是最好记的命令之一，因为cat在英语中是猫的意思，小猫咪是不是总给您一种娇小、可爱的感觉呢？另外如果您想看文本内容时还顺便显示行号的话，不妨再追加一个“-n”参数试试吧：<br><img src="/img/cat.png" alt=""><br><strong>more命令用于查看纯文本文件（较长的），格式为：“more [选项] 文件”。</strong><br>对于长篇的文本内容，推荐使用more命令来查看文本内容，不仅可以提示您已经阅读了百分之多少，还可以使用空格或回车键向下翻页：<br><img src="/img/more.png" alt=""><br><strong>head命令用于查看纯文本文档的前N行，格式为：“head [选项] [文件]”。</strong><br><img src="/img/head.png" alt=""><br><strong>tail命令用于查看纯文本文档的后N行或持续刷新内容，格式为：“tail [选项] [文件]”。</strong><br>当然咱们还会遇到一种更奇葩的情况，比如需要去查看文本内容的最后20行，那么操作方法其实跟head命令是非常相似的，只需要执行“tail -n 20 文件名”命令就可以达到这样的效果。而tail命令最强悍的功能是用于持续刷新一个文件的内容，尤其是对于想要实时看到最新日志文件的时候特别有用：<br><img src="/img/tail.png" alt=""><br><strong>tr命令用于替换文本文件中的字符，格式为:“tr [原始字符] [目标字符]”。</strong><br>例如试试把某个文本内容完整替换成大写英文吧：<br><code>[caijy@localhost Desktop]$ cat 2.txt
 abcdefghijklmnopqrstuvwxyz
 [caijy@localhost Desktop]$ cat 2.txt | tr [a-z] [A-Z]
 ABCDEFGHIJKLMNOPQRSTUVWXYZ</code><br><strong>wc命令用于统计指定文本的行数、字数、字节数，格式为“wc [参数] 文本”。</strong></p>
@@ -755,10 +829,10 @@ caijy</code></p>
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Table of Contents
+            Inhaltsverzeichnis
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
+            Übersicht
           </li>
         </ul>
       
@@ -778,7 +852,7 @@ caijy</code></p>
               <a href="/sakura-hly.github.io/archives/">
             
                 <span class="site-state-item-count">4</span>
-                <span class="site-state-item-name">posts</span>
+                <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
           
@@ -789,7 +863,7 @@ caijy</code></p>
             <div class="site-state-item site-state-categories">
               
                 <span class="site-state-item-count">1</span>
-                <span class="site-state-item-name">categories</span>
+                <span class="site-state-item-name">Kategorien</span>
               
             </div>
           
@@ -800,7 +874,7 @@ caijy</code></p>
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">1</span>
-                <span class="site-state-item-name">tags</span>
+                <span class="site-state-item-name">Tags</span>
               
             </div>
           
@@ -867,7 +941,7 @@ caijy</code></p>
 </div>
 
 
-  <div class="powered-by">Powered by <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a></div>
 
   <span class="post-meta-divider">|</span>
 
