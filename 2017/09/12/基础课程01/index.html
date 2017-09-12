@@ -5,17 +5,18 @@
   
   <title>基础课程01 | My Linux Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="弱小和无知不是生存的障碍，傲慢才是。">
+  <meta name="description" content="经济有限，笔者在虚拟机上安装的“红帽”，具体安装步骤在此不展开论述，不会的同学参考[虚拟机/红帽安装及工具下载](http://www.linuxprobe.com/chapter-01.html)。  ###重置root用户密码 记得笔者一次面试的时候被问到：如果忘记MySQL root用户的密码怎么办？我一想，这种问题就该直接谷歌，结果被鄙视一脸。后来查了一下，无非是几个命令。 在此记录这个比">
+<meta name="keywords" content="Linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="基础课程01">
 <meta property="og:url" content="http://yoursite.com/2017/09/12/基础课程01/index.html">
 <meta property="og:site_name" content="My Linux Blog">
-<meta property="og:description" content="弱小和无知不是生存的障碍，傲慢才是。">
+<meta property="og:description" content="经济有限，笔者在虚拟机上安装的“红帽”，具体安装步骤在此不展开论述，不会的同学参考[虚拟机/红帽安装及工具下载](http://www.linuxprobe.com/chapter-01.html)。  ###重置root用户密码 记得笔者一次面试的时候被问到：如果忘记MySQL root用户的密码怎么办？我一想，这种问题就该直接谷歌，结果被鄙视一脸。后来查了一下，无非是几个命令。 在此记录这个比">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-09-12T05:59:19.478Z">
+<meta property="og:updated_time" content="2017-09-12T07:32:39.394Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基础课程01">
-<meta name="twitter:description" content="弱小和无知不是生存的障碍，傲慢才是。">
+<meta name="twitter:description" content="经济有限，笔者在虚拟机上安装的“红帽”，具体安装步骤在此不展开论述，不会的同学参考[虚拟机/红帽安装及工具下载](http://www.linuxprobe.com/chapter-01.html)。  ###重置root用户密码 记得笔者一次面试的时候被问到：如果忘记MySQL root用户的密码怎么办？我一想，这种问题就该直接谷歌，结果被鄙视一脸。后来查了一下，无非是几个命令。 在此记录这个比">
   
     <link rel="alternate" href="/atom.xml" title="My Linux Blog" type="application/atom+xml">
   
@@ -70,6 +71,10 @@
   <time datetime="2017-09-12T05:59:19.000Z" itemprop="datePublished">2017-09-12</time>
 </a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -86,13 +91,90 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <pre><code>经济有限，笔者在虚拟机上安装的“红帽”，具体安装步骤在此不展开论述，不会的同学参考[虚拟机/红帽安装及工具下载](http://www.linuxprobe.com/chapter-01.html)。
+
+###重置root用户密码
+记得笔者一次面试的时候被问到：如果忘记MySQL root用户的密码怎么办？我一想，这种问题就该直接谷歌，结果被鄙视一脸。后来查了一下，无非是几个命令。
+在此记录这个比较重要的问题，此处以红帽系统为例（大家先确认自己的Linux系统是不是红帽）：
+1. 重启Linux，在引导界面按“e”
+![](/img/01.png)
+2. 在linux16参数这行的后面追加“rd.break”参数并同时一起按下键盘“ctrl“和“x”按键来执行内核参数
+![](/img/02.png)
+3. 过一会儿便进入系统的紧急求援模式。依次输入一下命令（其中第三行命令的“123456”是你新的root用户密码）：
+    * mount -o remount,rw /sysroot
+    * chroot /sysroot
+    * echo &quot;123456&quot; | passwd --stdin root
+    * touch /.autorelabel
+    * exit
+    * reboot
+   然后等待重启即可
+![](/!img/03.png)
+
+***
+
+###RPM红帽软件包
+这里总结一下常用的软件包命令：
+    * 安装软件的命令格式:rpm -ivh filename.rpm
+    * 升级软件的命令格式:rpm -Uvh filename.rpm
+    * 卸载软件的命令格式:rpm -e filename.rpm
+    * 查询软件的描述信息的命令格式:rpm -qpi filename.rpm
+    * 列出软件的文件信息的命令格式:rpm -qpl filename.rpm
+    * 查询文件属于哪个RPM的命令格式:rpm -qf filename
+
+***
+
+###Yum软件仓库
+Yum软件仓库是为了进一步降低软件安装难度和复杂度而设计的技术，Yum软件仓库可以根据用户的要求分析出所需软件包及其相关依赖关系，然后自动从服务器下载软件包并安装到系统，
+下面的Yum命令过一下即可。
+| Tables                      | Cool                      |
+| -------------------------   | -----------------------:  |
+| yum repolist all            | 列出所有仓库               |
+| yum list all                | 列出仓库中所有软件包        |
+| yum info 软件包名称          | 查看软件包信息             |
+| yum install 软件包名称       | 安装软件包                 |
+| yum reinstall 软件包名称     | 重新安装软件包             |
+| yum update 软件包名称        | 升级软件包                 |
+| yum remove 软件包名称        | 移除软件包                 |
+| yum clean all               | 清除所有仓库缓存            |
+| yum check-update            | 检查可更新的软件包          |
+| yum grouplist               | 查看系统中已经安装的软件包组 |
+| yum groupinstall 软件包组    | 安装指定的软件包组          |
+| yum groupremove 软件包组     | 移除指定的软件包组          |
+| yum groupinfo 软件包组       | 查询指定的软件包组信息      |
+
+***
+
+###Systemd初始化进程
+Linux操作系统开机过程首先从BIOS开始，进入“Boot Loader”，加载系统内核，，内核进行初始化，启动初始化进程。
+初始化进程作为系统第一个进程，它需要完成Linux系统中相关的初始化工作，为用户提供合适的工作环境。
+systemd初始化进程服务采用了并发启动机制，开机速度得到了不小的提升。
+红帽RHEL7系统启动时要做大量的初始化工作，例如挂在文件系统和交换分区。启动各类进程服务等操作，这些都可以看作一个个的单元（Unit），
+</code></pre><p>即用”目标(target)”代替了“运行级别”这个概念，区别如下表所示：<br>    | Sysvinit运行级别        | System目标名称                           | 作用             |<br>    | ———————- |:—————————————-:| —————:|<br>    | 0                      | runlevel0.target, poweroff.target        | 关机            |<br>    | 1                      | runlevel1.target, rescue.target          | 单用户模式       |<br>    | 2                      | runlevel2.target, multi-user.target      | 等同于级别3      |<br>    | 3                      | runlevel3.target, multi-user.target      | 多用户的文本界面 |<br>    | 4                      | runlevel4.target, multi-user.target      | 等同于级别3      |<br>    | 5                      | runlevel5.target, graphical.target       | 多用户的图形界面 |<br>    | 6                      | runlevel6.target, reboot.target          | 重启            |<br>    | emergency              | emergency.target                         | 紧急Shell       |</p>
+<pre><code>红帽RHEL6系统使用service、chkconfig等命令来管理系统服务，红帽RHEL7系统中管理服务使用的是systemctl命令：
+**systemctl管理服务的启动、重启、停止、重载、查看状态的命令：**
+| Sysvinit命令(红帽RHEL6系统)        | Systemctl命令（红帽RHEL7系统）            | 作用                         |
+| --------------------------------- |:----------------------------------------:| ---------------------------:|
+| service foo start                 | systemctl start foo.service              | 启动服务                     |
+| service foo restart               | systemctl restart foo.service            | 重启服务                     |
+| service foo stop                  | systemctl stop foo.service               | 停止服务                     |
+| service foo reload                | systemctl reload foo.service             | 重新加载配置文件（不终止服务） |
+| service foo status                | systemctl status foo.service             | 查看服务状态                 |
+**systemctl设置服务的开机启动、不启动、查看各级别下服务启动状态的命令：**
+| Sysvinit命令(红帽RHEL6系统)        | Systemctl命令（红帽RHEL7系统）            | 作用                              |
+| --------------------------------- |:----------------------------------------:| -------------------------------: |
+| chkconfig foo on                  | systemctl enable foo.service             | 开机自动启动                      |
+| chkconfig foo off                 | systemctl disable foo.service            | 开机不自动启动                    |
+| chkconfig foo                     | systemctl is-enabled foo.service         | 查看特定服务是否为开机自启动       |
+| chkconfig --list                  | systemctl list-unit-files --type=service | 查看各个级别下服务的启动与禁用情况  |
+</code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/12/基础课程01/" data-id="cj7ha1z4o0001u8vj0rg9mj38" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/09/12/基础课程01/" data-id="cj7ha5nk9000088vjtqftex6v" class="article-share-link">Share</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
+
     </footer>
   </div>
   
