@@ -95,13 +95,13 @@
 
 
 
-<meta name="description" content="#新手必须掌握的Linux命令#">
+<meta name="description" content="新手必须掌握的Linux命令">
 <meta name="keywords" content="Linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="基础课程02">
 <meta property="og:url" content="http://yoursite.com/2017/09/12/基础课程02/index.html">
 <meta property="og:site_name" content="My Linux Blog">
-<meta property="og:description" content="#新手必须掌握的Linux命令#">
+<meta property="og:description" content="新手必须掌握的Linux命令">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/img/04.png">
 <meta property="og:image" content="http://yoursite.com/img/05.png">
@@ -120,10 +120,10 @@
 <meta property="og:image" content="http://yoursite.com/img/head.png">
 <meta property="og:image" content="http://yoursite.com/img/tail.png">
 <meta property="og:image" content="http://yoursite.com/img/stat.png">
-<meta property="og:updated_time" content="2017-09-12T14:07:10.643Z">
+<meta property="og:updated_time" content="2017-09-13T02:19:33.734Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基础课程02">
-<meta name="twitter:description" content="#新手必须掌握的Linux命令#">
+<meta name="twitter:description" content="新手必须掌握的Linux命令">
 <meta name="twitter:image" content="http://yoursite.com/img/04.png">
 
 
@@ -356,7 +356,7 @@
       
 
       
-        <p>#新手必须掌握的Linux命令#<br><a id="more"></a></p>
+        <h1 id="新手必须掌握的Linux命令"><a href="#新手必须掌握的Linux命令" class="headerlink" title="新手必须掌握的Linux命令"></a>新手必须掌握的Linux命令</h1><a id="more"></a>
 <h3 id="shell简介"><a href="#shell简介" class="headerlink" title="shell简介"></a>shell简介</h3><p>通常计算机硬件是由运算器、控制器、存储器、输入/输出设备等等这些物理设备共同组成的，而能够让机箱内各种硬件设备各司其职的东西就叫做系统内核。Linux系统的内核负责驱动硬件、管理活动和分配/管理硬件资源等等任务，如此说来系统内核对计算机正常稳定的运行来讲可真的是太重要了，因此一般不建议直接去编辑内核中的参数，而是让用户通过基于“系统调用接口”开发出的程序/服务来管理计算机，这样一层层环环相扣来满足咱们的日常工作需要.<br><img src="/img/04.png" alt="Linux系统结构图"><br><strong>“Shell”——也可称为“壳”，充当的是人与内核（硬件）的翻译官，用户把一些命令“告诉”Shell终端，它就会调用相应的程序服务执行工作啦</strong><br>主流Linux系统选择Bash解释器作为命令行终端主要有以下4项优势:</p>
 <ol>
 <li>通过上下方向键来调取过往执行过的Linux命令。</li>
@@ -646,10 +646,7 @@ Tue Sep 12 21:01:04 CST 2017</code><br>查看今天是一年中的第几天，�
 <p>平时在系统终端中执行一个命令后如果想立即的停止它，您可以同时按下系统组合键<br><strong>“Ctrl+c”</strong>，这样命令的进程将会立即被终止，是生产工作中比较常用的命令行快捷键之一。<br>或者有些命令在执行时会不断的在屏幕上输出信息，影响到咱们继续输入命令了，便可以在执行命令时在命令最后面添加上一个<br><strong>“&amp;”</strong>符号，这样命令从开始执行就默认被放到系统后台了。</p>
 <h3 id="常用系统工作命令-1"><a href="#常用系统工作命令-1" class="headerlink" title="常用系统工作命令"></a>常用系统工作命令</h3><p>为了更好的了解Linux服务器，成为一名合格的运维人员，您必须具备快速查看Linux系统运行状态的能力，因此接下来咱们会逐个来学习下对于网卡网络、系统内核、系统负载、内存使用情况、当前启用终端数量、历史登录记录、命令执行记录以及救援诊断命令的使用方法，都是超级实用的Linux命令哦~</p>
 <p><strong>ifconfig用于获取网卡配置与网络状态等信息:格式为”ifconfig [网络设备] [参数]”。</strong><br>查看本机当前的网卡配置与网络状态等信息，主要就是看每段开头的网卡名称、inet参数后面的IP地址、ether参数后面的MAC网卡物理地址以及RX、TX的接收与发送数据包的流量大小。<br><img src="/img/ifconfig.png" alt=""></p>
-<p><strong>uname命令用于查看系统内核与系统版本等信息，格式为：“uname [-a]”。</strong><br>一般会固定搭配上-a参数来完整查看当前系统的内核名称、主机名、内核发行版本、节点名、系统时间、硬件名称、硬件平台、处理器类型以及操作系统名称等信息:<br><code>[caijy@localhost Desktop]$ uname -a
-Linux localhost.localdomain 3.10.0-123.el7.x86_64 #1 SMP Mon May 5 11:16:57 EDT 2014 x86_64 x86_64 x86_64 GNU/Linux
-[caijy@localhost Desktop]$</code><br>顺便说下，如果您想查看当前系统版本的详细信息需要看redhat-release文件：<br><code>[caijy@localhost Desktop]$ cat /etc/redhat-release
-Red Hat Enterprise Linux Server release 7.0 (Maipo)</code></p>
+<p><strong>uname命令用于查看系统内核与系统版本等信息，格式为：“uname [-a]”。</strong><br>一般会固定搭配上-a参数来完整查看当前系统的内核名称、主机名、内核发行版本、节点名、系统时间、硬件名称、硬件平台、处理器类型以及操作系统名称等信息:<br><code>[caijy@localhost Desktop]$ uname -a</code><br><code>Linux localhost.localdomain 3.10.0-123.el7.x86_64 #1 SMP Mon May 5 11:16:57 EDT 2014 x86_64 x86_64 x86_64 GNU/Linux</code><br>顺便说下，如果您想查看当前系统版本的详细信息需要看redhat-release文件：<br><code>[caijy@localhost Desktop]$ cat /etc/redhat-release</code><br><code>Red Hat Enterprise Linux Server release 7.0 (Maipo)</code></p>
 <p><strong>uptime命令用于查看系统的负载信息，格式为：“uptime”。</strong><br>这个命令可以为您显示当前系统时间、系统已运行时间、启用终端数量以及平均负载值等信息数据。平均负载值指的是最近1分钟、5分钟、15分钟的系统压力情况（下面加粗的信息部分），负载值越低越好<br><code>[caijy@localhost Desktop]$ uptime
  21:14:39 up 31 min,  2 users,  load average: 0.20, 0.19, 0.14</code></p>
 <p><strong>free命令用于显示当前系统中内存的使用量信息，格式为：“free [-h]”。</strong><br>为了保证Linux系统不会因硬件故障而突然卡住宕机，那么内存使用量当之无愧是运维人员最应该时刻要关注的数据对象啦，可以使用-h参数来以更人性化的样输出当前内存的实时使用量信息<br><img src="/img/free.png" alt=""></p>
@@ -908,7 +905,7 @@ caijy</code></p>
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#shell简介"><span class="nav-number">1.</span> <span class="nav-text">shell简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#man–帮助命令"><span class="nav-number">2.</span> <span class="nav-text">man–帮助命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用系统工作命令"><span class="nav-number">3.</span> <span class="nav-text">常用系统工作命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用系统工作命令-1"><span class="nav-number">4.</span> <span class="nav-text">常用系统工作命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工作目录切换命令"><span class="nav-number">5.</span> <span class="nav-text">工作目录切换命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文本文件编辑命令"><span class="nav-number">6.</span> <span class="nav-text">文本文件编辑命令</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#新手必须掌握的Linux命令"><span class="nav-number">1.</span> <span class="nav-text">新手必须掌握的Linux命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#shell简介"><span class="nav-number">1.0.1.</span> <span class="nav-text">shell简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#man–帮助命令"><span class="nav-number">1.0.2.</span> <span class="nav-text">man–帮助命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用系统工作命令"><span class="nav-number">1.0.3.</span> <span class="nav-text">常用系统工作命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用系统工作命令-1"><span class="nav-number">1.0.4.</span> <span class="nav-text">常用系统工作命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工作目录切换命令"><span class="nav-number">1.0.5.</span> <span class="nav-text">工作目录切换命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文本文件编辑命令"><span class="nav-number">1.0.6.</span> <span class="nav-text">文本文件编辑命令</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
