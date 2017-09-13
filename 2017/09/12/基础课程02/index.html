@@ -120,7 +120,7 @@
 <meta property="og:image" content="http://yoursite.com/img/head.png">
 <meta property="og:image" content="http://yoursite.com/img/tail.png">
 <meta property="og:image" content="http://yoursite.com/img/stat.png">
-<meta property="og:updated_time" content="2017-09-13T02:19:33.734Z">
+<meta property="og:updated_time" content="2017-09-13T02:26:56.672Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基础课程02">
 <meta name="twitter:description" content="新手必须掌握的Linux命令">
@@ -553,12 +553,7 @@
 </tr>
 </tbody>
 </table>
-<p>按照默认的格式查看当前的系统时间：<br><code>[caijy@localhost Desktop]$ date
-Tue Sep 12 20:33:37 CST 2017</code><br>按照”年-月-日 小时:分钟:秒”的格式查看当前的系统时间：<br><code>[caijy@localhost Desktop]$ date &quot;+%Y-%m-%d %H:%M:%S&quot;
-2017-09-12 20:35:30</code><br>设置当前的系统时间为2017年9月12日21点00分：<br><code>[caijy@localhost Desktop]$ sudo date -s &quot;20170912 21:00:00&quot;
-Tue Sep 12 21:00:00 CST 2017</code><br>再次查看系统时间<br><code>[caijy@localhost Desktop]$ date
-Tue Sep 12 21:01:04 CST 2017</code><br>查看今天是一年中的第几天，其实用这个参数也能够很好的区分备份时间的新旧，即数字越大，越靠近当前时间：<br><code>[caijy@localhost Desktop]$ date &quot;+%j&quot;
-255</code></p>
+<p>按照默认的格式查看当前的系统时间：<br><code>[caijy@localhost Desktop]$ date</code><br><code>Tue Sep 12 20:33:37 CST 2017</code><br>按照”年-月-日 小时:分钟:秒”的格式查看当前的系统时间：<br><code>[caijy@localhost Desktop]$ date &quot;+%Y-%m-%d %H:%M:%S&quot;</code><br><code>2017-09-12 20:35:30</code><br>设置当前的系统时间为2017年9月12日21点00分：<br><code>[caijy@localhost Desktop]$ sudo date -s &quot;20170912 21:00:00&quot;</code><br><code>Tue Sep 12 21:00:00 CST 2017</code><br>再次查看系统时间<br><code>[caijy@localhost Desktop]$ date</code><br><code>Tue Sep 12 21:01:04 CST 2017</code><br>查看今天是一年中的第几天，其实用这个参数也能够很好的区分备份时间的新旧，即数字越大，越靠近当前时间：<br><code>[caijy@localhost Desktop]$ date &quot;+%j&quot;</code><br><code>255</code></p>
 <p><strong>reboot命令用于重启系统，格式为：”reboot”。</strong><br>重启计算机这种操作会涉及到对硬件资源的管理权限，因此默认只能使用root用户来重启您的电脑：<br><code>[caijy@localhost Desktop]$ reboot</code></p>
 <p><strong>poweroff命令用于关闭系统，格式为：”poweroff”。</strong><br>关机命令也同理，默认只有root管理员用户才可以关闭您的电脑：<br><code>[caijy@localhost Desktop]$ poweroff</code></p>
 <p><strong>wget命令用于在终端中下载网络文件，格式为：“wget [参数] 下载地址”。</strong></p>
@@ -636,36 +631,24 @@ Tue Sep 12 21:01:04 CST 2017</code><br>查看今天是一年中的第几天，�
 <li>第4行:物理内存总量，使用量，空闲量，作为内核缓存的内存量。</li>
 <li>第5行:虚拟内存总量，使用量，空闲量，已被提前加载的内存数据。</li>
 </ul>
-<p><strong>pidof命令用于查询某个指定服务进程的PID号码值，格式为：“pidof [参数] [服务名称]”。</strong><br>PID值是区别每个进程的唯一号码，每次在计算机上运行相同的服务程序都很少会获得同样值的PID号码，例如查询下本机sshd服务程序的PID进程号码值：<br><code>[caijy@localhost Desktop]$ pidof sshd
-1736</code></p>
-<p><strong>kill命令用于终止某个指定PID号码的服务进程，格式为：“kill [参数] [进程PID号]”。</strong><br>咱们来动手把上面pidof命令查询到的PID号码给终止掉吧，这样操作的效果等同于把sshd服务强制停止。<br><code>[caijy@localhost Desktop]$ sudo kill 1736</code><br><strong>killall命令用于终止某个指定名称的服务所对应的全部进程，格式为：“killall [参数] [进程名称]”。</strong><br>(目前尚未安装网卡，找个例子)<br><code>[root@linuxprobe ~]# pidof httpd
-13581 13580 13579 13578 13577 13576
-[root@linuxprobe ~]# killall httpd
-[root@linuxprobe ~]# pidof httpd
-[root@linuxprobe ~]#</code></p>
+<p><strong>pidof命令用于查询某个指定服务进程的PID号码值，格式为：“pidof [参数] [服务名称]”。</strong><br>PID值是区别每个进程的唯一号码，每次在计算机上运行相同的服务程序都很少会获得同样值的PID号码，例如查询下本机sshd服务程序的PID进程号码值：<br><code>[caijy@localhost Desktop]$ pidof sshd</code><br><code>1736</code></p>
+<p><strong>kill命令用于终止某个指定PID号码的服务进程，格式为：“kill [参数] [进程PID号]”。</strong><br>咱们来动手把上面pidof命令查询到的PID号码给终止掉吧，这样操作的效果等同于把sshd服务强制停止。<br><code>[caijy@localhost Desktop]$ sudo kill 1736</code><br><strong>killall命令用于终止某个指定名称的服务所对应的全部进程，格式为：“killall [参数] [进程名称]”。</strong><br>(目前尚未安装网卡，找个例子)<br><code>[root@linuxprobe ~]# pidof httpd</code><br><code>13581 13580 13579 13578 13577 13576</code><br><code>[root@linuxprobe ~]# killall httpd</code><br><code>[root@linuxprobe ~]# pidof httpd</code><br><code>[root@linuxprobe ~]#</code></p>
 <p>平时在系统终端中执行一个命令后如果想立即的停止它，您可以同时按下系统组合键<br><strong>“Ctrl+c”</strong>，这样命令的进程将会立即被终止，是生产工作中比较常用的命令行快捷键之一。<br>或者有些命令在执行时会不断的在屏幕上输出信息，影响到咱们继续输入命令了，便可以在执行命令时在命令最后面添加上一个<br><strong>“&amp;”</strong>符号，这样命令从开始执行就默认被放到系统后台了。</p>
 <h3 id="常用系统工作命令-1"><a href="#常用系统工作命令-1" class="headerlink" title="常用系统工作命令"></a>常用系统工作命令</h3><p>为了更好的了解Linux服务器，成为一名合格的运维人员，您必须具备快速查看Linux系统运行状态的能力，因此接下来咱们会逐个来学习下对于网卡网络、系统内核、系统负载、内存使用情况、当前启用终端数量、历史登录记录、命令执行记录以及救援诊断命令的使用方法，都是超级实用的Linux命令哦~</p>
 <p><strong>ifconfig用于获取网卡配置与网络状态等信息:格式为”ifconfig [网络设备] [参数]”。</strong><br>查看本机当前的网卡配置与网络状态等信息，主要就是看每段开头的网卡名称、inet参数后面的IP地址、ether参数后面的MAC网卡物理地址以及RX、TX的接收与发送数据包的流量大小。<br><img src="/img/ifconfig.png" alt=""></p>
 <p><strong>uname命令用于查看系统内核与系统版本等信息，格式为：“uname [-a]”。</strong><br>一般会固定搭配上-a参数来完整查看当前系统的内核名称、主机名、内核发行版本、节点名、系统时间、硬件名称、硬件平台、处理器类型以及操作系统名称等信息:<br><code>[caijy@localhost Desktop]$ uname -a</code><br><code>Linux localhost.localdomain 3.10.0-123.el7.x86_64 #1 SMP Mon May 5 11:16:57 EDT 2014 x86_64 x86_64 x86_64 GNU/Linux</code><br>顺便说下，如果您想查看当前系统版本的详细信息需要看redhat-release文件：<br><code>[caijy@localhost Desktop]$ cat /etc/redhat-release</code><br><code>Red Hat Enterprise Linux Server release 7.0 (Maipo)</code></p>
-<p><strong>uptime命令用于查看系统的负载信息，格式为：“uptime”。</strong><br>这个命令可以为您显示当前系统时间、系统已运行时间、启用终端数量以及平均负载值等信息数据。平均负载值指的是最近1分钟、5分钟、15分钟的系统压力情况（下面加粗的信息部分），负载值越低越好<br><code>[caijy@localhost Desktop]$ uptime
- 21:14:39 up 31 min,  2 users,  load average: 0.20, 0.19, 0.14</code></p>
+<p><strong>uptime命令用于查看系统的负载信息，格式为：“uptime”。</strong><br>这个命令可以为您显示当前系统时间、系统已运行时间、启用终端数量以及平均负载值等信息数据。平均负载值指的是最近1分钟、5分钟、15分钟的系统压力情况（下面加粗的信息部分），负载值越低越好<br><code>[caijy@localhost Desktop]$ uptime</code><br><code>21:14:39 up 31 min,  2 users,  load average: 0.20, 0.19, 0.14</code></p>
 <p><strong>free命令用于显示当前系统中内存的使用量信息，格式为：“free [-h]”。</strong><br>为了保证Linux系统不会因硬件故障而突然卡住宕机，那么内存使用量当之无愧是运维人员最应该时刻要关注的数据对象啦，可以使用-h参数来以更人性化的样输出当前内存的实时使用量信息<br><img src="/img/free.png" alt=""></p>
 <p><strong>who命令用于查看当前登入主机的用户终端信息，格式为：”who [参数]”。</strong><br>简单三个字母就可以快捷的显示出所有正在登录着本机的用户名称以及他们正在开启的终端信息：<br><img src="/img/who.png" alt=""></p>
 <p><strong>last命令用于查看所有系统的登入记录，格式为：”last [参数]”。</strong><br>使用last命令可以看到本机的登录记录，但由于这些信息都是被以日志文件的形式保存在系统中的数据内容，骇客们很轻易的便可对内容进行篡改，所以千万不要单纯以该命令的输出信息而判断系统有无被恶意入侵！<br><img src="/img/last.png" alt=""></p>
 <p><strong>history命令用于显示历史执行过的命令，格式为：“history [-c]”。</strong><br>执行history命令能显示出当前用户在本地计算机中执行过的最近1000条命令记录，觉得1000不够用的话还可以修改/etc/profile文件的HISTSIZE变量值，或者使用-c参数来清空里面的历史数据，还可以使用“!编码数字”的方式来重复执行某一次的命令，有很多种有趣的玩法：<br><img src="/img/history.png" alt=""><br><img src="/img/08.png" alt=""></p>
 <p>历史命令会被保存到用户家目录中的”.bash_history”文件中。Linux系统中以点(.)开头的文件均代表隐藏文件，一般大多会是系统服务文件。<br><code>[caijy@localhost Desktop]$ cat ~/.bash_history</code><br>清空该用户在本机中执行的Linux命令历史记录信息：<br><code>[caijy@localhost Desktop]$ history -c</code></p>
 <p><strong>sosreport命令用于收集系统配置并诊断信息后输出结论文档，格式为：“sosreport”。</strong><br>。。有待学习</p>
-<h3 id="工作目录切换命令"><a href="#工作目录切换命令" class="headerlink" title="工作目录切换命令"></a>工作目录切换命令</h3><p><strong>pwd命令用于显示当前所处的工作目录，格式为：“pwd [选项]”。</strong><br><code>[caijy@localhost Desktop]$ pwd
-/home/caijy/Desktop</code></p>
-<p><strong>cd命令用于切换工作路径，格式为：“cd [目录名称]”。</strong><br>这个命令应该是最最常用的Linux命令之一了，您可以通过cd命令来便捷的切换到不同的工作目录。除了常见的切换目录的方式，还可以使用“cd -”命令来返回到上一次所处的目录或使用“cd ~”命令来切换到当前用户的家目录，亦或使用“cd ~username”则可以切换到其他用户的家目录了~例如使用“cd 路径”的方式切换进/etc目录中：<br><code>[caijy@localhost Desktop]$ cd /etc</code><br>同样的道理，再尝试切换进/bin目录中：<br><code>[caijy@localhost etc]$ cd /bin</code><br>此时返回到上一次的目录（即/etc目录）：<br><code>[caijy@localhost bin]$ cd -
-/etc</code><br>还可以快速的切换到用户自己的家目录呢：<br><code>[caijy@localhost etc]$ cd ~
-[caijy@localhost ~]$</code></p>
-<p><strong>ls命令用于显示目录中的文件信息，格式为：“ls [选项] [文件] ”。</strong><br>当咱们处在不同的工作目录下时，能够看到当前目录下的文件也在发生变化，ls命令的“-a”参数看到全部文件（包括隐藏文件），再结合“-l”参数来查看文件的属性、大小等详细信息。整合之后的命令即可实现查看当前目录中所有文件列表并输出这些文件的属性信息：<br><img src="/img/ls-al.png" alt=""><br>需要看目录属性信息的话，需要额外添加一个-d参数才可以，例如查看/etc目录的权限与属性信息：<br><code>[caijy@localhost ~]$ ls -ld /etc
-drwxr-xr-x. 132 root root 8192 Sep 12 20:48 /etc</code></p>
-<h3 id="文本文件编辑命令"><a href="#文本文件编辑命令" class="headerlink" title="文本文件编辑命令"></a>文本文件编辑命令</h3><p>在Linux系统中一切都是文件，而对于服务程序的配置自然也就是在编辑程序的配置文件，如果不能熟练的查阅数据，那以后工作时可就真的要尴尬了。接下来学习几条用于查看文本文件内容的命令吧<br><strong>cat命令用于查看纯文本文件（较短的），格式为：“cat [选项] [文件]”。</strong><br>Linux系统中有需要用于查看文本内容的命令，但其中每个命令又都有自己的特色特点，比如这个cat命令就是用于查看比较精简的文本内容的。这个其实是最好记的命令之一，因为cat在英语中是猫的意思，小猫咪是不是总给您一种娇小、可爱的感觉呢？另外如果您想看文本内容时还顺便显示行号的话，不妨再追加一个“-n”参数试试吧：<br><img src="/img/cat.png" alt=""><br><strong>more命令用于查看纯文本文件（较长的），格式为：“more [选项] 文件”。</strong><br>对于长篇的文本内容，推荐使用more命令来查看文本内容，不仅可以提示您已经阅读了百分之多少，还可以使用空格或回车键向下翻页：<br><img src="/img/more.png" alt=""><br><strong>head命令用于查看纯文本文档的前N行，格式为：“head [选项] [文件]”。</strong><br><img src="/img/head.png" alt=""><br><strong>tail命令用于查看纯文本文档的后N行或持续刷新内容，格式为：“tail [选项] [文件]”。</strong><br>当然咱们还会遇到一种更奇葩的情况，比如需要去查看文本内容的最后20行，那么操作方法其实跟head命令是非常相似的，只需要执行“tail -n 20 文件名”命令就可以达到这样的效果。而tail命令最强悍的功能是用于持续刷新一个文件的内容，尤其是对于想要实时看到最新日志文件的时候特别有用：<br><img src="/img/tail.png" alt=""><br><strong>tr命令用于替换文本文件中的字符，格式为:“tr [原始字符] [目标字符]”。</strong><br>例如试试把某个文本内容完整替换成大写英文吧：<br><code>[caijy@localhost Desktop]$ cat 2.txt
-abcdefghijklmnopqrstuvwxyz
-[caijy@localhost Desktop]$ cat 2.txt | tr [a-z] [A-Z]
-ABCDEFGHIJKLMNOPQRSTUVWXYZ</code><br><strong>wc命令用于统计指定文本的行数、字数、字节数，格式为“wc [参数] 文本”。</strong></p>
+<h3 id="工作目录切换命令"><a href="#工作目录切换命令" class="headerlink" title="工作目录切换命令"></a>工作目录切换命令</h3><p><strong>pwd命令用于显示当前所处的工作目录，格式为：“pwd [选项]”。</strong><br><code>[caijy@localhost Desktop]$ pwd</code><br><code>/home/caijy/Desktop</code></p>
+<p><strong>cd命令用于切换工作路径，格式为：“cd [目录名称]”。</strong><br>这个命令应该是最最常用的Linux命令之一了，您可以通过cd命令来便捷的切换到不同的工作目录。除了常见的切换目录的方式，还可以使用“cd -”命令来返回到上一次所处的目录或使用“cd ~”命令来切换到当前用户的家目录，亦或使用“cd ~username”则可以切换到其他用户的家目录了~例如使用“cd 路径”的方式切换进/etc目录中：<br><code>[caijy@localhost Desktop]$ cd /etc</code><br>同样的道理，再尝试切换进/bin目录中：<br><code>[caijy@localhost etc]$ cd /bin</code><br>此时返回到上一次的目录（即/etc目录）：<br><code>[caijy@localhost bin]$ cd -</code><br>/etc<code>还可以快速的切换到用户自己的家目录呢：</code>[caijy@localhost etc]$ cd ~<code>`[caijy@localhost ~]$</code></p>
+<p><strong>ls命令用于显示目录中的文件信息，格式为：“ls [选项] [文件] ”。</strong><br>当咱们处在不同的工作目录下时，能够看到当前目录下的文件也在发生变化，ls命令的“-a”参数看到全部文件（包括隐藏文件），再结合“-l”参数来查看文件的属性、大小等详细信息。整合之后的命令即可实现查看当前目录中所有文件列表并输出这些文件的属性信息：<br><img src="/img/ls-al.png" alt=""><br>需要看目录属性信息的话，需要额外添加一个-d参数才可以，例如查看/etc目录的权限与属性信息：<br><code>[caijy@localhost ~]$ ls -ld /etc</code><br><code>drwxr-xr-x. 132 root root 8192 Sep 12 20:48 /etc</code></p>
+<h3 id="文本文件编辑命令"><a href="#文本文件编辑命令" class="headerlink" title="文本文件编辑命令"></a>文本文件编辑命令</h3><p>在Linux系统中一切都是文件，而对于服务程序的配置自然也就是在编辑程序的配置文件，如果不能熟练的查阅数据，那以后工作时可就真的要尴尬了。接下来学习几条用于查看文本文件内容的命令吧<br><strong>cat命令用于查看纯文本文件（较短的），格式为：“cat [选项] [文件]”。</strong><br>Linux系统中有需要用于查看文本内容的命令，但其中每个命令又都有自己的特色特点，比如这个cat命令就是用于查看比较精简的文本内容的。这个其实是最好记的命令之一，因为cat在英语中是猫的意思，小猫咪是不是总给您一种娇小、可爱的感觉呢？另外如果您想看文本内容时还顺便显示行号的话，不妨再追加一个“-n”参数试试吧：<br><img src="/img/cat.png" alt=""><br><strong>more命令用于查看纯文本文件（较长的），格式为：“more [选项] 文件”。</strong><br>对于长篇的文本内容，推荐使用more命令来查看文本内容，不仅可以提示您已经阅读了百分之多少，还可以使用空格或回车键向下翻页：<br><img src="/img/more.png" alt=""><br><strong>head命令用于查看纯文本文档的前N行，格式为：“head [选项] [文件]”。</strong><br><img src="/img/head.png" alt=""><br><strong>tail命令用于查看纯文本文档的后N行或持续刷新内容，格式为：“tail [选项] [文件]”。</strong><br>当然咱们还会遇到一种更奇葩的情况，比如需要去查看文本内容的最后20行，那么操作方法其实跟head命令是非常相似的，只需要执行“tail -n 20 文件名”命令就可以达到这样的效果。而tail命令最强悍的功能是用于持续刷新一个文件的内容，尤其是对于想要实时看到最新日志文件的时候特别有用：<br><img src="/img/tail.png" alt=""><br><strong>tr命令用于替换文本文件中的字符，格式为:“tr [原始字符] [目标字符]”。</strong><br>例如试试把某个文本内容完整替换成大写英文吧：<br><code>[caijy@localhost Desktop]$ cat 2.txt</code><br><code>abcdefghijklmnopqrstuvwxyz</code><br><code>[caijy@localhost Desktop]$ cat 2.txt | tr [a-z] [A-Z]</code><br><code>ABCDEFGHIJKLMNOPQRSTUVWXYZ</code></p>
+<p><strong>wc命令用于统计指定文本的行数、字数、字节数，格式为“wc [参数] 文本”。</strong></p>
 <table>
 <thead>
 <tr>
@@ -688,51 +671,9 @@ ABCDEFGHIJKLMNOPQRSTUVWXYZ</code><br><strong>wc命令用于统计指定文本的
 </tr>
 </tbody>
 </table>
-<p>例如可以使用“-l”参数来统计行数，而passwd是用于保存系统帐户信息的文件，因此下面的命令就是用于统计当前系统中有多少个用户的作用啦：<br><code>[caijy@localhost Desktop]$ wc -l /etc/passwd
-38 /etc/passwd</code></p>
+<p>例如可以使用“-l”参数来统计行数，而passwd是用于保存系统帐户信息的文件，因此下面的命令就是用于统计当前系统中有多少个用户的作用啦：<br><code>[caijy@localhost Desktop]$ wc -l /etc/passwd</code><br><code>38 /etc/passwd</code></p>
 <p><strong>stat命令用于查看文件的具体存储信息和时间等信息，格式“stat 文件名称”。</strong><br><img src="/img/stat.png" alt=""></p>
-<p><strong>cut命令用于按“列”来提取文本字符，格式为：“cut [参数] 文本”。</strong><br>如何准确的提取出最想要的数据，这也应该是咱们学习研究的方向之一，按基于“行”的方式来提取是比较简单的，只需要设置好要搜索的关键词即可，但是按列搜索的话不仅要使用“-f”参数来设置需要看的列数，还必须使用“-d”参数来设置间隔符号。因为passwd是用于保存用户信息数据的文件且每一项值都是通过冒号来间隔的，因此可以来尝试下提取出passwd文件中的用户名信息吧，即提取以:（冒号）为间隔符号的第一列内容：<br><code>[caijy@localhost Desktop]$ head -n 2 /etc/passwd
-root:x:0:0:root:/root:/bin/bash
-bin:x:1:1:bin:/bin:/sbin/nologin
-[caijy@localhost Desktop]$ cut -d: -f1 /etc/passwd
-root
-bin
-daemon
-adm
-lp
-sync
-shutdown
-halt
-mail
-operator
-games
-ftp
-nobody
-dbus
-polkitd
-unbound
-colord
-usbmuxd
-avahi
-avahi-autoipd
-libstoragemgmt
-saslauth
-qemu
-rpc
-rpcuser
-nfsnobody
-rtkit
-radvd
-ntp
-chrony
-abrt
-pulse
-gdm
-gnome-initial-setup
-postfix
-sshd
-tcpdump
-caijy</code></p>
+<p><strong>cut命令用于按“列”来提取文本字符，格式为：“cut [参数] 文本”。</strong><br>如何准确的提取出最想要的数据，这也应该是咱们学习研究的方向之一，按基于“行”的方式来提取是比较简单的，只需要设置好要搜索的关键词即可，但是按列搜索的话不仅要使用“-f”参数来设置需要看的列数，还必须使用“-d”参数来设置间隔符号。因为passwd是用于保存用户信息数据的文件且每一项值都是通过冒号来间隔的，因此可以来尝试下提取出passwd文件中的用户名信息吧，即提取以:（冒号）为间隔符号的第一列内容：<br><code>[caijy@localhost Desktop]$ head -n 2 /etc/passwd</code><br><code>root:x:0:0:root:/root:/bin/bash</code><br><code>bin:x:1:1:bin:/bin:/sbin/nologin</code><br><code>[caijy@localhost Desktop]$ cut -d: -f1 /etc/passwd</code><br><code>root</code><br><code>bin</code><br><code>daemon</code><br><code>adm</code><br><code>lp</code><br><code>sync</code><br><code>shutdown</code><br><code>halt</code><br><code>mail</code><br><code>operator</code><br><code>games</code><br><code>ftp</code><br><code>nobody</code><br><code>dbus</code><br><code>polkitd</code><br><code>unbound</code><br><code>colord</code><br><code>usbmuxd</code><br><code>avahi</code><br><code>avahi-autoipd</code><br><code>libstoragemgmt</code><br><code>saslauth</code><br><code>qemu</code><br><code>rpc</code><br><code>rpcuser</code><br><code>nfsnobody</code><br><code>rtkit</code><br><code>radvd</code><br><code>ntp</code><br><code>chrony</code><br><code>abrt</code><br><code>pulse</code><br><code>gdm</code><br><code>gnome-initial-setup</code><br><code>postfix</code><br><code>sshd</code><br><code>tcpdump</code><br><code>caijy</code></p>
 <p><strong>diff命令用于比较多个文本文件的差异，格式为：”diff [参数] 文件”。</strong><br>仅仅显示比较后的结果，判断文件是否相同：<br><code>diff --brief diff_A.txt diff_B.txt</code><br>使用详细的上下文输出格式来描述文件内容具体的不同：<br><code>diff -c diff_A.txt diff_B.txt</code></p>
 
       
