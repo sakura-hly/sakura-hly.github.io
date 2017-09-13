@@ -120,7 +120,7 @@
 <meta property="og:image" content="http://yoursite.com/img/head.png">
 <meta property="og:image" content="http://yoursite.com/img/tail.png">
 <meta property="og:image" content="http://yoursite.com/img/stat.png">
-<meta property="og:updated_time" content="2017-09-13T02:29:47.190Z">
+<meta property="og:updated_time" content="2017-09-13T12:59:40.290Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基础课程02">
 <meta name="twitter:description" content="新手必须掌握的Linux命令">
@@ -230,7 +230,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Home
           </a>
         </li>
       
@@ -240,7 +240,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archiv
+            Archives
           </a>
         </li>
       
@@ -253,7 +253,7 @@
             
               <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
-            Suche
+            Search
           </a>
         </li>
       
@@ -338,7 +338,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-12T19:51:03+08:00">
                 2017-09-12
@@ -359,7 +359,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">in</span>
+                <span class="post-meta-item-text">In</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -740,6 +740,168 @@
 <p><strong>stat命令用于查看文件的具体存储信息和时间等信息，格式“stat 文件名称”。</strong><br><img src="/img/stat.png" alt=""></p>
 <p><strong>cut命令用于按“列”来提取文本字符，格式为：“cut [参数] 文本”。</strong><br>如何准确的提取出最想要的数据，这也应该是咱们学习研究的方向之一，按基于“行”的方式来提取是比较简单的，只需要设置好要搜索的关键词即可，但是按列搜索的话不仅要使用“-f”参数来设置需要看的列数，还必须使用“-d”参数来设置间隔符号。因为passwd是用于保存用户信息数据的文件且每一项值都是通过冒号来间隔的，因此可以来尝试下提取出passwd文件中的用户名信息吧，即提取以:（冒号）为间隔符号的第一列内容：<br><code>[caijy@localhost Desktop]$ head -n 2 /etc/passwd</code><br><code>root:x:0:0:root:/root:/bin/bash</code><br><code>bin:x:1:1:bin:/bin:/sbin/nologin</code><br><code>[caijy@localhost Desktop]$ cut -d: -f1 /etc/passwd</code><br><code>root</code><br><code>bin</code><br><code>daemon</code><br><code>adm</code><br><code>lp</code><br><code>sync</code><br><code>shutdown</code><br><code>halt</code><br><code>mail</code><br><code>operator</code><br><code>games</code><br><code>ftp</code><br><code>nobody</code><br><code>dbus</code><br><code>polkitd</code><br><code>unbound</code><br><code>colord</code><br><code>usbmuxd</code><br><code>avahi</code><br><code>avahi-autoipd</code><br><code>libstoragemgmt</code><br><code>saslauth</code><br><code>qemu</code><br><code>rpc</code><br><code>rpcuser</code><br><code>nfsnobody</code><br><code>rtkit</code><br><code>radvd</code><br><code>ntp</code><br><code>chrony</code><br><code>abrt</code><br><code>pulse</code><br><code>gdm</code><br><code>gnome-initial-setup</code><br><code>postfix</code><br><code>sshd</code><br><code>tcpdump</code><br><code>caijy</code></p>
 <p><strong>diff命令用于比较多个文本文件的差异，格式为：”diff [参数] 文件”。</strong><br>仅仅显示比较后的结果，判断文件是否相同：<br><code>diff --brief diff_A.txt diff_B.txt</code><br>使用详细的上下文输出格式来描述文件内容具体的不同：<br><code>diff -c diff_A.txt diff_B.txt</code></p>
+<hr>
+<h3 id="文件目录管理命令"><a href="#文件目录管理命令" class="headerlink" title="文件目录管理命令"></a>文件目录管理命令</h3><p><strong>touch命令用于创建空白文件与设置文件的各种时间，格式为：“touch [选项] [文件]”。</strong><br>touch命令能够创建出空白的文本文件，但这实在太简单不需要去讲，例如“touch linuxprobe”这样就可以创建出一个空白的名为linuxprobe的文本文件，而有难度的操作主要是用于设置文件内容的修改时间（mtime）、文件权限或属性的更改时间（ctime）与文件的读取时间（atime）。</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-a</td>
+<td>仅修改访问时间“atime”</td>
+</tr>
+<tr>
+<td>-m</td>
+<td>仅修改更改时间“mtime”</td>
+</tr>
+<tr>
+<td>-d</td>
+<td>同时修改atime与mtime</td>
+</tr>
+</tbody>
+</table>
+<p><code>[caijy@localhost Desktop]$ ls -l 1.txt</code><br><code>-rw-rw-r--. 1 caijy caijy 16314 Sep 12 21:42 1.txt</code><br><code>[caijy@localhost Desktop]$ echo &quot;hello,linux&quot; &gt;&gt; 1.txt</code><br><code>[caijy@localhost Desktop]$ ls -l 1.txt</code><br><code>-rw-rw-r--. 1 caijy caijy 16326 Sep 13 19:46 1.txt</code><br><code>[caijy@localhost Desktop]$ touch -d &quot;2017-06-06 12:22&quot; 1.txt</code><br><code>[caijy@localhost Desktop]$ ls -l 1.txt</code><br><code>-rw-rw-r--. 1 caijy caijy 16326 Jun  6 12:22 1.txt</code></p>
+<p><strong>mkdir命令用于创建空白的文件夹，格式为：“mkdir [选项] 目录”。</strong><br>在Linux系统中文件夹是最常见的文件类型之一，除了能创建单个目录外，还可以使用“-p”参数来递归创建出具有嵌套叠层关系的文件目录。<br><code>[caijy@localhost Desktop]$ mkdir linux</code><br><code>[caijy@localhost Desktop]$ cd linux</code><br><code>[caijy@localhost linux]$ mkdir -p a/b/c/d</code><br><code>[caijy@localhost linux]$ cd a</code><br><code>[caijy@localhost a]$ cd b</code><br><code>[caijy@localhost b]$</code></p>
+<p><strong>cp命令用于复制文件或目录，格式为：“cp [选项] 源文件 目标文件”。</strong><br>在Linux系统中的复制操作具体还分为3种情况，第一种情况是如果目标对象是个目录，则会把源文件复制到该目录中.，第二种情况是如果目标对象也是个普通文件，则会询问是否要覆盖它.最后是第三种的情况了，如果目标文件是不存在的，则会是正常的复制操作啦。</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-p</td>
+<td>保留原始文件的属性</td>
+</tr>
+<tr>
+<td>-d</td>
+<td>若对象为”链接文件”，则保留该”链接文件”的属性</td>
+</tr>
+<tr>
+<td>-r</td>
+<td>递归持续复制（用于目录）</td>
+</tr>
+<tr>
+<td>-i</td>
+<td>若目标文件存在则询问是否覆盖</td>
+</tr>
+<tr>
+<td>-a</td>
+<td>相当于-pdr（p,d,r为上述的参数）</td>
+</tr>
+</tbody>
+</table>
+<p>首先创建一个名为install.log的普通空白文件，然后把其复制出来一份名为x.log的备份文件：<br><code>[caijy@localhost Desktop]$ touch install.log</code><br><code>[caijy@localhost Desktop]$ cp install.log x.log</code><br><code>[caijy@localhost Desktop]$ ls</code><br><code>install.log  x.log</code></p>
+<p><strong>mv命令用于移动文件或改名，格式为：“mv [选项] 源文件 [目标路径|目标文件名]”。</strong><br>剪切操作不同于复制操作，因为它会默认把源文件删除掉，操作后就只有剪切后的文件了，并且如果对一个文件在同一个目录中进行剪切操作，其实也是重命名的作用：<br><code>[caijy@localhost Desktop]$ mv x.log linux.log</code></p>
+<p><strong>rm命令用于删除文件或目录，格式为：“rm [选项] 文件”。</strong><br>使用“-i”参数删除文件时向您询问是否要执行删除操作，您可以使用“-f”参数来直接强制删除，另外想要删除一个目录文件夹的话就需要再追加一个“-r”参数才可以，否则是删除不掉的，例如来尝试删除下刚刚那两个文件吧：<br><code>[caijy@localhost Desktop]$ ls</code><br><code>install.log  linux.log</code><br><code>[caijy@localhost Desktop]$ rm -i install.log</code><br><code>rm: remove regular empty file ‘install.log’? y</code><br><code>[caijy@localhost Desktop]$ rm -rf linux.log</code><br><code>[caijy@localhost Desktop]$ ls</code><br><code>[caijy@localhost Desktop]$</code></p>
+<p><strong>dd命令用于指定大小的拷贝文件或指定转换文件，格式为：“dd [参数]”。</strong><br>dd命令是个比较重要且具有特色的一个命令，它能够让用户指定数据块的大小和个数来复制一个文件的内容，当然如果您愿意的话还可以在复制过程中转换其中的数据。Linux系统中有一个叫做/dev/zero的设备文件，这个文件不会占用您的系统存储空间，但里面却可以提供无穷无尽的数据，因此用dd命令来生成出来一个指定大小的文件是再好不过的了。</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>if</td>
+<td>输入的文件名称。</td>
+</tr>
+<tr>
+<td>of</td>
+<td>输出的文件名称。</td>
+</tr>
+<tr>
+<td>bs</td>
+<td>设置每个“块”的大小。</td>
+</tr>
+<tr>
+<td>count</td>
+<td>设置要拷贝“块”的个数。</td>
+</tr>
+</tbody>
+</table>
+<p><code>[caijy@localhost Desktop]$ dd if=/dev/zero of=560_file count=1 bs=560M</code><br><code>1+0 records in</code><br><code>1+0 records out</code><br><code>587202560 bytes (587 MB) copied, 2.62394 s, 224 MB/s</code></p>
+<p>dd命令也绝对不仅限于复制文件这么简单，如果您想把一个光盘设备制作成iso格式的镜像文件，在Windows系统中一定免不了要用到第三方软件才能做到，但在Linux系统中就可以直接使用dd命令来复制并压制光盘设备变成一个可立即使用的iso镜像哦，例如：<br><code>[root@linuxprobe ~]# dd if=/dev/cdrom</code> <code>of=RHEL-server-7.0-x86_64-LinuxProbe.Com.iso</code><br><code>7311360+0 records in</code><br><code>7311360+0 records out</code><br><code>3743416320 bytes (3.7 GB) copied, 370.758 s, 10.1 MB/s</code></p>
+<p><strong>file命令用于查看文件的类型，格式为：“file 文件名”。</strong><br>如此看来在Linux系统中文本、目录、设备等等这些一切都会可以被统称为文件，而咱们一般又不能单凭后缀就知道具体的文件类型，这时只能用file命令来查看下文件类型啦~<br><code>[caijy@localhost Desktop]$ touch linux.log</code><br><code>[caijy@localhost Desktop]$ file linux.log</code><br><code>linux.log: empty</code><br><code>[caijy@localhost Desktop]$ file /dev/sda</code><br><code>/dev/sda: block special</code></p>
+<h3 id="打包压缩与搜索命令"><a href="#打包压缩与搜索命令" class="headerlink" title="打包压缩与搜索命令"></a>打包压缩与搜索命令</h3><p><strong>tar命令用于对文件打包压缩或解压，格式为：“tar [选项] [文件]”。</strong><br>Linux系统中常见的格式比较多，主要使用的是.tar或.tar.gz或.tar.bz2格式，大部分都是由tar命令来完成的，首先“-c”参数是用于创建压缩文件的，“-x”参数是用于解压文件的，因此这两个不能同时放一起使用，其次“-z”参数是指定使用Gzip格式来压缩解压文件，“-j”参数是指定使用bzip2格式来压缩解压文件。解压时候则是根据文件的后缀来决定是何种格式参数，而有些打包操作要数个小时，屏幕没有输出的话您一定会怀疑电脑死机了，也不好判断打包的进度情况，因此非常推荐使用“-v”参数来不断显示压缩或解压的过程给用户，“-C”参数用于指定要解压到的哪个指定的目录，而“-f”参数特别重要，它必须放到参数的最后一位，代表要压缩或解压的软件包名称。我会一般使用“tar -czvf 压缩包名称.tar.gz 要打包的目录”命令来把指定的文件来打包压缩，解压的话则是“tar -xzvf 压缩包名称.tar.gz”命令，接下来使用tar命令把/etc目录通过gzip格式进行打包压缩，并把文件命名为etc.tar.gz：<br><code>[caijy@localhost Desktop]$ tar -czvf etc.tar.gz /etc</code><br><code>tar: Removing leading `/&#39; from member names</code><br><code>/etc/</code><br><code>/etc/fstab</code><br><code>tar: /etc/crypttab: Cannot open: Permission denied</code><br><code>/etc/mtab</code><br><code>/etc/fonts/</code><br><code>/etc/fonts/conf.d/</code><br><code>/etc/fonts/conf.d/65-0-lohit-bengali.conf</code><br><code>......</code></p>
+<p>然后把刚刚打包的压缩包文件指定解压到mydir目录中：<br><code>[caijy@localhost Desktop]$ tar -xzvf etc.tar.gz -C mydir</code><br><code>etc/</code><br><code>etc/fstab</code><br><code>etc/mtab</code><br><code>etc/fonts/</code><br><code>etc/fonts/conf.d/</code><br><code>etc/fonts/conf.d/65-0-lohit-bengali.conf</code></p>
+<p><strong>grep命令用于对文本内容进行关键词的搜索匹配，格式为：“grep [选项] [文件]”。</strong><br>可以把grep命令当作是用途最广泛的文本搜索匹配工具，参数虽然很多但基本是用不到的.这里只说两个最最最常用的参数，只要会使用“-n”参数显示搜索到信息的行号，使用“-v”参数用于反选信息（即没有包含关键词的所有信息行）。<br>Linux系统中的/etc/passwd文件是保存着所有用户信息的文件，而一旦用户的登录终端被设置成“/sbin/nologin”则不再允许登录系统，因此可以通过使用grep命令来匹配出当前系统中所有不允许登录系统的用户信息：<br><code>[caijy@localhost Desktop]$ grep -n /sbin/nologin /etc/passwd</code><br><code>2:bin:x:1:1:bin:/bin:/sbin/nologin</code><br><code>3:daemon:x:2:2:daemon:/sbin:/sbin/nologin</code><br><code>4:adm:x:3:4:adm:/var/adm:/sbin/nologin</code><br><code>5:lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin</code><br><code>......</code></p>
+<p><strong>find命令用于在Linux系统中按照指定条件查找文件，格式为：“find [查找路径] 寻找条件 操作”。</strong><br><em>“Linux系统中的一切都是文件”</em>，在Linux系统中的搜索工作一般都是通过find命令来完成的，它可以根据不同的文件特性来做为匹配项（如文件名、大小、修改时间、权限等信息），一旦匹配到了则会默认为用户显示到屏幕上来，基础的匹配项目请见下表即可。我主要讲解下“–exec”参数重要的作用，这个参数是用于把find命令搜索到的结果交由给后面的命令再进一步做处理，十分类似于后面博文提到的管道符技术。</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-name</td>
+<td>匹配名称</td>
+</tr>
+<tr>
+<td>-perm</td>
+<td>匹配权限（mode为完全匹配，-mode为包含即可）</td>
+</tr>
+<tr>
+<td>-user</td>
+<td>匹配所有者</td>
+</tr>
+<tr>
+<td>-group</td>
+<td>匹配所有组</td>
+</tr>
+<tr>
+<td>-mtime</td>
+<td>匹配修改内容的时间（-n指n天以内，+n指n天以前）</td>
+</tr>
+<tr>
+<td>-atime -n +n</td>
+<td>匹配访问文件的时间-n指n天以内，+n指n天以前</td>
+</tr>
+<tr>
+<td>-ctime -n +n</td>
+<td>匹配修改权限的时间-n指n天以内，+n指n天以前</td>
+</tr>
+<tr>
+<td>-nouser</td>
+<td>匹配无所有者的文件</td>
+</tr>
+<tr>
+<td>-nogroup</td>
+<td>匹配无所有组的文件</td>
+</tr>
+<tr>
+<td>-newer f1 !f2</td>
+<td>匹配比文件f1新却比f2旧的文件</td>
+</tr>
+<tr>
+<td>–type b/d/c/p/l/f</td>
+<td>匹配文件类型（块设备、目录、字符设备、管道、链接文件、文件文件）</td>
+</tr>
+<tr>
+<td>-size</td>
+<td>匹配文件的大小（+50k查找超过50k的文件,而-50k则代表查找小于50k的文件）</td>
+</tr>
+<tr>
+<td>-prune</td>
+<td>忽略某个目录</td>
+</tr>
+<tr>
+<td>-exec {} \;</td>
+<td>后面可接对搜索到结果进一步处理的命令（下面会有演示）</td>
+</tr>
+</tbody>
+</table>
+<p>Linux系统中的配置文件根据FHS协议会被保存到/etc目录中，如果要想获取到该目录中所有以host开头的文件列表就可以这样做：<br><code>[caijy@localhost Desktop]$ sudo find /etc -name &quot;host*&quot; -print</code><br><code>[sudo] password for caijy:</code><br><code>/etc/avahi/hosts</code><br><code>/etc/host.conf</code><br><code>/etc/hosts</code></p>
+<p>想要在整个系统中搜索所有权限中包括SUID权限的文件，只需使用减号-4000即可：<br><code>[caijy@localhost Desktop]$ sudo find / -perm -4000 -print</code><br><code>/usr/bin/fusermount</code><br><code>/usr/bin/su</code><br><code>/usr/bin/chage</code><br><code>/usr/bin/gpasswd</code><br><code>......</code></p>
 
       
     </div>
@@ -871,10 +1033,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Inhaltsverzeichnis
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Übersicht
+            Overview
           </li>
         </ul>
       
@@ -898,7 +1060,7 @@
               <a href="/sakura-hly.github.io/archives/">
             
                 <span class="site-state-item-count">4</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">posts</span>
               </a>
             </div>
           
@@ -909,7 +1071,7 @@
             <div class="site-state-item site-state-categories">
               
                 <span class="site-state-item-count">1</span>
-                <span class="site-state-item-name">Kategorien</span>
+                <span class="site-state-item-name">categories</span>
               
             </div>
           
@@ -920,7 +1082,7 @@
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">1</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-name">tags</span>
               
             </div>
           
@@ -954,7 +1116,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#新手必须掌握的Linux命令"><span class="nav-number">1.</span> <span class="nav-text">新手必须掌握的Linux命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#shell简介"><span class="nav-number">1.0.1.</span> <span class="nav-text">shell简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#man–帮助命令"><span class="nav-number">1.0.2.</span> <span class="nav-text">man–帮助命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用系统工作命令"><span class="nav-number">1.0.3.</span> <span class="nav-text">常用系统工作命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用系统工作命令-1"><span class="nav-number">1.0.4.</span> <span class="nav-text">常用系统工作命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工作目录切换命令"><span class="nav-number">1.0.5.</span> <span class="nav-text">工作目录切换命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文本文件编辑命令"><span class="nav-number">1.0.6.</span> <span class="nav-text">文本文件编辑命令</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#新手必须掌握的Linux命令"><span class="nav-number">1.</span> <span class="nav-text">新手必须掌握的Linux命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#shell简介"><span class="nav-number">1.0.1.</span> <span class="nav-text">shell简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#man–帮助命令"><span class="nav-number">1.0.2.</span> <span class="nav-text">man–帮助命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用系统工作命令"><span class="nav-number">1.0.3.</span> <span class="nav-text">常用系统工作命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用系统工作命令-1"><span class="nav-number">1.0.4.</span> <span class="nav-text">常用系统工作命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工作目录切换命令"><span class="nav-number">1.0.5.</span> <span class="nav-text">工作目录切换命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文本文件编辑命令"><span class="nav-number">1.0.6.</span> <span class="nav-text">文本文件编辑命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件目录管理命令"><span class="nav-number">1.0.7.</span> <span class="nav-text">文件目录管理命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#打包压缩与搜索命令"><span class="nav-number">1.0.8.</span> <span class="nav-text">打包压缩与搜索命令</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -987,7 +1149,7 @@
 </div>
 
 
-  <div class="powered-by">Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Powered by <a class="theme-link" href="https://hexo.io">Hexo</a></div>
 
   <span class="post-meta-divider">|</span>
 
