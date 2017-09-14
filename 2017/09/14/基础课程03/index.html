@@ -105,7 +105,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/img/09.png">
 <meta property="og:image" content="http://yoursite.com/img/ls+more.png">
-<meta property="og:updated_time" content="2017-09-14T04:43:00.513Z">
+<meta property="og:updated_time" content="2017-09-14T06:02:13.568Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基础课程03">
 <meta name="twitter:description" content="我们已经学习了数十个常用的Linux系统命令，以后要把这些命令通过语法结合使用。">
@@ -548,6 +548,8 @@ Linux localhost.localdomain 3.10.0-123.el7.x86_64 #1 SMP Mon May 5</code> <code>
 <p>Linux系统为了能够为每个用户提供独立的、合适的工作运行环境，因此在不同的用户身份下提取一个相同的变量也可能会获得不同的值，例如查看下HOME变量在不同用户身份下的值都有那些吧（su是用于切换用户身份的命令）：<br><code>[root@localhost Desktop]# echo $HOME</code><br><code>/root</code><br><code>[root@localhost Desktop]# su - caijy</code><br><code>Last login: Thu Sep 14 11:01:16 CST 2017 on pts/0</code><br><code>[caijy@localhost ~]$ echo $HOME</code><br><code>/home/caijy</code></p>
 <p>其实变量是由固定的变量名与用户或系统设置的变量值两部分组成的，如果工作需要完全可以自己手工创建的，例如设置一个名称为WORKDIR的变量，方便用户更轻松的进入一个很深层的目录：<br><code>[caijy@localhost Desktop]$ mkdir -p c/workdir</code><br><code>[caijy@localhost Desktop]$ WORKDIR=c/workdir</code><br><code>[caijy@localhost Desktop]$ cd $WORKDIR</code><br><code>[caijy@localhost workdir]$ pwd</code><br><code>/home/caijy/Desktop/c/workdir</code></p>
 <p>但是这样的变量不具有全局性，作用范围也是有限的，默认不能够被其他用户使用的，如果工作需要的话咱们可以使用export命令将其提升为全局变量，这样其他的用户也就可以使用到这个变量了。</p>
+<hr>
+<p>转载自：<a href="http://www.linuxprobe.com/chapter-03.html" target="_blank" rel="external">http://www.linuxprobe.com/chapter-03.html</a></p>
 
       
     </div>
@@ -587,6 +589,10 @@ Linux localhost.localdomain 3.10.0-123.el7.x86_64 #1 SMP Mon May 5</code> <code>
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/sakura-hly.github.io/2017/09/14/基础课程04/" rel="prev" title="基础课程04">
+                基础课程04 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -705,7 +711,7 @@ Linux localhost.localdomain 3.10.0-123.el7.x86_64 #1 SMP Mon May 5</code> <code>
             
               <a href="/sakura-hly.github.io/archives/">
             
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">Artikel</span>
               </a>
             </div>

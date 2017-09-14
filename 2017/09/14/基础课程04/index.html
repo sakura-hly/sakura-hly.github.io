@@ -79,7 +79,7 @@
 <link href="/sakura-hly.github.io/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Linux," />
 
 
 
@@ -95,16 +95,24 @@
 
 
 
-<meta name="description" content="一个Linux菜鸟的博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="破晓">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+<meta name="description" content="首先来学习如何使用vim编辑器来编写、修改文档，然后通过逐个配置主机名称、系统网卡以及Yum仓库参数文件等实验来加深对vim编辑器中诸多命令、快捷键的执行方法与各个模式切换的方法。然后把前面的Linux命令、命令语法与Shell脚本中的if条件测试语句、for条件测试循环语句、while条件循环语句以及case条件测试语句通过vim编辑器写到Shell脚本中结合到一起，实现最终能够自动化工作的软件">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基础课程04">
+<meta property="og:url" content="http://yoursite.com/2017/09/14/基础课程04/index.html">
 <meta property="og:site_name" content="破晓">
-<meta property="og:description" content="一个Linux菜鸟的博客">
+<meta property="og:description" content="首先来学习如何使用vim编辑器来编写、修改文档，然后通过逐个配置主机名称、系统网卡以及Yum仓库参数文件等实验来加深对vim编辑器中诸多命令、快捷键的执行方法与各个模式切换的方法。然后把前面的Linux命令、命令语法与Shell脚本中的if条件测试语句、for条件测试循环语句、while条件循环语句以及case条件测试语句通过vim编辑器写到Shell脚本中结合到一起，实现最终能够自动化工作的软件">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/img/vim不同模式间的切换.png">
+<meta property="og:image" content="http://yoursite.com/img/vim-输入.png">
+<meta property="og:image" content="http://yoursite.com/img/vim-末行.png">
+<meta property="og:image" content="http://yoursite.com/img/vim-q!.png">
+<meta property="og:image" content="http://yoursite.com/img/配置网卡.png">
+<meta property="og:updated_time" content="2017-09-14T08:10:41.458Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="破晓">
-<meta name="twitter:description" content="一个Linux菜鸟的博客">
+<meta name="twitter:title" content="基础课程04">
+<meta name="twitter:description" content="首先来学习如何使用vim编辑器来编写、修改文档，然后通过逐个配置主机名称、系统网卡以及Yum仓库参数文件等实验来加深对vim编辑器中诸多命令、快捷键的执行方法与各个模式切换的方法。然后把前面的Linux命令、命令语法与Shell脚本中的if条件测试语句、for条件测试循环语句、while条件循环语句以及case条件测试语句通过vim编辑器写到Shell脚本中结合到一起，实现最终能够自动化工作的软件">
+<meta name="twitter:image" content="http://yoursite.com/img/vim不同模式间的切换.png">
 
 
 
@@ -134,13 +142,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/14/基础课程04/"/>
 
 
 
 
 
-  <title>Archiv | 破晓</title>
+  <title>基础课程04 | 破晓</title>
   
 
 
@@ -169,7 +177,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -277,259 +285,386 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/sakura-hly.github.io/2017/09/14/基础课程04/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="caijy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/sakura-hly.github.io/images/dp.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="破晓">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">基础课程04</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-14T13:51:07+08:00">
+                2017-09-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        Öhm..! Insgesamt 6 Artikel. Bleib dran.
-      </span>
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/sakura-hly.github.io/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2017">2017</h1>
-          </div>
-        
-        
 
-        
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/sakura-hly.github.io/2017/09/14/基础课程04/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count fb-comments-count" data-href="http://yoursite.com/2017/09/14/基础课程04/" itemprop="commentCount">0</span> comments
+                </a>
+              </span>
+            
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
+             <span id="/sakura-hly.github.io/2017/09/14/基础课程04/" class="leancloud_visitors" data-flag-title="基础课程04">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/sakura-hly.github.io/2017/09/14/基础课程04/" itemprop="url">
-              
-                <span itemprop="name">基础课程04</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-14T13:51:07+08:00"
-              content="2017-09-14" >
-          09-14
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+          
 
+        </div>
+      </header>
+    
 
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/sakura-hly.github.io/2017/09/14/基础课程03/" itemprop="url">
-              
-                <span itemprop="name">基础课程03</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-14T09:36:31+08:00"
-              content="2017-09-14" >
-          09-14
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/sakura-hly.github.io/2017/09/12/基础课程02/" itemprop="url">
-              
-                <span itemprop="name">基础课程02</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-12T19:51:03+08:00"
-              content="2017-09-12" >
-          09-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/sakura-hly.github.io/2017/09/12/基础课程01/" itemprop="url">
-              
-                <span itemprop="name">基础课程01</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-12T13:59:19+08:00"
-              content="2017-09-12" >
-          09-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/sakura-hly.github.io/2017/09/12/首页/" itemprop="url">
-              
-                <span itemprop="name">My Linux Blog</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-12T12:51:48+08:00"
-              content="2017-09-12" >
-          09-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
+        <p>首先来学习如何使用vim编辑器来编写、修改文档，然后通过逐个配置主机名称、系统网卡以及Yum仓库参数文件等实验来加深对vim编辑器中诸多命令、快捷键的执行方法与各个模式切换的方法。然后把前面的Linux命令、命令语法与Shell脚本中的if条件测试语句、for条件测试循环语句、while条件循环语句以及case条件测试语句通过vim编辑器写到Shell脚本中结合到一起，实现最终能够自动化工作的软件脚本工具。最后为读者们演示了怎样通过at命令与crond计划任务服务来分别实现一次性与长期性的系统任务设置方法，让日常的工作更加高效自动化，一劳永逸。<br><a id="more"></a></p>
+<h3 id="Vim文本编辑器"><a href="#Vim文本编辑器" class="headerlink" title="Vim文本编辑器"></a>Vim文本编辑器</h3><p><strong>“Linux系统中一切都是文件，而配置一个服务就是在修改其配置文件的参数”</strong>。而且在日常工作中也一定免不了遇到编写文档的事情吧，这些都是要通过文本编辑器来完成的，咱们选择学习vim这个当前整个linux操作系统中都会默认安装好的一款超棒文本编辑器，学会后绝对会能让您“通吃”当前主流的系统。<br>Vim能够得到广大厂商与众多用户的认可，原因就是在Vim编辑器中内设有的三种模式——<strong>命令模式</strong>、<strong>末行模式</strong> 和 <strong>编辑模式</strong>，每种模式分别又支持多种不同的命令快捷键组合，大大的提高了工作效率，用习惯后会觉得非常的顺手。而要想在文本操作时更加高效率，就必须先搞清Vim编辑器的三种模式的操作不同与切换方法：<br><img src="/img/vim不同模式间的切换.png" alt="vim不同模式间的切换"></p>
+<ul>
+<li><strong>命令模式：控制光标移动，可对文本进行删除、复制、粘贴和查找等工作。</strong></li>
+<li><strong>输入模式：正常的文本录入。</strong></li>
+<li><strong>末行模式：保存、退出与设置编辑环境。</strong></li>
+</ul>
+<p>每次运行vim编辑器后都默认会是 <em>“命令模式”</em>，需要先进入到 <em>“输入模式”</em> 后再进行编写文档的工作，而每次编辑完成需先返回到 <em>“命令模式”</em> 后再进入 <em>“末行模式”</em> 中执行对文本的保存或退出操作，并不能直接从 <em>“输入模式”</em> 切换到 <em>“末行模式”</em> 。vim编辑器内设支持的命令有成百上千种用法，为了能够帮助读者更快的掌握vim编辑器，刘遄老师分别总结了在 <strong>命令模式</strong> 和 <strong>末行模式</strong> 中最常用的一些快捷键命令，如下表所示：</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>dd</td>
+<td>删除（剪切）光标所在整行。</td>
+</tr>
+<tr>
+<td>5dd</td>
+<td>删除(剪切)从光标处开始的5行。</td>
+</tr>
+<tr>
+<td>yy</td>
+<td>复制光标所在整行</td>
+</tr>
+<tr>
+<td>5yy</td>
+<td>复制从光标处开始的5行。</td>
+</tr>
+<tr>
+<td>n</td>
+<td>显示搜索命令定位到的下一个字符串</td>
+</tr>
+<tr>
+<td>N</td>
+<td>显示搜索命令定位到的上一个字符串</td>
+</tr>
+<tr>
+<td>u</td>
+<td>撤销上一步操作</td>
+</tr>
+<tr>
+<td>p</td>
+<td>将之前删除（dd）或复制（yy）过的数据粘贴到光标后。</td>
+</tr>
+<tr>
+<td>/字符串</td>
+<td>在文本中从上至下搜索该字符串。</td>
+</tr>
+<tr>
+<td>?字符串</td>
+<td>在文本中从下至上搜索该字符串。</td>
+</tr>
+</tbody>
+</table>
+<p>末行模式主要用于保存或退出文件，能够设置vim编辑器的整体使用环境，还可以让用户执行外部Linux命令或跳转到特定的行数，切换到末行模式的方式就是在命令模式中输入一个冒号就可以的，末行模式中可用的命令如下表：</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>:w</td>
+<td>保存</td>
+</tr>
+<tr>
+<td>:q</td>
+<td>推出</td>
+</tr>
+<tr>
+<td>:q!</td>
+<td>强制推出</td>
+</tr>
+<tr>
+<td>:wq!</td>
+<td>强制保存退出</td>
+</tr>
+<tr>
+<td>:set nu</td>
+<td>设置行号</td>
+</tr>
+<tr>
+<td>:set nonu</td>
+<td>不显示行号</td>
+</tr>
+<tr>
+<td>:命令</td>
+<td>执行该命令</td>
+</tr>
+<tr>
+<td>:整数</td>
+<td>跳转到该行</td>
+</tr>
+<tr>
+<td>:s/one/two</td>
+<td>将当前光标所在行的第一个one替换成two</td>
+</tr>
+<tr>
+<td>:s/one/two/g</td>
+<td>将当前光标所在行的所有one替换成two</td>
+</tr>
+<tr>
+<td>:%s/one/two/g</td>
+<td>将全文中的所有one替换成two</td>
+</tr>
+</tbody>
+</table>
+<h4 id="编写简单文档"><a href="#编写简单文档" class="headerlink" title="编写简单文档"></a>编写简单文档</h4><p>现在就让咱们一起动手编写个简单的文档吧，编写脚本的第1步就是给文件取个名字，如果文档的名称存在则打开它，如果不存在则是创建一个临时的输入文件。<br><code>[root@localhost workdir]# vim practice.txt</code><br>进入文件后默认看到的是vim编辑器的命令模式，这时只能够执行命令快捷键而不能随意输入文本内容，必须切换到输入模式才可以开始编写工作。有些读者应该能够猜出a、i、o三键的区别了吧，对，就是光标的位置不同！a键与i键分别是在光标右一位和光标当前位置切换到输入模式，而o键则是在光标的下面再创建一个空行，此时可敲击a键进入到编辑器的输入模式，<br>输入模式是可以随意输入文本内容的，更不会把您输入的文本内容当作命令而执行:<br><img src="/img/vim-输入.png" alt=""><br>如果想要保存并退出这个文本文件，必须先从 <em>输入模式</em> 返回到 <em>命令模式</em>，然后切换至 <em>末行模式</em> 中才能完成保存退出操作。<br><img src="/img/vim-末行.png" alt=""><br>当咱们在末行模式中键入:wq!时就意味着强制保存并退出文件，然后便可以用cat命令查看到保存文件后的信息了<br><code>[root@localhost workdir]# cat practice.txt</code><br><code>You can write in it.</code></p>
+<p>感觉是不是很简单，咱们接下来继续编辑这个文件，因为要在原有文本的内容下面追加内容，所以在命令模式中敲击o键的话会更高效呢.<br><img src="/img/vim-q!.png" alt=""><br>现在是不是感觉对vim编辑器有了一些实战经验呢，也不是想象中的那么难吧~现在咱们查看下文本的内容会发现果然后面一次输入的内容并没有被保存下来:<br><code>[root@localhost workdir]# cat practice.txt</code><br><code>You can write in it.</code></p>
+<h4 id="配置主机名称"><a href="#配置主机名称" class="headerlink" title="配置主机名称"></a>配置主机名称</h4><p>为了便于在局域网中指定查找某个用户的电脑或区别主机的作用，除了要有IP地址外还要配置一个主机名，用户之间可以通过这个类似于域名的名称来便捷的相互访问。绝大部分的Linux系统主机名都是保存在/etc/hostname文件中的，咱们要想将其内容修改为”linuxprobe.com”，思路大致如下：</p>
+<ol>
+<li>使用vim编辑器修改”/etc/hostname”主机名称文件。</li>
+<li>把原始主机名称删除后追加”linuxprobe.com”。</li>
+<li>保存退出文档并用hostname命令检查是否修改成功。</li>
+</ol>
+<p>使用hostname命令查看当前的主机名称，但有时系统不能立即同步到主机名称已经发生改变，所以如果您确认修改完成却还显示原来的主机名称，可重启虚拟机后再查看下：<br><code>[root@localhost workdir]# hostname</code><br><code>caijy.com</code></p>
+<h4 id="配置网卡信息"><a href="#配置网卡信息" class="headerlink" title="配置网卡信息"></a>配置网卡信息</h4><p>能够正确的配置网卡IP地址是保证两台服务器互相通信的前提，而Linux系统中的一切都是文件，配置网络的工作其实就是在编辑网卡配置文件，因此这个小任务不仅是帮助您熟练操作vim编辑器的过程，还是在为以后学习各种服务课程打下深深的基础。</p>
+<p>在红帽RHEL7系统中的网卡配置文件前缀则以 <em>“ifcfg-eno”</em> 开始的,例如现在要想配置一个名称为eno16777736的网卡设备开机自启动并且IP地址、子网、网关等信息由人工指定的话思路应该是：</p>
+<ol>
+<li>首先要切换到”/etc/sysconfig/network-scripts”目录中（该目录存放着网卡的配置文件）。</li>
+<li>使用vim编辑器修改网卡文件”ifcfg-eno16777736”，逐项写入配置参数并保存退出，因每台电脑的硬件及架构情况都是不一样的，同学们的网卡默认名称请通过ifconfig命令自行确认。<ul>
+<li>设备类型:TYPE=Ethernet</li>
+<li>地址分配模式:BOOTPROTO=static</li>
+<li>网卡名称:NAME=eno16777736</li>
+<li>是否启动:ONBOOT=yes</li>
+<li>IP地址:IPADDR=192.168.10.10</li>
+<li>子网掩码:NETMASK=255.255.255.0</li>
+<li>网关地址:GATEWAY=192.168.10.1</li>
+<li>DNS地址:DNS1=192.168.10.1</li>
+</ul>
+</li>
+<li>重启网卡设备并测试网络是否联通。</li>
+</ol>
+<p>进入到网卡配置文件所在的目录，然后编辑网卡配置文件填入下面的信息：<br><img src="/img/配置网卡.png" alt=""><br>执行重启网卡设备的命令，正常情况不会有提示信息，然后通过ping命令测试网络能否联通。<br><code>[root@localhost network-scripts]# systemctl restart network</code><br><code>[root@localhost network-scripts]# ping 192.168.10.10</code><br><code>PING 192.168.10.10 (192.168.10.10) 56(84) bytes of data.</code><br><code>64 bytes from 192.168.10.10: icmp_seq=1 ttl=64 time=0.029 ms</code><br><code>64 bytes from 192.168.10.10: icmp_seq=2 ttl=64 time=0.032 ms</code><br><code>64 bytes from 192.168.10.10: icmp_seq=3 ttl=64 time=0.032 ms</code><br><code>64 bytes from 192.168.10.10: icmp_seq=4 ttl=64 time=0.040 ms</code><br><code>64 bytes from 192.168.10.10: icmp_seq=5 ttl=64 time=0.066 ms</code><br><code>64 bytes from 192.168.10.10: icmp_seq=6 ttl=64 time=0.031 ms</code><br><code>^C</code><br><code>--- 192.168.10.10 ping statistics ---</code><br><code>6 packets transmitted, 6 received, 0% packet loss, time 5002ms</code><br><code>rtt min/avg/max/mdev = 0.029/0.038/0.066/0.013 ms</code></p>
+<h4 id="配置Yum仓库"><a href="#配置Yum仓库" class="headerlink" title="配置Yum仓库"></a>配置Yum仓库</h4><p>前面了解过Yum软件仓库的作用是为了进一步简化RPM管理软件难度以及自动分析所需软件包及其依赖关系的技术。您可以把Yum想象成是一个硕大的软件仓库，里面保存有几乎所有常用的工具，而只需要说出所需的软件包名称，系统就会自动的为您搞定一切。那么既然要使用Yum技术，就要先把软件仓库搭建起来，然后将其配置规则确定好才行</p>
+<ol>
+<li>首先要进入到”/etc/yum.repos.d/“目录中（因为该目录存放着yum仓库的配置文件）</li>
+<li>使用vim编辑器创建一个名为rhel7.repo的新配置文件（文件名称可随意，但后缀必须为repo），逐项写入下面加粗的配置参数并保存退出（不写中文注释）。<ul>
+<li>[rhel-media] yum仓库唯一标识符，避免与其他仓库冲突。</li>
+<li>name=linuxprobe yum仓库的名称描述，易于识别仓库用处。。</li>
+<li>baseurl=file:///media/cdrom 提供方式包括FTP（ftp://..）、HTTP（<a href="http://..）、本地（file:///..）" target="_blank" rel="external">http://..）、本地（file:///..）</a></li>
+<li>enabled=1 设置此源是否可用，1为可用，0为禁用。</li>
+<li>gpgcheck=1 设置此源是否校验文件，1为校验，0为不校验。</li>
+<li>gpgkey=file:///media/cdrom/RPM-GPG-KEY-redhat-release 若为校验请指定公钥文件地址。</li>
+</ul>
+</li>
+<li>按配置参数的路径把光盘挂载，并把光盘挂载信息写入到/etc/fstab文件中。  </li>
+<li>使用”yum install httpd -y”命令检查Yum仓库是否已经可用。</li>
+</ol>
+<p>进入到/etc/yum.repos.d目录中后创建Yum配置文件：<br><code>[root@localhost network-scripts]# cd /etc/yum.repos.d/</code><br><code>[root@localhost yum.repos.d]# vim rehl17.repo</code><br><code>[rhel7]</code><br><code>name=rhel7</code><br><code>baseurl=file:///media/cdrom</code><br><code>enabled=1</code><br><code>gpgcheck=0</code></p>
+<p>创建挂载点后进行挂载操作，并设置成开机自动挂载<br><code>[root@localhost yum.repos.d]# mkdir -p /media/cdrom</code><br><code>[root@localhost yum.repos.d]# mount /dev/cdrom /media/cdrom</code><br><code>mount: /dev/sr0 is write-protected, mounting read-only</code><br><code>[root@localhost yum.repos.d]# vim /etc/fstab</code><br><code>/dev/cdrom /media/cdrom iso9660 defaults 0 0</code></p>
+<p>尝试使用Yum软件仓库来安装Web服务，出现Complete（完成）则代表Yum仓库配置正确：<br><code>[root@localhost yum.repos.d]# yum install httpd</code><br><code>Loaded plugins: langpacks, product-id, subscription-manager</code><br><code>This system is not registered to Red Hat Subscription Management. You can use subscription-manager to register.</code><br><code>......</code><br><code>Complete!</code></p>
+<h3 id="编写shell脚本"><a href="#编写shell脚本" class="headerlink" title="编写shell脚本"></a>编写shell脚本</h3>
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/sakura-hly.github.io/2017/09/12/hello-world/" itemprop="url">
-              
-                <span itemprop="name">Hello World</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-12T12:33:41+08:00"
-              content="2017-09-12" >
-          09-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/sakura-hly.github.io/tags/Linux/" rel="tag"># Linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/sakura-hly.github.io/2017/09/14/基础课程03/" rel="next" title="基础课程03">
+                <i class="fa fa-chevron-left"></i> 基础课程03
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+        
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  //with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
 
 
           </div>
@@ -537,6 +672,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -557,8 +696,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           
             <img class="site-author-image" itemprop="image"
@@ -623,6 +771,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Vim文本编辑器"><span class="nav-number">1.</span> <span class="nav-text">Vim文本编辑器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#编写简单文档"><span class="nav-number">1.1.</span> <span class="nav-text">编写简单文档</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置主机名称"><span class="nav-number">1.2.</span> <span class="nav-text">配置主机名称</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置网卡信息"><span class="nav-number">1.3.</span> <span class="nav-text">配置网卡信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置Yum仓库"><span class="nav-number">1.4.</span> <span class="nav-text">配置Yum仓库</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编写shell脚本"><span class="nav-number">2.</span> <span class="nav-text">编写shell脚本</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -748,6 +912,10 @@
 
 
   
+  <script type="text/javascript" src="/sakura-hly.github.io/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/sakura-hly.github.io/js/src/post-details.js?v=5.1.2"></script>
+
+
 
   
 
