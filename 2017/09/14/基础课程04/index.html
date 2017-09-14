@@ -108,7 +108,9 @@
 <meta property="og:image" content="http://yoursite.com/img/vim-末行.png">
 <meta property="og:image" content="http://yoursite.com/img/vim-q!.png">
 <meta property="og:image" content="http://yoursite.com/img/配置网卡.png">
-<meta property="og:updated_time" content="2017-09-14T08:10:41.458Z">
+<meta property="og:image" content="http://yoursite.com/img/脚本中的位置变量.png">
+<meta property="og:image" content="http://yoursite.com/img/测试语句格式.png">
+<meta property="og:updated_time" content="2017-09-14T09:39:51.875Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基础课程04">
 <meta name="twitter:description" content="首先来学习如何使用vim编辑器来编写、修改文档，然后通过逐个配置主机名称、系统网卡以及Yum仓库参数文件等实验来加深对vim编辑器中诸多命令、快捷键的执行方法与各个模式切换的方法。然后把前面的Linux命令、命令语法与Shell脚本中的if条件测试语句、for条件测试循环语句、while条件循环语句以及case条件测试语句通过vim编辑器写到Shell脚本中结合到一起，实现最终能够自动化工作的软件">
@@ -218,7 +220,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Home
           </a>
         </li>
       
@@ -228,7 +230,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archiv
+            Archives
           </a>
         </li>
       
@@ -241,7 +243,7 @@
             
               <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
-            Suche
+            Search
           </a>
         </li>
       
@@ -326,7 +328,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-14T13:51:07+08:00">
                 2017-09-14
@@ -347,7 +349,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">in</span>
+                <span class="post-meta-item-text">In</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -567,7 +569,107 @@
 <p>进入到/etc/yum.repos.d目录中后创建Yum配置文件：<br><code>[root@localhost network-scripts]# cd /etc/yum.repos.d/</code><br><code>[root@localhost yum.repos.d]# vim rehl17.repo</code><br><code>[rhel7]</code><br><code>name=rhel7</code><br><code>baseurl=file:///media/cdrom</code><br><code>enabled=1</code><br><code>gpgcheck=0</code></p>
 <p>创建挂载点后进行挂载操作，并设置成开机自动挂载<br><code>[root@localhost yum.repos.d]# mkdir -p /media/cdrom</code><br><code>[root@localhost yum.repos.d]# mount /dev/cdrom /media/cdrom</code><br><code>mount: /dev/sr0 is write-protected, mounting read-only</code><br><code>[root@localhost yum.repos.d]# vim /etc/fstab</code><br><code>/dev/cdrom /media/cdrom iso9660 defaults 0 0</code></p>
 <p>尝试使用Yum软件仓库来安装Web服务，出现Complete（完成）则代表Yum仓库配置正确：<br><code>[root@localhost yum.repos.d]# yum install httpd</code><br><code>Loaded plugins: langpacks, product-id, subscription-manager</code><br><code>This system is not registered to Red Hat Subscription Management. You can use subscription-manager to register.</code><br><code>......</code><br><code>Complete!</code></p>
-<h3 id="编写shell脚本"><a href="#编写shell脚本" class="headerlink" title="编写shell脚本"></a>编写shell脚本</h3>
+<h3 id="编写Shell脚本"><a href="#编写Shell脚本" class="headerlink" title="编写Shell脚本"></a>编写Shell脚本</h3><p>Shell终端解释器被形容是人与计算机硬件的“翻译官”，它作为用户与Linux系统内部通讯的媒介，除了允许了各种变量与参数外还提供了诸如循环、分支等高级语言才有的控制结构特性，如何正确的使用这些功能，准确下达命令尤为重要。Shell脚本的工作方式有两种，首先是前面所接触的交互方式(Interactive)，即当用户每输入一条命令就执行一次，而批处理(Batch)则是由用户事先编写好一个完整的Shell脚本，Shell会一次性执行脚本中诸多的命令。因此在Shell脚本中不仅需要用到很多前面学习过的Linux命令以及正则表达式、管道符、数据流重定向等语法规则，还需要把内部功能模块化后通过逻辑语句进行加工，最终才能成为日常所见的Shell脚本程序，可以通过SHELL变量来查看到当前系统已经默认使用bash解释器作为命令行终端了：<br><code>[root@localhost Desktop]# echo $SHELL</code><br><code>/bin/bash</code></p>
+<h4 id="编写简单的脚本"><a href="#编写简单的脚本" class="headerlink" title="编写简单的脚本"></a>编写简单的脚本</h4><p>估计读者看完上面对Shell脚本如此复杂的描述都有一种心累想放弃的感觉了吧，但这仅指的是一个高深Shell脚本的编写原则，其实使用vim编辑器把linux命令按照顺序依次写入文件就是编写完成一个最简单的脚本啦。例如想查看当前所在工作路径并列出当前目录下所有文件及属性信息，编写一个脚本来完成的话是这样：<br><code>[root@localhost Desktop]# vim example.sh</code><br><code>#! /bin/bash</code><br><code>#For Example</code><br><code>pwd</code><br><code>ls -al</code><br>Shell脚本文件的名称是可以任意起，但咱们应该遵守运维行业人员大众的规范把.sh后缀写上，这样让其他人一看就知道是个脚本文件，与人方便自己方便。在这个脚本中实际上出现了三种不同的元素，第一行脚本声明(#!)是用来告知系统用何种shell解释器来执行本脚本程序，第二行注释信息(#)是对程序功能和某些命令的介绍信息，使得自己或他人再次看到这个脚本内容时可以快速知道这些功能的作用或一些警告信息，第三、四行可执行语句也就是咱们平时执行的Linux命令啦~什么？同学们不相信这么简单就编写出来了一个脚本程序，那来执行看一看吧：<br><code>[root@localhost Desktop]# bash example.sh</code><br><code>/home/caijy/Desktop</code><br><code>total 4848</code><br><code>drwxr-xr-x.  4 caijy caijy      93 Sep 14 16:29 .</code><br><code>drwx------. 14 caijy caijy    4096 Sep 14 11:05 ..</code><br><code>drwxrwxr-x.  3 caijy caijy      20 Sep 14 12:34 c</code><br><code>-rw-rw-r--.  1 caijy caijy 4946304 Sep 13 20:29 etc.tar.gz</code><br><code>-rw-r--r--.  1 root  root       38 Sep 14 16:28 example.sh</code><br><code>-rw-rw-r--.  1 caijy caijy       0 Sep 13 20:21 linux.log</code><br><code>drwxrwxr-x.  2 caijy caijy    4096 Sep 13 21:06 mydir</code><br><code>-rw-rw-r--.  1 caijy caijy      50 Sep 14 10:31 readme.txt</code><br>第二种运行脚本程序的方法是以输入完整路径的方式来执行，但默认会因为权限不足而提示报错信息，这种情况只需要为脚本文件增加执行权限即可:<br><code>[root@localhost Desktop]# ./example.sh</code><br><code>bash: ./example.sh: Permission denied</code><br><code>[root@localhost Desktop]# chmod u+x example.sh</code><br><code>[root@localhost Desktop]# bash example.sh</code><br><code>/home/caijy/Desktop</code><br><code>total 4848</code><br><code>drwxr-xr-x.  4 caijy caijy      93 Sep 14 16:29 .</code><br><code>drwx------. 14 caijy caijy    4096 Sep 14 11:05 ..</code><br><code>drwxrwxr-x.  3 caijy caijy      20 Sep 14 12:34 c</code><br><code>-rw-rw-r--.  1 caijy caijy 4946304 Sep 13 20:29 etc.tar.gz</code><br><code>-rw-r--r--.  1 root  root       38 Sep 14 16:28 example.sh</code><br><code>-rw-rw-r--.  1 caijy caijy       0 Sep 13 20:21 linux.log</code><br><code>drwxrwxr-x.  2 caijy caijy    4096 Sep 13 21:06 mydir</code><br><code>-rw-rw-r--.  1 caijy caijy      50 Sep 14 10:31 readme.txt</code></p>
+<h4 id="接收用户的参数"><a href="#接收用户的参数" class="headerlink" title="接收用户的参数"></a>接收用户的参数</h4><p>但是像上面这样的脚本程序在功能上真的太过于“死板”，为了能够让Shell脚本程序更好的满足用户对灵活完成工作的热切需要，必须要让脚本程序能够像咱们以前执行命令时那样来接收用户输入进来的参数。</p>
+<p>其实Shell脚本早就考虑到了这些，已经在脚本中定义好了很多变量功能，例如$0对应当前Shell脚本程序的名称，$#对应总共有几个参数，$*对应所有位置的参数值，而$1,$2,$3……依次类推则分别对应着第N个位置的参数:<br><img src="/img/脚本中的位置变量.png" alt=""><br>尝试来编写一个测试用的脚本程序，通过引用上面的变量参数来看下真实效果：<br><code>[root@localhost Desktop]# vim example.sh</code><br><code>#! /bin/bash</code><br><code>echo &quot;当前脚本名称为$0.&quot;</code><br><code>echo &quot;总共有$#个参数，分别是$*.&quot;</code><br><code>echo &quot;第1个参数为$1,第5个为$5.&quot;</code><br><code>[root@localhost Desktop]# bash example.sh one two three four five</code><br><code>当前脚本名称为example.sh.</code><br><code>总共有5个参数，分别是one two three four five.</code><br><code>第1个参数为one,第5个为five.</code></p>
+<h4 id="判断用户的参数"><a href="#判断用户的参数" class="headerlink" title="判断用户的参数"></a>判断用户的参数</h4><p>学习就像是在登台阶，在您学习完执行linux命令，掌握脚本语法变量和接收用户输入信息等方法后就要踏上新的高度——<em>即能够进一步去处理接收到的用户的参数</em>。因为有时咱们也需要像前面学习过的mkdir命令一样来判断用户输入的信息，从而判断用户指定的文件夹名称是否已经存在，已存在则提示报错，不存在则自动的创建。条件测试语法能够判断表达式是否成立，若条件成立则返回数字0，否则便返回其他随机数值。<br><img src="/img/测试语句格式.png" alt=""></p>
+<p>条件判断语句按照测试对象可分为 <strong>文件测试、逻辑测试、整数值比较与字符串比较</strong>，文件测试即用来按照指定条件来判断文件是否存在或权限是否满足，具体的参数包括有：</p>
+<table>
+<thead>
+<tr>
+<th>操作符</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-d</td>
+<td>测试是否为目录</td>
+</tr>
+<tr>
+<td>-e</td>
+<td>测试文件或目录是否存在</td>
+</tr>
+<tr>
+<td>-f</td>
+<td>判断是否为文件</td>
+</tr>
+<tr>
+<td>-r</td>
+<td>测试当前用户是否有权限读取</td>
+</tr>
+<tr>
+<td>-w</td>
+<td>测试当前用户是否有权限写入</td>
+</tr>
+<tr>
+<td>-x</td>
+<td>测试当前用户是否有权限执行</td>
+</tr>
+</tbody>
+</table>
+<p>好啦，那么先通过文件测试语句来判断/etc/fstab是否为一个目录文件，然后通过$?变量来显示上一条命令执行后的返回值，这样就可以通过返回的非零值判断目录是不存在的了（即文件测试语句判断结果不符合）：<br><code>[root@localhost Desktop]# [ -d /etc/fstab ]</code><br><code>[root@localhost Desktop]# echo $?</code><br><code>1</code><br>再来用文件测试语句来判断下/etc/fstab是否为一般文件，这样看到返回值是0即代表这个一般文件是存在的：<br><code>[root@localhost Desktop]# [ -f /etc/fstab ]</code><br><code>[root@localhost Desktop]# echo $?</code><br><code>0</code><br>逻辑测试则是用于判断用户给出的条件是为真还是假，从而把条件测试语句与逻辑语句相搭配结合使用可以实现一个更高级的使用方法，例如在Shell终端中逻辑“与”符号是&amp;&amp;，它代表当前面的命令执行成功后才会执行后面的命令，因此可以用来判断/dev/cdrom设备是否存在，若存在时才输出Exist字样。<br><code>[root@localhost Desktop]# [ -e /dev/cdrom ] &amp;&amp; echo &quot;exist&quot;</code><br><code>exist</code><br>除了“与”逻辑测试符号外,还有逻辑“或”，“非”符号，在Linux系统中逻辑“非”的符号就是一个叹号，它代表把条件测试中的判断结果取相反值。</p>
+<p>整数比较运算符是仅对数字的测试操作，不能把数字与字符串、文件等内容一起操作，而且不能想当然的使用日常生活中的等号、大于号、小于号等来做判断，因为等号与是赋值命令符冲突，大于号和小于号分别是和输出重定向命令符和输入重定向命令符冲突。虽然有时候碰巧也能执行成功，但是在后面脚本程序中普遍会产生错误，一定要使用规范的整数比较运算符来进行操作：</p>
+<table>
+<thead>
+<tr>
+<th>操作符</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-eq</td>
+<td>判断是否等于</td>
+</tr>
+<tr>
+<td>-ne</td>
+<td>判断是否不等于</td>
+</tr>
+<tr>
+<td>-gt</td>
+<td>判断是否大于</td>
+</tr>
+<tr>
+<td>-lt</td>
+<td>判断是否小于</td>
+</tr>
+<tr>
+<td>-le</td>
+<td>判断是否等于或小于</td>
+</tr>
+<tr>
+<td>-ge</td>
+<td>判断是否大于或等于</td>
+</tr>
+</tbody>
+</table>
+<p>咱们先小试牛刀的测试下10是否大于10以及10是否等于10，依次通过判断输出的返回值内容来进行判断：<br><code>[root@caijy Desktop]# [ 10 -gt 10 ]</code><br><code>[root@caijy Desktop]# echo $?</code><br><code>1</code><br><code>[root@caijy Desktop]# [ 10 -eq 10 ]</code><br><code>[root@caijy Desktop]# echo $?</code><br><code>0</code><br>在前面第2章的第四小节中学习过一个叫做free的命令，它能够获取到当前系统正在使用及可用的内存量信息。接下来咱们先用free -m命令查看以兆为单位的内存使用量情况，然后通过grep Mem:命令对关键词匹配过滤出剩余内存量的行，再用awk ‘{print $4}’命令过滤只保留第三列，最后用FreeMem=`语句`的方式把语句内执行的结果赋值给变量，这个演示确实有些难度，但看懂后会觉得很有意思，写到笔记本上在运维工作时也会用得上。<br><code>[root@caijy Desktop]# free -m</code><br><code>total       used       free     shared    buffers     cached</code><br><code>Mem:          1826        867        959          9          0        278</code><br><code>-/+ buffers/cache:        588       1238</code><br><code>Swap:         2047          0       2047</code><br><code>[root@caijy Desktop]# free -m | grep -n Mem</code><br><code>2:Mem:          1826        867        959          9          0        278</code><br><code>[root@caijy Desktop]# free -m | grep -n Mem | awk &#39;{print $4}&#39;</code><br><code>955</code><br><code>[root@caijy Desktop]# FreeMem=`free -m | grep Mem | awk &#39;{print $4}&#39;</code><br><code>[root@caijy Desktop]# echo $FreeMem</code><br><code>953</code><br>上面做的获取内存可用量的步骤有些难度“超纲”了，如果不能够马上理解也不用担心，接下来才是重点，需要通过整数运算符来判断内存可用量的值是否小于1024，若小于则会提示内存不足的字样：<br><code>[root@caijy Desktop]# [ $FreeMem -lt 1024 ] &amp;&amp; echo &quot;Insufficient Memory&quot;</code><br><code>Insufficient Memory</code><br>字符串比较是判断测试字符串是否为空值，或两个字符串是否相同的操作，常常用来判断某个变量是否未被定义（即内容为空值），理解起来也比较简单，常见的操作运算符如下：</p>
+<table>
+<thead>
+<tr>
+<th>操作符</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>=</td>
+<td>比较字符串内容是否相同。</td>
+</tr>
+<tr>
+<td>!=</td>
+<td>比较字符串内容是否不同。</td>
+</tr>
+<tr>
+<td>-z</td>
+<td>判断字符串内容是否为空。</td>
+</tr>
+</tbody>
+</table>
+<p>咱们可以通过判断String变量是否为空值，进而判断是否未被定义：<br><code>[root@caijy Desktop]# [ -z $String ]</code><br><code>[root@caijy Desktop]# echo $?</code><br><code>0</code><br>最后再尝试把逻辑运算符引入来试试，当判断用于保存当前语系的环境变量值LANG不是为英语（en.US）则会满足逻辑条件并输出非英语的字样：<br><code>[root@caijy Desktop]# echo $LANG</code><br><code>en_US.utf8</code><br><code>[root@caijy Desktop]# [ $LANG != &quot;en.US.utf8&quot; ] &amp;&amp; echo &quot;Not en.US.utf8&quot;</code><br><code>Not en.US.utf8</code></p>
+
       
     </div>
     
@@ -698,10 +800,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Inhaltsverzeichnis
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Übersicht
+            Overview
           </li>
         </ul>
       
@@ -725,7 +827,7 @@
               <a href="/sakura-hly.github.io/archives/">
             
                 <span class="site-state-item-count">6</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">posts</span>
               </a>
             </div>
           
@@ -736,7 +838,7 @@
             <div class="site-state-item site-state-categories">
               
                 <span class="site-state-item-count">1</span>
-                <span class="site-state-item-name">Kategorien</span>
+                <span class="site-state-item-name">categories</span>
               
             </div>
           
@@ -747,7 +849,7 @@
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">1</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-name">tags</span>
               
             </div>
           
@@ -781,7 +883,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Vim文本编辑器"><span class="nav-number">1.</span> <span class="nav-text">Vim文本编辑器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#编写简单文档"><span class="nav-number">1.1.</span> <span class="nav-text">编写简单文档</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置主机名称"><span class="nav-number">1.2.</span> <span class="nav-text">配置主机名称</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置网卡信息"><span class="nav-number">1.3.</span> <span class="nav-text">配置网卡信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置Yum仓库"><span class="nav-number">1.4.</span> <span class="nav-text">配置Yum仓库</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编写shell脚本"><span class="nav-number">2.</span> <span class="nav-text">编写shell脚本</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Vim文本编辑器"><span class="nav-number">1.</span> <span class="nav-text">Vim文本编辑器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#编写简单文档"><span class="nav-number">1.1.</span> <span class="nav-text">编写简单文档</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置主机名称"><span class="nav-number">1.2.</span> <span class="nav-text">配置主机名称</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置网卡信息"><span class="nav-number">1.3.</span> <span class="nav-text">配置网卡信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置Yum仓库"><span class="nav-number">1.4.</span> <span class="nav-text">配置Yum仓库</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编写Shell脚本"><span class="nav-number">2.</span> <span class="nav-text">编写Shell脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#编写简单的脚本"><span class="nav-number">2.1.</span> <span class="nav-text">编写简单的脚本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#接收用户的参数"><span class="nav-number">2.2.</span> <span class="nav-text">接收用户的参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#判断用户的参数"><span class="nav-number">2.3.</span> <span class="nav-text">判断用户的参数</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -814,7 +916,7 @@
 </div>
 
 
-  <div class="powered-by">Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Powered by <a class="theme-link" href="https://hexo.io">Hexo</a></div>
 
   <span class="post-meta-divider">|</span>
 
