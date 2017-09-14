@@ -110,7 +110,9 @@
 <meta property="og:image" content="http://yoursite.com/img/配置网卡.png">
 <meta property="og:image" content="http://yoursite.com/img/脚本中的位置变量.png">
 <meta property="og:image" content="http://yoursite.com/img/测试语句格式.png">
-<meta property="og:updated_time" content="2017-09-14T09:39:51.875Z">
+<meta property="og:image" content="http://yoursite.com/img/单分支结构-2.png">
+<meta property="og:image" content="http://yoursite.com/img/双分支结构-1.png">
+<meta property="og:updated_time" content="2017-09-14T11:01:04.191Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基础课程04">
 <meta name="twitter:description" content="首先来学习如何使用vim编辑器来编写、修改文档，然后通过逐个配置主机名称、系统网卡以及Yum仓库参数文件等实验来加深对vim编辑器中诸多命令、快捷键的执行方法与各个模式切换的方法。然后把前面的Linux命令、命令语法与Shell脚本中的if条件测试语句、for条件测试循环语句、while条件循环语句以及case条件测试语句通过vim编辑器写到Shell脚本中结合到一起，实现最终能够自动化工作的软件">
@@ -220,7 +222,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            Startseite
           </a>
         </li>
       
@@ -230,7 +232,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archives
+            Archiv
           </a>
         </li>
       
@@ -243,7 +245,7 @@
             
               <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
-            Search
+            Suche
           </a>
         </li>
       
@@ -328,7 +330,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-14T13:51:07+08:00">
                 2017-09-14
@@ -349,7 +351,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">In</span>
+                <span class="post-meta-item-text">in</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -569,6 +571,7 @@
 <p>进入到/etc/yum.repos.d目录中后创建Yum配置文件：<br><code>[root@localhost network-scripts]# cd /etc/yum.repos.d/</code><br><code>[root@localhost yum.repos.d]# vim rehl17.repo</code><br><code>[rhel7]</code><br><code>name=rhel7</code><br><code>baseurl=file:///media/cdrom</code><br><code>enabled=1</code><br><code>gpgcheck=0</code></p>
 <p>创建挂载点后进行挂载操作，并设置成开机自动挂载<br><code>[root@localhost yum.repos.d]# mkdir -p /media/cdrom</code><br><code>[root@localhost yum.repos.d]# mount /dev/cdrom /media/cdrom</code><br><code>mount: /dev/sr0 is write-protected, mounting read-only</code><br><code>[root@localhost yum.repos.d]# vim /etc/fstab</code><br><code>/dev/cdrom /media/cdrom iso9660 defaults 0 0</code></p>
 <p>尝试使用Yum软件仓库来安装Web服务，出现Complete（完成）则代表Yum仓库配置正确：<br><code>[root@localhost yum.repos.d]# yum install httpd</code><br><code>Loaded plugins: langpacks, product-id, subscription-manager</code><br><code>This system is not registered to Red Hat Subscription Management. You can use subscription-manager to register.</code><br><code>......</code><br><code>Complete!</code></p>
+<hr>
 <h3 id="编写Shell脚本"><a href="#编写Shell脚本" class="headerlink" title="编写Shell脚本"></a>编写Shell脚本</h3><p>Shell终端解释器被形容是人与计算机硬件的“翻译官”，它作为用户与Linux系统内部通讯的媒介，除了允许了各种变量与参数外还提供了诸如循环、分支等高级语言才有的控制结构特性，如何正确的使用这些功能，准确下达命令尤为重要。Shell脚本的工作方式有两种，首先是前面所接触的交互方式(Interactive)，即当用户每输入一条命令就执行一次，而批处理(Batch)则是由用户事先编写好一个完整的Shell脚本，Shell会一次性执行脚本中诸多的命令。因此在Shell脚本中不仅需要用到很多前面学习过的Linux命令以及正则表达式、管道符、数据流重定向等语法规则，还需要把内部功能模块化后通过逻辑语句进行加工，最终才能成为日常所见的Shell脚本程序，可以通过SHELL变量来查看到当前系统已经默认使用bash解释器作为命令行终端了：<br><code>[root@localhost Desktop]# echo $SHELL</code><br><code>/bin/bash</code></p>
 <h4 id="编写简单的脚本"><a href="#编写简单的脚本" class="headerlink" title="编写简单的脚本"></a>编写简单的脚本</h4><p>估计读者看完上面对Shell脚本如此复杂的描述都有一种心累想放弃的感觉了吧，但这仅指的是一个高深Shell脚本的编写原则，其实使用vim编辑器把linux命令按照顺序依次写入文件就是编写完成一个最简单的脚本啦。例如想查看当前所在工作路径并列出当前目录下所有文件及属性信息，编写一个脚本来完成的话是这样：<br><code>[root@localhost Desktop]# vim example.sh</code><br><code>#! /bin/bash</code><br><code>#For Example</code><br><code>pwd</code><br><code>ls -al</code><br>Shell脚本文件的名称是可以任意起，但咱们应该遵守运维行业人员大众的规范把.sh后缀写上，这样让其他人一看就知道是个脚本文件，与人方便自己方便。在这个脚本中实际上出现了三种不同的元素，第一行脚本声明(#!)是用来告知系统用何种shell解释器来执行本脚本程序，第二行注释信息(#)是对程序功能和某些命令的介绍信息，使得自己或他人再次看到这个脚本内容时可以快速知道这些功能的作用或一些警告信息，第三、四行可执行语句也就是咱们平时执行的Linux命令啦~什么？同学们不相信这么简单就编写出来了一个脚本程序，那来执行看一看吧：<br><code>[root@localhost Desktop]# bash example.sh</code><br><code>/home/caijy/Desktop</code><br><code>total 4848</code><br><code>drwxr-xr-x.  4 caijy caijy      93 Sep 14 16:29 .</code><br><code>drwx------. 14 caijy caijy    4096 Sep 14 11:05 ..</code><br><code>drwxrwxr-x.  3 caijy caijy      20 Sep 14 12:34 c</code><br><code>-rw-rw-r--.  1 caijy caijy 4946304 Sep 13 20:29 etc.tar.gz</code><br><code>-rw-r--r--.  1 root  root       38 Sep 14 16:28 example.sh</code><br><code>-rw-rw-r--.  1 caijy caijy       0 Sep 13 20:21 linux.log</code><br><code>drwxrwxr-x.  2 caijy caijy    4096 Sep 13 21:06 mydir</code><br><code>-rw-rw-r--.  1 caijy caijy      50 Sep 14 10:31 readme.txt</code><br>第二种运行脚本程序的方法是以输入完整路径的方式来执行，但默认会因为权限不足而提示报错信息，这种情况只需要为脚本文件增加执行权限即可:<br><code>[root@localhost Desktop]# ./example.sh</code><br><code>bash: ./example.sh: Permission denied</code><br><code>[root@localhost Desktop]# chmod u+x example.sh</code><br><code>[root@localhost Desktop]# bash example.sh</code><br><code>/home/caijy/Desktop</code><br><code>total 4848</code><br><code>drwxr-xr-x.  4 caijy caijy      93 Sep 14 16:29 .</code><br><code>drwx------. 14 caijy caijy    4096 Sep 14 11:05 ..</code><br><code>drwxrwxr-x.  3 caijy caijy      20 Sep 14 12:34 c</code><br><code>-rw-rw-r--.  1 caijy caijy 4946304 Sep 13 20:29 etc.tar.gz</code><br><code>-rw-r--r--.  1 root  root       38 Sep 14 16:28 example.sh</code><br><code>-rw-rw-r--.  1 caijy caijy       0 Sep 13 20:21 linux.log</code><br><code>drwxrwxr-x.  2 caijy caijy    4096 Sep 13 21:06 mydir</code><br><code>-rw-rw-r--.  1 caijy caijy      50 Sep 14 10:31 readme.txt</code></p>
 <h4 id="接收用户的参数"><a href="#接收用户的参数" class="headerlink" title="接收用户的参数"></a>接收用户的参数</h4><p>但是像上面这样的脚本程序在功能上真的太过于“死板”，为了能够让Shell脚本程序更好的满足用户对灵活完成工作的热切需要，必须要让脚本程序能够像咱们以前执行命令时那样来接收用户输入进来的参数。</p>
@@ -669,6 +672,12 @@
 </tbody>
 </table>
 <p>咱们可以通过判断String变量是否为空值，进而判断是否未被定义：<br><code>[root@caijy Desktop]# [ -z $String ]</code><br><code>[root@caijy Desktop]# echo $?</code><br><code>0</code><br>最后再尝试把逻辑运算符引入来试试，当判断用于保存当前语系的环境变量值LANG不是为英语（en.US）则会满足逻辑条件并输出非英语的字样：<br><code>[root@caijy Desktop]# echo $LANG</code><br><code>en_US.utf8</code><br><code>[root@caijy Desktop]# [ $LANG != &quot;en.US.utf8&quot; ] &amp;&amp; echo &quot;Not en.US.utf8&quot;</code><br><code>Not en.US.utf8</code></p>
+<hr>
+<h3 id="流程控制语句"><a href="#流程控制语句" class="headerlink" title="流程控制语句"></a>流程控制语句</h3><p>接下来咱们通过if、for、while、case四种条件、循环语句来学习相对更高难度级别的Shell脚本.</p>
+<h4 id="if条件测试语句"><a href="#if条件测试语句" class="headerlink" title="if条件测试语句"></a>if条件测试语句</h4><p>if条件语句可以让脚本根据实际情况的不同而自动切换命令执行方案，从技术角度上来说分为单分支结构、双分支结构、多分支结构，复杂度随着灵活度一起逐级上升。</p>
+<p>单分支的if条件语句结构，这种结构仅用if、then、fi关键词组成，只在条件成立后才执行预设命令，相当于口语的“如果……那么……”，属于最简单的一种条件判断结构，操作语法如图4-17所示：<br><img src="/img/单分支结构-2.png" alt=""><br>使用单分支的if条件语句来判断某个目录是否存在，若已经存在就结束条件判断和整个Shell脚本，而如果不存在则去创建这个目录：<br><code>[root@caijy Desktop]# vim mkcdrom.sh</code><br><code>#! /bin/bash</code><br><code>DIR=&quot;/media/cdrom&quot;</code><br><code>if [ ! -e $DIR ]</code><br><code>then</code><br><code>mkdir -p $DIR</code><br><code>fi</code></p>
+<p>双分支的if条件语句结构，这种结构仅用if、then、else、fi关键词组成，进行两次条件判断匹配，两次判断中任何一项匹配成功后都会执行预设命令，相当于口语的“如果……那么……或者……那么……”，也是属于很简单的一种条件判断结构，操作语法如图4-18所示：<br><img src="/img/双分支结构-1.png" alt=""></p>
+<p>使用双分支的if条件语句来验证某个主机是否在线，然后根据判断执行返回值结果分别给予对方主机是在线还是不在线的提示信息。脚本中我主要是使用ping命令来测试与对方主机的网络联通性，而linux系统中的ping命令不像windows系统一样仅会尝试四次就结束，因此为了避免用户等待时间过长，而通过-c参数来规定尝试的次数，-i参数定义每个数据包的发送间隔时间以及-W参数定义最长的等待超时时间。</p>
 
       
     </div>
@@ -800,10 +809,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Table of Contents
+            Inhaltsverzeichnis
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
+            Übersicht
           </li>
         </ul>
       
@@ -827,7 +836,7 @@
               <a href="/sakura-hly.github.io/archives/">
             
                 <span class="site-state-item-count">6</span>
-                <span class="site-state-item-name">posts</span>
+                <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
           
@@ -838,7 +847,7 @@
             <div class="site-state-item site-state-categories">
               
                 <span class="site-state-item-count">1</span>
-                <span class="site-state-item-name">categories</span>
+                <span class="site-state-item-name">Kategorien</span>
               
             </div>
           
@@ -849,7 +858,7 @@
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">1</span>
-                <span class="site-state-item-name">tags</span>
+                <span class="site-state-item-name">Tags</span>
               
             </div>
           
@@ -883,7 +892,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Vim文本编辑器"><span class="nav-number">1.</span> <span class="nav-text">Vim文本编辑器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#编写简单文档"><span class="nav-number">1.1.</span> <span class="nav-text">编写简单文档</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置主机名称"><span class="nav-number">1.2.</span> <span class="nav-text">配置主机名称</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置网卡信息"><span class="nav-number">1.3.</span> <span class="nav-text">配置网卡信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置Yum仓库"><span class="nav-number">1.4.</span> <span class="nav-text">配置Yum仓库</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编写Shell脚本"><span class="nav-number">2.</span> <span class="nav-text">编写Shell脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#编写简单的脚本"><span class="nav-number">2.1.</span> <span class="nav-text">编写简单的脚本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#接收用户的参数"><span class="nav-number">2.2.</span> <span class="nav-text">接收用户的参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#判断用户的参数"><span class="nav-number">2.3.</span> <span class="nav-text">判断用户的参数</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Vim文本编辑器"><span class="nav-number">1.</span> <span class="nav-text">Vim文本编辑器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#编写简单文档"><span class="nav-number">1.1.</span> <span class="nav-text">编写简单文档</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置主机名称"><span class="nav-number">1.2.</span> <span class="nav-text">配置主机名称</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置网卡信息"><span class="nav-number">1.3.</span> <span class="nav-text">配置网卡信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置Yum仓库"><span class="nav-number">1.4.</span> <span class="nav-text">配置Yum仓库</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编写Shell脚本"><span class="nav-number">2.</span> <span class="nav-text">编写Shell脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#编写简单的脚本"><span class="nav-number">2.1.</span> <span class="nav-text">编写简单的脚本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#接收用户的参数"><span class="nav-number">2.2.</span> <span class="nav-text">接收用户的参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#判断用户的参数"><span class="nav-number">2.3.</span> <span class="nav-text">判断用户的参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#流程控制语句"><span class="nav-number">3.</span> <span class="nav-text">流程控制语句</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#if条件测试语句"><span class="nav-number">3.1.</span> <span class="nav-text">if条件测试语句</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -916,7 +925,7 @@
 </div>
 
 
-  <div class="powered-by">Powered by <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a></div>
 
   <span class="post-meta-divider">|</span>
 
