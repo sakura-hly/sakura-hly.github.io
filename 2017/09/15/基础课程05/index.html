@@ -105,7 +105,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/img/权限值.png">
 <meta property="og:image" content="http://yoursite.com/img/文件权限.png">
-<meta property="og:updated_time" content="2017-09-15T09:38:22.477Z">
+<meta property="og:updated_time" content="2017-09-15T09:40:13.324Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基础课程05">
 <meta name="twitter:description" content="Linux系统具有多用户、多任务的历史发展特点，所以也迫使其具有了很好的安全性，保障Linux系统安全的背后是复杂的配置工作。">
@@ -215,7 +215,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Home
           </a>
         </li>
       
@@ -225,7 +225,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archiv
+            Archives
           </a>
         </li>
       
@@ -238,7 +238,7 @@
             
               <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
-            Suche
+            Search
           </a>
         </li>
       
@@ -323,7 +323,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-15T09:14:38+08:00">
                 2017-09-15
@@ -344,7 +344,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">in</span>
+                <span class="post-meta-item-text">In</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -678,8 +678,9 @@
 <p>只用超级用户才可以使用visudo命令编辑sudo程序的配置文件（/etc/sudoers），平时还可以使用visudo命令来配置用户权限吧，这样既能防止多个用户同时修改配置文件，还能对配置文件内的参数进行语法检查，对于错误的参数会直接提示并报错：<br><code>visudo: &gt;&gt;&gt; /etc/sudoers: syntax error near line 111 &lt;&lt;&lt;</code><br><code>What now?</code><br><code>Options are:</code><br><code>(e)dit sudoers file again</code><br><code>(x)it without saving changes to sudoers file</code><br><code>(Q)uit and save changes to sudoers file (DANGER!)</code></p>
 <p>使用visudo命令配置sudo服务的服务文件时，操作的方法与咱们学习过的vim编辑器是一致的，因此在编写完成后记得在末行模式下保存并退出。sudo服务程序配置文件中约第99行按照下面的格式填写上指定的信息即可：</p>
 <ul>
-<li><strong>谁可以使用超级用户身份     允许使用sudo命令的主机=（以谁的身份执行命令）     可执行命令的列表</strong><br><code>[root@caijy ~]# visudo</code><br><code>## Allow root to run any commands anywhere</code><br><code>root    ALL=(ALL)       ALL</code><br><code>caijy    ALL=(ALL)       ALL</code></li>
+<li><strong>谁可以使用超级用户身份     允许使用sudo命令的主机=（以谁的身份执行命令）     可执行命令的列表</strong></li>
 </ul>
+<p><code>[root@caijy ~]# visudo</code><br><code>## Allow root to run any commands anywhere</code><br><code>root    ALL=(ALL)       ALL</code><br><code>caijy    ALL=(ALL)       ALL</code></p>
 <p>这样填写后记得要保存后再退出，然后切换至指定的用户身份就可以用sudo -l命令查看到所有可执行的命令啦（此处验证的是该普通用户的密码，而不是root用户的密码，同学们不要搞混喽）：<br><code>[root@caijy ~]# su - caijy</code><br><code>Last login: Fri Sep 15 16:22:01 CST 2017 on pts/0</code><br><code>[caijy@caijy ~]$ sudo -l</code><br><code>[sudo] password for caijy:</code><br><code>Matching Defaults entries for caijy on this host:</code><br><code>requiretty, !visiblepw, always_set_home, env_reset, env_keep=&quot;COLORS</code><br><code>DISPLAY HOSTNAME HISTSIZE INPUTRC KDEDIR LS_COLORS&quot;,</code> <code>env_keep+=&quot;MAIL PS1</code><br><code>PS2 QTDIR USERNAME LANG LC_ADDRESS LC_CTYPE&quot;, env_keep+=&quot;LC_COLLATE</code><br><code>LC_IDENTIFICATION LC_MEASUREMENT LC_MESSAGES&quot;,</code><br><code>env_keep+=&quot;LC_MONETARY</code><br><code>LC_NAME LC_NUMERIC LC_PAPER LC_TELEPHONE&quot;, env_keep+=&quot;LC_TIME LC_ALL</code><br><code>LANGUAGE LINGUAS _XKB_CHARSET XAUTHORITY&quot;,</code><br><code>secure_path=/sbin\:/bin\:/usr/sbin\:/usr/bin</code><br><code>User caijy may run the following commands on this host:</code><br><code>(ALL) ALL</code><br><code>(ALL) ALL</code><br>接下来就是见证奇迹的时刻，因为作为一名普通用户是肯定不能查看到root超级用户家目录(/root)中的文件信息的，但咱们只需要在想执行的命令前面加上sudo命令就变得有权限了：<br><code>[caijy@caijy root]$ ls /root</code><br><code>ls: cannot open directory /root: Permission denied</code><br><code>[caijy@caijy root]$ sudo ls /root</code><br><code>[sudo] password for caijy:</code><br><code>anaconda-ks.cfg  initial-setup-ks.cfg</code><br>效果非常明显哦！但是考虑到真实的工作环境中肯定不能允许某个普通用户拥有了整个系统中所有命令的最高执行权，也不符合刚刚提到的权限赋予原则——在保证普通用户完成工作的前提下，尽可能少的给予额外的权限，因此ALL的参数就显得有些不合适了，应该代之以具体的命令来既让用户满足了工作需求，也能够受到必要的权限约束。<em>如果需要让某个用户只能使用超级用户的身份执行指定的命令，切记一定要写上的是该命令的绝对路径，否则系统会识别不出来哦，咱们可以先用whereis命令找出命令所对应的保存路径</em>，然后把刚刚配置文件中约第99行的用户权限参数修改成对应的路径即可：<br><code>[root@caijy ~]# whereis cat</code><br><code>cat: /usr/bin/cat /usr/share/man/man1/cat.1.gz /usr/share/man/man1p/cat.1p.gz</code><br><code>[root@caijy ~]# visudo</code><br><code>## Allow root to run any commands anywhere</code><br><code>root    ALL=(ALL)       ALL</code><br><code>caijy    ALL=(ALL)       /bin/cat</code><br>这样编辑好后依然是记得要保存退出，然后咱们再次切换到指定的普通用户上面，尝试正常查看某个文件的内容被提示没有权限，然后再用sudo命令后就可以顺利的查看文件内容啦：<br><code>[root@caijy ~]# su - caijy</code><br><code>Last login: Fri Sep 15 16:46:38 CST 2017 on pts/0</code><br><code>[caijy@caijy ~]$ cat /etc/shadow</code><br><code>cat: /etc/shadow: Permission denied</code><br><code>[caijy@caijy ~]$ sudo cat /etc/shadow</code><br><code>[sudo] password for caijy:</code><br><code>root:$6$dVUdyi82$u11lUZwsCwYv92m92nCjP9My1dT.QH.j463.MUeREj5C6pkOmNpY2ugpg5pGJ2kXrphOC7qFViD8mrfvZs.9W/:17424:0:99999:7:::</code><br><code>bin:*:16141:0:99999:7:::</code><br><code>......</code><br>这样当咱们切换到普通用户后再执行命令时，就不用再频繁麻烦的要求验证密码了，在日常工作会一定会感觉到痛快极了~</p>
 <hr>
 <p>转载自：<a href="http://www.linuxprobe.com/chapter-05.html" target="_blank" rel="external">http://www.linuxprobe.com/chapter-05.html</a></p>
@@ -814,10 +815,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Inhaltsverzeichnis
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Übersicht
+            Overview
           </li>
         </ul>
       
@@ -841,7 +842,7 @@
               <a href="/sakura-hly.github.io/archives/">
             
                 <span class="site-state-item-count">7</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">posts</span>
               </a>
             </div>
           
@@ -852,7 +853,7 @@
             <div class="site-state-item site-state-categories">
               
                 <span class="site-state-item-count">1</span>
-                <span class="site-state-item-name">Kategorien</span>
+                <span class="site-state-item-name">categories</span>
               
             </div>
           
@@ -863,7 +864,7 @@
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">1</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-name">tags</span>
               
             </div>
           
@@ -930,7 +931,7 @@
 </div>
 
 
-  <div class="powered-by">Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Powered by <a class="theme-link" href="https://hexo.io">Hexo</a></div>
 
   <span class="post-meta-divider">|</span>
 
