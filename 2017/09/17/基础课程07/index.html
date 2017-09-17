@@ -109,7 +109,7 @@
 <meta property="og:image" content="http://yoursite.com/img/raid10.jpg">
 <meta property="og:image" content="http://yoursite.com/img/逻辑卷.png">
 <meta property="og:image" content="http://yoursite.com/img/添加两块硬盘到虚拟机.png">
-<meta property="og:updated_time" content="2017-09-17T13:25:28.627Z">
+<meta property="og:updated_time" content="2017-09-17T13:30:19.306Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基础课程07">
 <meta name="twitter:description" content="前面学习了硬盘设备分区、格式化、挂载等知识技能后，为了能够进一步满足生产环境中对存储设备IO读写速度和数据冗余备份机制的更高需求，这里会深入学习各个常用RAID磁盘陈列组技术方案的特性，并实际部署RAID10，RAID5+备份盘等方案来更直观看到RAID磁盘阵列组的强大效果。 同时为了满足用户对存储资源动态调整的需求，还会深入学习LVM逻辑卷管理器的部署，扩容，缩小，快照，及卸载删除的步骤。">
@@ -575,6 +575,8 @@ UUID=d357b1a3-003d-46b4-8c15-6beedeab36ca /boot                   xfs     defaul
 <p><strong>第二步，把LV逻辑卷设备删除，需要手工输入y来确认操作：</strong><br><code>[root@localhost ~]# lvremove /dev/storage/vo</code><br><code>Do you really want to remove active logical volume vo? [y/n]: y</code><br><code>Logical volume &quot;vo&quot; successfully removed</code></p>
 <p><strong>第三步，把VG卷组删除，此处只需要写卷组名称即可，而无需设备完整绝对路径：</strong><br><code>[root@localhost ~]# vgremove storage</code><br><code>Volume group &quot;storage&quot; successfully removed</code></p>
 <p><strong>第四步，把PV物理卷设备移除。</strong><br><code>[root@localhost ~]# pvremove /dev/sdb /dev/sdc</code><br><code>Labels on physical volume &quot;/dev/sdb&quot; successfully wiped</code><br><code>Labels on physical volume &quot;/dev/sdc&quot; successfully wiped</code><br>执行以上操作后大家可以再分别执行下lvdisplay、vgdisplay、pvdisplay命令来查看逻辑卷管理器信息，操作正确则会不能再看到逻辑卷设备信息了。</p>
+<hr>
+<p>转载自：<a href="http://www.linuxprobe.com/chapter-07.html" target="_blank" rel="external">http://www.linuxprobe.com/chapter-07.html</a></p>
 
       
     </div>
