@@ -79,7 +79,7 @@
 <link href="/sakura-hly.github.io/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="jdk1.8,String," />
 
 
 
@@ -95,16 +95,18 @@
 
 
 
-<meta name="description" content="一个Linux菜鸟的博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="破晓">
-<meta property="og:url" content="http://yoursite.com/archives/2017/09/index.html">
+<meta name="description" content="从现在开始学习jdk1.8源码，先从常用的java.lang.String开始。">
+<meta name="keywords" content="jdk1.8,String">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JDK1.8源码学习-String">
+<meta property="og:url" content="http://yoursite.com/2017/09/19/JDK1.8源码学习-1/index.html">
 <meta property="og:site_name" content="破晓">
-<meta property="og:description" content="一个Linux菜鸟的博客">
+<meta property="og:description" content="从现在开始学习jdk1.8源码，先从常用的java.lang.String开始。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-09-19T05:59:18.716Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="破晓">
-<meta name="twitter:description" content="一个Linux菜鸟的博客">
+<meta name="twitter:title" content="JDK1.8源码学习-String">
+<meta name="twitter:description" content="从现在开始学习jdk1.8源码，先从常用的java.lang.String开始。">
 
 
 
@@ -134,13 +136,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/2017/09/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/19/JDK1.8源码学习-1/"/>
 
 
 
 
 
-  <title>Archive | 破晓</title>
+  <title>JDK1.8源码学习-String | 破晓</title>
   
 
 
@@ -169,7 +171,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -277,411 +279,258 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/sakura-hly.github.io/2017/09/19/JDK1.8源码学习-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="caijy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/sakura-hly.github.io/images/dp.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="破晓">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">JDK1.8源码学习-String</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-19T10:31:14+08:00">
+                2017-09-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        Um..! 12 posts in total. Keep on posting.
-      </span>
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/sakura-hly.github.io/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2017">2017</h1>
-          </div>
-        
-        
 
-        
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/sakura-hly.github.io/2017/09/19/JDK1.8源码学习-1/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count fb-comments-count" data-href="http://yoursite.com/2017/09/19/JDK1.8源码学习-1/" itemprop="commentCount">0</span> comments
+                </a>
+              </span>
+            
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
+             <span id="/sakura-hly.github.io/2017/09/19/JDK1.8源码学习-1/" class="leancloud_visitors" data-flag-title="JDK1.8源码学习-String">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/sakura-hly.github.io/2017/09/19/JDK1-8源码学习-2/" itemprop="url">
-              
-                <span itemprop="name">JDK1-8源码学习-StringBUilder，StringBUffer</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-19T13:57:09+08:00"
-              content="2017-09-19" >
-          09-19
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+          
 
+        </div>
+      </header>
+    
 
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/sakura-hly.github.io/2017/09/19/JDK1.8源码学习-1/" itemprop="url">
-              
-                <span itemprop="name">JDK1.8源码学习-String</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-19T10:31:14+08:00"
-              content="2017-09-19" >
-          09-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/sakura-hly.github.io/2017/09/18/基础课程08/" itemprop="url">
-              
-                <span itemprop="name">基础课程08</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-18T13:55:22+08:00"
-              content="2017-09-18" >
-          09-18
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/sakura-hly.github.io/2017/09/17/基础课程07/" itemprop="url">
-              
-                <span itemprop="name">基础课程07</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-17T15:45:32+08:00"
-              content="2017-09-17" >
-          09-17
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <p>从现在开始学习jdk1.8源码，先从常用的java.lang.String开始。<br><a id="more"></a></p>
+<p>首先来看jdk1.8中java.lang.String的定义：<br><code>public final class String</code><br><code>implements java.io.Serializable, Comparable&lt;String&gt;, CharSequence {</code><br><code>}</code><br>String类使用了final关键字修饰，是为不可变类，并且实现了序列化，比较器接口，还有一个CharSequence接口。CharSequence是字符数组，说明String本质上是通过字符数组实现的。这个CharSequence接口定义了一些String常用的方法：<br><code>int length();</code></p>
+<p><code>char charAt(int index);</code></p>
+<p><code>CharSequence subSequence(int start, int end);</code></p>
+<p><code>public String toString();</code></p>
+<p><code>......</code></p>
+<p>还有两个特殊的方法使用了default关键字：<br><code>public default IntStream chars() {
+        class CharIterator implements PrimitiveIterator.OfInt {
+            ......
+}</code><br>这是Java8引入的新概念，叫做default方法，也可以称为Defender方法，或者虚拟扩展方法（Virtual extension methods)。在此不展开介绍，有兴趣的同学自己百度一下。</p>
+<p>接下来看看String的成员，<br><code>private final char value[];//用于存储String的字符</code><br>下面有很多构造函数，都是一些常用的：<br><code>public String() {
+    this.value = new char[0];
+ }</code><br><code>public String(String original) {
+    this.value = original.value;
+    this.hash = original.hash;
+ }</code><br><code>public String(char value[]) {
+    this.value = Arrays.copyOf(value, value.length);
+ }</code><br> <code>......</code></p>
+<p>来看看我们重点学习的equls方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">public boolean equals(Object anObject) &#123;</div><div class="line">    if (this == anObject) &#123;</div><div class="line">        return true;</div><div class="line">    &#125;</div><div class="line">    if (anObject instanceof String) &#123;</div><div class="line">        String anotherString = (String)anObject;</div><div class="line">        int n = value.length;</div><div class="line">        if (n == anotherString.value.length) &#123;</div><div class="line">            char v1[] = value;</div><div class="line">            char v2[] = anotherString.value;</div><div class="line">            int i = 0;</div><div class="line">            //逐个比较字符</div><div class="line">            while (n-- != 0) &#123;</div><div class="line">                if (v1[i] != v2[i])</div><div class="line">                    return false;</div><div class="line">                i++;</div><div class="line">            &#125;</div><div class="line">            return true;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    return false;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>众所周知，Object的equls方法是通过“==”实现的，可以看出String的equls是比较其内容的。<br>嘻嘻，还有hashcode方法，利用每一位字符计算出一个哈希值：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">private int hash; // Default to 0</div><div class="line"></div><div class="line">public int hashCode() &#123;</div><div class="line">    int h = hash;</div><div class="line">    if (h == 0 &amp;&amp; value.length &gt; 0) &#123;</div><div class="line">        char val[] = value;</div><div class="line"></div><div class="line">        for (int i = 0; i &lt; value.length; i++) &#123;</div><div class="line">            h = 31 * h + val[i];</div><div class="line">        &#125;</div><div class="line">        hash = h;</div><div class="line">    &#125;</div><div class="line">    return h;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>substring方法实际上返回了一个新的String，concat方法也是…<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">public String substring(int beginIndex) &#123;</div><div class="line">    if (beginIndex &lt; 0) &#123;</div><div class="line">        throw new StringIndexOutOfBoundsException(beginIndex);</div><div class="line">    &#125;</div><div class="line">    int subLen = value.length - beginIndex;</div><div class="line">    if (subLen &lt; 0) &#123;</div><div class="line">        throw new StringIndexOutOfBoundsException(subLen);</div><div class="line">    &#125;</div><div class="line">    return (beginIndex == 0) ? this : new String(value, beginIndex, subLen);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>最后是一个特殊的intern方法，是一个native方法：当一个String实例str调用intern()方法时，Java查找常量池中是否有相同Unicode的字符串常量，如果有，则返回其的引用， 如果没有，则在常量池中增加一个Unicode等于str的字符串并返回它的引用。有兴趣的同学还可以深入了解一下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">public native String intern();</div></pre></td></tr></table></figure></p>
+<p>在jdk1.6及以前，字符串常量池是放在永久代（PermGen）的，据我所知，根据平台的不同，PermGen的大小从32M到96M不等。你可以增加它的大小，但它的大小固定在运行时不能改变，所以使用的时候要小心，如果不加控制，可能会导致OOM。</p>
+<p>从jdk1.7开始，字符串常量池被移到了堆中，这意味着你不会再被一块固定大小的内存区域所限制。像大多数常规对象一样，所有的Strings现在会处于堆中。</p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/sakura-hly.github.io/2017/09/15/基础课程06/" itemprop="url">
-              
-                <span itemprop="name">基础课程06</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-15T18:55:19+08:00"
-              content="2017-09-15" >
-          09-15
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/sakura-hly.github.io/2017/09/15/基础课程05/" itemprop="url">
-              
-                <span itemprop="name">基础课程05</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-15T09:14:38+08:00"
-              content="2017-09-15" >
-          09-15
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/sakura-hly.github.io/2017/09/14/基础课程04/" itemprop="url">
-              
-                <span itemprop="name">基础课程04</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-14T13:51:07+08:00"
-              content="2017-09-14" >
-          09-14
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/sakura-hly.github.io/2017/09/14/基础课程03/" itemprop="url">
-              
-                <span itemprop="name">基础课程03</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-14T09:36:31+08:00"
-              content="2017-09-14" >
-          09-14
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/sakura-hly.github.io/2017/09/12/基础课程02/" itemprop="url">
-              
-                <span itemprop="name">基础课程02</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-12T19:51:03+08:00"
-              content="2017-09-12" >
-          09-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/sakura-hly.github.io/2017/09/12/基础课程01/" itemprop="url">
-              
-                <span itemprop="name">基础课程01</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-12T13:59:19+08:00"
-              content="2017-09-12" >
-          09-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/sakura-hly.github.io/tags/jdk1-8/" rel="tag"># jdk1.8</a>
+          
+            <a href="/sakura-hly.github.io/tags/String/" rel="tag"># String</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/sakura-hly.github.io/2017/09/18/基础课程08/" rel="next" title="基础课程08">
+                <i class="fa fa-chevron-left"></i> 基础课程08
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/sakura-hly.github.io/2017/09/19/JDK1-8源码学习-2/" rel="prev" title="JDK1-8源码学习-StringBUilder，StringBUffer">
+                JDK1-8源码学习-StringBUilder，StringBUffer <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/sakura-hly.github.io/archives/2017/09/page/2/">2</a><a class="extend next" rel="next" href="/sakura-hly.github.io/archives/2017/09/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+        
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  //with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
 
 
           </div>
@@ -689,6 +538,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -900,6 +753,10 @@
 
 
   
+  <script type="text/javascript" src="/sakura-hly.github.io/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/sakura-hly.github.io/js/src/post-details.js?v=5.1.2"></script>
+
+
 
   
 

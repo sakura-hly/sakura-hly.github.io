@@ -79,7 +79,7 @@
 <link href="/sakura-hly.github.io/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="jdk1.8,String," />
 
 
 
@@ -95,16 +95,18 @@
 
 
 
-<meta name="description" content="一个Linux菜鸟的博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="破晓">
-<meta property="og:url" content="http://yoursite.com/archives/2017/09/index.html">
+<meta name="description" content="在编写JAVA代码的过程中有时要频繁地对字符串进行拼接，如果直接用”+”拼接的话会建立很多的String型对象，严重的话会对服务器资源和性能造成不小的影响；(其实在jdk1.5之后，String“+”拼接在底层已经用StringBuilder实现了)而使用StringBuilder和StringBuffer能解决以上问题。 AbsractStringBuilder这是jdk1.8中对StringB">
+<meta name="keywords" content="jdk1.8,String">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JDK1-8源码学习-StringBUilder，StringBUffer">
+<meta property="og:url" content="http://yoursite.com/2017/09/19/JDK1-8源码学习-2/index.html">
 <meta property="og:site_name" content="破晓">
-<meta property="og:description" content="一个Linux菜鸟的博客">
+<meta property="og:description" content="在编写JAVA代码的过程中有时要频繁地对字符串进行拼接，如果直接用”+”拼接的话会建立很多的String型对象，严重的话会对服务器资源和性能造成不小的影响；(其实在jdk1.5之后，String“+”拼接在底层已经用StringBuilder实现了)而使用StringBuilder和StringBuffer能解决以上问题。 AbsractStringBuilder这是jdk1.8中对StringB">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-09-19T07:16:26.373Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="破晓">
-<meta name="twitter:description" content="一个Linux菜鸟的博客">
+<meta name="twitter:title" content="JDK1-8源码学习-StringBUilder，StringBUffer">
+<meta name="twitter:description" content="在编写JAVA代码的过程中有时要频繁地对字符串进行拼接，如果直接用”+”拼接的话会建立很多的String型对象，严重的话会对服务器资源和性能造成不小的影响；(其实在jdk1.5之后，String“+”拼接在底层已经用StringBuilder实现了)而使用StringBuilder和StringBuffer能解决以上问题。 AbsractStringBuilder这是jdk1.8中对StringB">
 
 
 
@@ -134,13 +136,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/2017/09/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/19/JDK1-8源码学习-2/"/>
 
 
 
 
 
-  <title>Archive | 破晓</title>
+  <title>JDK1-8源码学习-StringBUilder，StringBUffer | 破晓</title>
   
 
 
@@ -169,7 +171,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -277,411 +279,242 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/sakura-hly.github.io/2017/09/19/JDK1-8源码学习-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="caijy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/sakura-hly.github.io/images/dp.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="破晓">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">JDK1-8源码学习-StringBUilder，StringBUffer</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-19T13:57:09+08:00">
+                2017-09-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        Um..! 12 posts in total. Keep on posting.
-      </span>
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/sakura-hly.github.io/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2017">2017</h1>
-          </div>
-        
-        
 
-        
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/sakura-hly.github.io/2017/09/19/JDK1-8源码学习-2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count fb-comments-count" data-href="http://yoursite.com/2017/09/19/JDK1-8源码学习-2/" itemprop="commentCount">0</span> comments
+                </a>
+              </span>
+            
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
+             <span id="/sakura-hly.github.io/2017/09/19/JDK1-8源码学习-2/" class="leancloud_visitors" data-flag-title="JDK1-8源码学习-StringBUilder，StringBUffer">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/sakura-hly.github.io/2017/09/19/JDK1-8源码学习-2/" itemprop="url">
-              
-                <span itemprop="name">JDK1-8源码学习-StringBUilder，StringBUffer</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-19T13:57:09+08:00"
-              content="2017-09-19" >
-          09-19
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+          
 
+        </div>
+      </header>
+    
 
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/sakura-hly.github.io/2017/09/19/JDK1.8源码学习-1/" itemprop="url">
-              
-                <span itemprop="name">JDK1.8源码学习-String</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-19T10:31:14+08:00"
-              content="2017-09-19" >
-          09-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/sakura-hly.github.io/2017/09/18/基础课程08/" itemprop="url">
-              
-                <span itemprop="name">基础课程08</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-18T13:55:22+08:00"
-              content="2017-09-18" >
-          09-18
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/sakura-hly.github.io/2017/09/17/基础课程07/" itemprop="url">
-              
-                <span itemprop="name">基础课程07</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-17T15:45:32+08:00"
-              content="2017-09-17" >
-          09-17
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <p>在编写JAVA代码的过程中有时要频繁地对字符串进行拼接，如果直接用”+”拼接的话会建立很多的String型对象，严重的话会对服务器资源和性能造成不小的影响；(其实在jdk1.5之后，String“+”拼接在底层已经用StringBuilder实现了)而使用StringBuilder和StringBuffer能解决以上问题。</p>
+<h3 id="AbsractStringBuilder"><a href="#AbsractStringBuilder" class="headerlink" title="AbsractStringBuilder"></a>AbsractStringBuilder</h3><p>这是jdk1.8中对StringBuilder的声明，可以看到也用final修饰了，那么为什么我们还说它是可变类呢，注意到它继承了AbstractStringBuilder，关键就是这个类。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public final class StringBuilder</div><div class="line">    extends AbstractStringBuilder</div><div class="line">    implements java.io.Serializable, CharSequence</div><div class="line">&#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>我们重点看到AbstractStringBuilder的append方法，有很多，选取其中一个：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">public AbstractStringBuilder append(String str) &#123;</div><div class="line">    if (str == null)</div><div class="line">        return appendNull();</div><div class="line">    int len = str.length();</div><div class="line">    //先扩大自身容量</div><div class="line">    ensureCapacityInternal(count + len);</div><div class="line">    //调用getChars()将str拼接/复制到自身后面</div><div class="line">    str.getChars(0, len, value, count);</div><div class="line">    count += len;</div><div class="line">    return this;</div><div class="line">&#125;</div><div class="line">public void getChars(int srcBegin, int srcEnd, char[] dst, int dstBegin)</div><div class="line">&#123;</div><div class="line">    if (srcBegin &lt; 0)</div><div class="line">        throw new StringIndexOutOfBoundsException(srcBegin);</div><div class="line">    if ((srcEnd &lt; 0) || (srcEnd &gt; count))</div><div class="line">        throw new StringIndexOutOfBoundsException(srcEnd);</div><div class="line">    if (srcBegin &gt; srcEnd)</div><div class="line">        throw new StringIndexOutOfBoundsException(&quot;srcBegin &gt; srcEnd&quot;);</div><div class="line">    System.arraycopy(value, srcBegin, dst, dstBegin, srcEnd - srcBegin);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>从以上代码可以看到StringBuilder的append实际上是调用System.arraycopy()方法的，而且这个方法是一个native方法，从指定源数组中复制一个数组，复制从指定的位置开始， 到目标数组的指定位置结束，这个方法效率也不错。</p>
+<p>还有一个delete方法,从StringBuilder中删除从start到end的字符：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">public AbstractStringBuilder delete(int start, int end) &#123;</div><div class="line">    if (start &lt; 0)</div><div class="line">        throw new StringIndexOutOfBoundsException(start);</div><div class="line">    if (end &gt; count)</div><div class="line">        end = count;</div><div class="line">    if (start &gt; end)</div><div class="line">        throw new StringIndexOutOfBoundsException();</div><div class="line">    int len = end - start;</div><div class="line">    if (len &gt; 0) &#123;</div><div class="line">        //实质是调用System.arraycopy对自身进行复制</div><div class="line">        System.arraycopy(value, start+len, value, start, count-end);</div><div class="line">        count -= len;</div><div class="line">    &#125;</div><div class="line">    return this;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>reverse方法，这是String没有的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">public AbstractStringBuilder reverse() &#123;</div><div class="line">    boolean hasSurrogates = false;</div><div class="line">    int n = count - 1;</div><div class="line">    for (int j = (n-1) &gt;&gt; 1; j &gt;= 0; j--) &#123;</div><div class="line">        int k = n - j;</div><div class="line">        char cj = value[j];</div><div class="line">        char ck = value[k];</div><div class="line">        value[j] = ck;</div><div class="line">        value[k] = cj;</div><div class="line">        //这里是判断每个字符是否在Character.MIN_SURROGATE(\ud800)和Character.MAX_SURROGATE(\udfff)之间</div><div class="line">        if (Character.isSurrogate(cj) ||</div><div class="line">            Character.isSurrogate(ck)) &#123;</div><div class="line">            hasSurrogates = true;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    if (hasSurrogates) &#123;</div><div class="line">        reverseAllValidSurrogatePairs();</div><div class="line">    &#125;</div><div class="line">    return this;</div><div class="line">&#125;</div><div class="line"></div><div class="line">private void reverseAllValidSurrogatePairs() &#123;//反转回有效代理对</div><div class="line">    for (int i = 0; i &lt; count - 1; i++) &#123;</div><div class="line">        char c2 = value[i];</div><div class="line">        if (Character.isLowSurrogate(c2)) &#123;</div><div class="line">            char c1 = value[i + 1];</div><div class="line">            if (Character.isHighSurrogate(c1)) &#123;</div><div class="line">                //将i和i+1位字符互换</div><div class="line">                //高代理+低代理组合表示一个字符</div><div class="line">                value[i++] = c1;</div><div class="line">                value[i] = c2;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里反转还加了这些判断，为什么这样做？首先来看一个概念，下面这段话摘自知乎：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Surrogate 這個概念，不是來自 Java 語言，而是來自 Unicode 編碼方式之一 UTF-16 。</div><div class="line">簡而言之，Java 語言內部的字符信息是使用 UTF-16 編碼。因為，char 這個類型是 16-bit 的。它可以有65536種取值，即65536個編號，每個編號可以代表1種字符。</div><div class="line">但是，Unicode 包含的字符已經遠遠超過65536個。那，編號大於65536的，還要用 16-bit 編碼，該怎麼辦？</div><div class="line">於是，Unicode 標準制定組想出的辦法就是，從這65536個編號裏，拿出2048個，規定它們是「Surrogates」，讓它們兩個為一組，來代表編號大於65536的那些字符。</div><div class="line">更具體地，編號為 U+D800 至 U+DBFF 的規定為「High Surrogates」，共1024個。編號為 U+DC00 至 U+DFFF 的規定為「Low Surrogates」，也是1024個。它們兩兩組合出現，就又可以多表示1048576種字符。</div></pre></td></tr></table></figure></p>
+<hr>
+<h3 id="StringBuilder"><a href="#StringBuilder" class="headerlink" title="StringBuilder"></a>StringBuilder</h3><p>StringBuilder的大多数方法都是调用父类AbstractStringBuilder的方法，只是自己增加了writeObject()和readObject()的用于序列化/反序列化的方法。</p>
+<hr>
+<h3 id="StringBuffer"><a href="#StringBuffer" class="headerlink" title="StringBuffer"></a>StringBuffer</h3><p>StringBuffer和StringBuilder的代码大致相同，只是在绝大多数方法前面都加了synchronized关键字，所以它是线程安全的，代价是性能低下。</p>
+<p>相比而言StringBuilder是非线程安全的，性能很好。</p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/sakura-hly.github.io/2017/09/15/基础课程06/" itemprop="url">
-              
-                <span itemprop="name">基础课程06</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-15T18:55:19+08:00"
-              content="2017-09-15" >
-          09-15
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/sakura-hly.github.io/2017/09/15/基础课程05/" itemprop="url">
-              
-                <span itemprop="name">基础课程05</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-15T09:14:38+08:00"
-              content="2017-09-15" >
-          09-15
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/sakura-hly.github.io/2017/09/14/基础课程04/" itemprop="url">
-              
-                <span itemprop="name">基础课程04</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-14T13:51:07+08:00"
-              content="2017-09-14" >
-          09-14
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/sakura-hly.github.io/2017/09/14/基础课程03/" itemprop="url">
-              
-                <span itemprop="name">基础课程03</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-14T09:36:31+08:00"
-              content="2017-09-14" >
-          09-14
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/sakura-hly.github.io/2017/09/12/基础课程02/" itemprop="url">
-              
-                <span itemprop="name">基础课程02</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-12T19:51:03+08:00"
-              content="2017-09-12" >
-          09-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/sakura-hly.github.io/2017/09/12/基础课程01/" itemprop="url">
-              
-                <span itemprop="name">基础课程01</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-12T13:59:19+08:00"
-              content="2017-09-12" >
-          09-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/sakura-hly.github.io/tags/jdk1-8/" rel="tag"># jdk1.8</a>
+          
+            <a href="/sakura-hly.github.io/tags/String/" rel="tag"># String</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/sakura-hly.github.io/2017/09/19/JDK1.8源码学习-1/" rel="next" title="JDK1.8源码学习-String">
+                <i class="fa fa-chevron-left"></i> JDK1.8源码学习-String
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/sakura-hly.github.io/archives/2017/09/page/2/">2</a><a class="extend next" rel="next" href="/sakura-hly.github.io/archives/2017/09/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+        
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  //with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
 
 
           </div>
@@ -689,6 +522,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -709,8 +546,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           
             <img class="site-author-image" itemprop="image"
@@ -775,6 +621,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#AbsractStringBuilder"><span class="nav-number">1.</span> <span class="nav-text">AbsractStringBuilder</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#StringBuilder"><span class="nav-number">2.</span> <span class="nav-text">StringBuilder</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#StringBuffer"><span class="nav-number">3.</span> <span class="nav-text">StringBuffer</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -900,6 +762,10 @@
 
 
   
+  <script type="text/javascript" src="/sakura-hly.github.io/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/sakura-hly.github.io/js/src/post-details.js?v=5.1.2"></script>
+
+
 
   
 
