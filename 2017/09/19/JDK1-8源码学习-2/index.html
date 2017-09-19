@@ -95,18 +95,18 @@
 
 
 
-<meta name="description" content="在编写JAVA代码的过程中有时要频繁地对字符串进行拼接，如果直接用”+”拼接的话会建立很多的String型对象，严重的话会对服务器资源和性能造成不小的影响；(其实在jdk1.5之后，String“+”拼接在底层已经用StringBuilder实现了)而使用StringBuilder和StringBuffer能解决以上问题。 AbsractStringBuilder这是jdk1.8中对StringB">
+<meta name="description" content="在编写JAVA代码的过程中有时要频繁地对字符串进行拼接，如果直接用”+”拼接的话会建立很多的String型对象，严重的话会对服务器资源和性能造成不小的影响；(其实在jdk1.5之后，String“+”拼接在底层已经用StringBuilder实现了)而使用StringBuilder和StringBuffer能解决以上问题。">
 <meta name="keywords" content="jdk1.8,String">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JDK1-8源码学习-StringBUilder，StringBUffer">
 <meta property="og:url" content="http://yoursite.com/2017/09/19/JDK1-8源码学习-2/index.html">
 <meta property="og:site_name" content="破晓">
-<meta property="og:description" content="在编写JAVA代码的过程中有时要频繁地对字符串进行拼接，如果直接用”+”拼接的话会建立很多的String型对象，严重的话会对服务器资源和性能造成不小的影响；(其实在jdk1.5之后，String“+”拼接在底层已经用StringBuilder实现了)而使用StringBuilder和StringBuffer能解决以上问题。 AbsractStringBuilder这是jdk1.8中对StringB">
+<meta property="og:description" content="在编写JAVA代码的过程中有时要频繁地对字符串进行拼接，如果直接用”+”拼接的话会建立很多的String型对象，严重的话会对服务器资源和性能造成不小的影响；(其实在jdk1.5之后，String“+”拼接在底层已经用StringBuilder实现了)而使用StringBuilder和StringBuffer能解决以上问题。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-09-19T07:16:26.373Z">
+<meta property="og:updated_time" content="2017-09-19T07:18:00.758Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JDK1-8源码学习-StringBUilder，StringBUffer">
-<meta name="twitter:description" content="在编写JAVA代码的过程中有时要频繁地对字符串进行拼接，如果直接用”+”拼接的话会建立很多的String型对象，严重的话会对服务器资源和性能造成不小的影响；(其实在jdk1.5之后，String“+”拼接在底层已经用StringBuilder实现了)而使用StringBuilder和StringBuffer能解决以上问题。 AbsractStringBuilder这是jdk1.8中对StringB">
+<meta name="twitter:description" content="在编写JAVA代码的过程中有时要频繁地对字符串进行拼接，如果直接用”+”拼接的话会建立很多的String型对象，严重的话会对服务器资源和性能造成不小的影响；(其实在jdk1.5之后，String“+”拼接在底层已经用StringBuilder实现了)而使用StringBuilder和StringBuffer能解决以上问题。">
 
 
 
@@ -403,7 +403,7 @@
       
 
       
-        <p>在编写JAVA代码的过程中有时要频繁地对字符串进行拼接，如果直接用”+”拼接的话会建立很多的String型对象，严重的话会对服务器资源和性能造成不小的影响；(其实在jdk1.5之后，String“+”拼接在底层已经用StringBuilder实现了)而使用StringBuilder和StringBuffer能解决以上问题。</p>
+        <p>在编写JAVA代码的过程中有时要频繁地对字符串进行拼接，如果直接用”+”拼接的话会建立很多的String型对象，严重的话会对服务器资源和性能造成不小的影响；(其实在jdk1.5之后，String“+”拼接在底层已经用StringBuilder实现了)而使用StringBuilder和StringBuffer能解决以上问题。<br><a id="more"></a></p>
 <h3 id="AbsractStringBuilder"><a href="#AbsractStringBuilder" class="headerlink" title="AbsractStringBuilder"></a>AbsractStringBuilder</h3><p>这是jdk1.8中对StringBuilder的声明，可以看到也用final修饰了，那么为什么我们还说它是可变类呢，注意到它继承了AbstractStringBuilder，关键就是这个类。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public final class StringBuilder</div><div class="line">    extends AbstractStringBuilder</div><div class="line">    implements java.io.Serializable, CharSequence</div><div class="line">&#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>我们重点看到AbstractStringBuilder的append方法，有很多，选取其中一个：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">public AbstractStringBuilder append(String str) &#123;</div><div class="line">    if (str == null)</div><div class="line">        return appendNull();</div><div class="line">    int len = str.length();</div><div class="line">    //先扩大自身容量</div><div class="line">    ensureCapacityInternal(count + len);</div><div class="line">    //调用getChars()将str拼接/复制到自身后面</div><div class="line">    str.getChars(0, len, value, count);</div><div class="line">    count += len;</div><div class="line">    return this;</div><div class="line">&#125;</div><div class="line">public void getChars(int srcBegin, int srcEnd, char[] dst, int dstBegin)</div><div class="line">&#123;</div><div class="line">    if (srcBegin &lt; 0)</div><div class="line">        throw new StringIndexOutOfBoundsException(srcBegin);</div><div class="line">    if ((srcEnd &lt; 0) || (srcEnd &gt; count))</div><div class="line">        throw new StringIndexOutOfBoundsException(srcEnd);</div><div class="line">    if (srcBegin &gt; srcEnd)</div><div class="line">        throw new StringIndexOutOfBoundsException(&quot;srcBegin &gt; srcEnd&quot;);</div><div class="line">    System.arraycopy(value, srcBegin, dst, dstBegin, srcEnd - srcBegin);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>从以上代码可以看到StringBuilder的append实际上是调用System.arraycopy()方法的，而且这个方法是一个native方法，从指定源数组中复制一个数组，复制从指定的位置开始， 到目标数组的指定位置结束，这个方法效率也不错。</p>
