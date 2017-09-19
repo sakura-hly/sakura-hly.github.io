@@ -95,18 +95,20 @@
 
 
 
-<meta name="description" content="你好，欢迎来到我的个人技术博客。      –《Linux就该这么学》读书笔记">
+<meta name="description" content="保证数据的安全性是继可用性之后最为重要的一项工作，防火墙技术作为公网与内网之间的保护屏障，起着至关重要的作用。大家一起先来学习在红帽RHEL7系统中firewalld防火墙服务与iptables防火墙服务之间的关系，从理论和事实层面剖析真相。 本节将会分别使用iptables，firewall-cmd，firewall-config和Tcp_wrappers等防火墙策略配置服务来完成数十个根据真实">
 <meta name="keywords" content="Linux">
 <meta property="og:type" content="article">
-<meta property="og:title" content="My Linux Blog">
-<meta property="og:url" content="http://yoursite.com/2017/09/12/首页/index.html">
+<meta property="og:title" content="基础课程08">
+<meta property="og:url" content="http://yoursite.com/2017/09/18/基础课程08/index.html">
 <meta property="og:site_name" content="破晓">
-<meta property="og:description" content="你好，欢迎来到我的个人技术博客。      –《Linux就该这么学》读书笔记">
+<meta property="og:description" content="保证数据的安全性是继可用性之后最为重要的一项工作，防火墙技术作为公网与内网之间的保护屏障，起着至关重要的作用。大家一起先来学习在红帽RHEL7系统中firewalld防火墙服务与iptables防火墙服务之间的关系，从理论和事实层面剖析真相。 本节将会分别使用iptables，firewall-cmd，firewall-config和Tcp_wrappers等防火墙策略配置服务来完成数十个根据真实">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-09-12T05:55:47.945Z">
+<meta property="og:image" content="http://yoursite.com/img/防火墙拓扑.png">
+<meta property="og:updated_time" content="2017-09-18T13:23:42.739Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="My Linux Blog">
-<meta name="twitter:description" content="你好，欢迎来到我的个人技术博客。      –《Linux就该这么学》读书笔记">
+<meta name="twitter:title" content="基础课程08">
+<meta name="twitter:description" content="保证数据的安全性是继可用性之后最为重要的一项工作，防火墙技术作为公网与内网之间的保护屏障，起着至关重要的作用。大家一起先来学习在红帽RHEL7系统中firewalld防火墙服务与iptables防火墙服务之间的关系，从理论和事实层面剖析真相。 本节将会分别使用iptables，firewall-cmd，firewall-config和Tcp_wrappers等防火墙策略配置服务来完成数十个根据真实">
+<meta name="twitter:image" content="http://yoursite.com/img/防火墙拓扑.png">
 
 
 
@@ -136,13 +138,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/09/12/首页/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/18/基础课程08/"/>
 
 
 
 
 
-  <title>My Linux Blog | 破晓</title>
+  <title>基础课程08 | 破晓</title>
   
 
 
@@ -293,7 +295,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/sakura-hly.github.io/2017/09/12/首页/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/sakura-hly.github.io/2017/09/18/基础课程08/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="caijy">
@@ -310,7 +312,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">My Linux Blog</h1>
+          <h1 class="post-title" itemprop="name headline">基础课程08</h1>
         
 
         <div class="post-meta">
@@ -322,8 +324,8 @@
               
                 <span class="post-meta-item-text">Veröffentlicht am</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-12T12:51:48+08:00">
-                2017-09-12
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-18T13:55:22+08:00">
+                2017-09-18
               </time>
             
 
@@ -363,8 +365,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/sakura-hly.github.io/2017/09/12/首页/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count fb-comments-count" data-href="http://yoursite.com/2017/09/12/首页/" itemprop="commentCount">0</span> comments
+                <a href="/sakura-hly.github.io/2017/09/18/基础课程08/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count fb-comments-count" data-href="http://yoursite.com/2017/09/18/基础课程08/" itemprop="commentCount">0</span> comments
                 </a>
               </span>
             
@@ -372,7 +374,7 @@
 
           
           
-             <span id="/sakura-hly.github.io/2017/09/12/首页/" class="leancloud_visitors" data-flag-title="My Linux Blog">
+             <span id="/sakura-hly.github.io/2017/09/18/基础课程08/" class="leancloud_visitors" data-flag-title="基础课程08">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -403,7 +405,229 @@
       
 
       
-        <p>你好，欢迎来到我的个人技术博客。<br>      –《Linux就该这么学》读书笔记</p>
+        <p>保证数据的安全性是继可用性之后最为重要的一项工作，防火墙技术作为公网与内网之间的保护屏障，起着至关重要的作用。大家一起先来学习在红帽RHEL7系统中firewalld防火墙服务与iptables防火墙服务之间的关系，从理论和事实层面剖析真相。</p>
+<p>本节将会分别使用iptables，firewall-cmd，firewall-config和Tcp_wrappers等防火墙策略配置服务来完成数十个根据真实工作需求而设计的防火墙策略配置实验，让大家不仅能够熟练的对请求包流量进行过滤，还能够基于服务程序进行允许和关闭操作，做到保证Linux系统安全万无一失。<br><a id="more"></a></p>
+<h3 id="防火墙管理工具"><a href="#防火墙管理工具" class="headerlink" title="防火墙管理工具"></a>防火墙管理工具</h3><p>保证数据的安全性是继可用性之后最为重要的一项工作，众所周知外部公网相比企业内网更加的“罪恶丛生”，因此防火墙技术作为公网与内网之间的保护屏障，虽然有硬件和软件之分，但主要功能都是 <strong>依据策略对外部请求进行过滤</strong>，防火墙技术能够做到监控每一个数据包并判断是否有相应的匹配策略，直到匹配到其中一条策略规则或执行默认策略为止，防火墙策略可以基于来源地址，请求动作或协议等信息来定制，<strong>最终仅让合法的用户请求流入到内网，其余的均被抛弃。</strong><br><img src="/img/防火墙拓扑.png" alt=""><br>在红帽RHEL7系统中Filewalld服务取代了Iptables服务，对于接触Linux系统比较早或学习过红帽RHEL6系统的读者来讲，突然改用Firewalld服务后确实不免会有些抵触心理，或许会觉得Firewalld服务是一次不小的改变。但其实Iptables服务与Firewalld服务都不是真正的防火墙，它们都是用来定义防火墙策略功能的“防火墙管理工具”而已，iptables服务会把配置好的防火墙策略交由内核层面的netfilter网络过滤器来处理，而filewalld服务则是把配置好的防火墙策略交由内核层面的nftables包过滤框架来处理。换句话说，当前在Linux系统中其实同时有多个防火墙管理工具共同存在，它们的作用都是为了方便运维人员管理Linux系统的防火墙策略，而咱们只要配置妥当其中一个就足够了。虽然各个工具之间各有优劣特色，但对于防火墙策略的配置思路上是保持一致的，同学们甚至可以不用完全掌握本章节内的知识，而是在这诸多个防火墙管理工具中任选一款来学透即可，完全能够满足日常的工作所需。</p>
+<hr>
+<h3 id="Iptables"><a href="#Iptables" class="headerlink" title="Iptables"></a>Iptables</h3><p>在较早期的Linux系统中想配置防火墙默认使用的都是iptables防火墙管理命令，而新型firewalld防火墙管理服务已经被投入使用多年。</p>
+<h4 id="策略与匹配链"><a href="#策略与匹配链" class="headerlink" title="策略与匹配链"></a>策略与匹配链</h4><p>防火墙会从上至下来读取规则策略，一旦匹配到了合适的就会去执行并立即结束匹配动作，但也有转了一圈之后发现没有匹配到合适规则的时候，那么就回去执行默认策略。因此对防火墙的策略无非就是两种，一种是“通”，另一种是“堵”————当防火墙的默认策略是拒绝的，就要设置允许规则，否则谁都进不来了，而如果防火墙的默认策略是允许的，就要设置拒绝规则，否则谁都能进来了，起不到防范的作用。</p>
+<p>iptables命令把对数据进行过滤或处理数据包的策略叫做规则，把多条规则又存放到一个规则链中，规则链是依据处理数据包位置的不同而进行的分类，包括有：在进行路由选择前处理数据包（PREROUTING），处理流入的数据包（INPUT），处理流出的数据包（OUTPUT），处理转发的数据包（FORWARD），在进行路由选择后处理数据包（POSTROUTING）。从内网向外网发送的数据一把都是可控且良性的，<strong>因此显而易见咱们使用最多的就是INPUT数据链，这个链中定义的规则起到了保证私网设施不受外网骇客侵犯的作用。</strong></p>
+<p>比如您所居住的社区物业保安有两条规定——“禁止小商贩进入社区，各种车辆都需要登记”，这两条安保规定很明显应该是作用到了社区的正门（流量必须经过的地方），而不是每家每户的防盗门上。根据前面提到的防火墙策略的匹配顺序规则，咱们可以猜想有多种情况——比如来访人员是小商贩，则会被物业保安直接拒绝在大门外，也无需再对车辆进行登记，而如果来访人员是一辆汽车，那么因为第一条禁止小商贩策略就没有被匹配到，因而按顺序匹配到第二条策略，需要对车辆进行登记，再有如果来访的是社区居民，则既不满足小商贩策略，也不满足车辆登记策略，因此会执行默认的放行策略。</p>
+<p>不过只有规则策略还不能保证社区的安全，物业保安还应该知道该怎么样处理这些被匹配到的流量，比如包括有“允许”、“登记”、“拒绝”、“不理他”，这些动作对应到iptables命令术语中是 <strong>ACCEPT（允许流量通过）</strong>，<strong>LOG（记录日志信息）</strong>，<strong>REJECT（拒绝流量通过）</strong>，<strong>DROP（拒绝流量通过）</strong>。允许动作和记录日志工作都比较好理解，着重需要讲解的是这两条拒绝动作的的不同点，其中REJECT和DROP的动作操作都是把数据包拒绝，<strong>DROP是直接把数据包抛弃不响应，而REJECT会拒绝后在回复一条“您的信息我已收到，但被扔掉了”</strong>，让对方清晰的看到数据被拒绝的响应。就好比说您有一天正在家里看电视，突然有人敲门，透过“猫眼”一看是推销商品的，咱们如果不需要的情况下就会直接拒绝他们（REJECT）。但如果透过“猫眼”看到的是债主带了几十个小弟来讨债，这种情况不光要拒绝开门，还要默不作声，伪装成自己不在家的样子（DROP），这就是两种拒绝动作的不同之处。</p>
+<p><strong>把Linux系统设置成REJECT拒绝动作策略后，对方会看到本机的端口不可达的响应：</strong></p>
+<h4 id="基本的命令参数"><a href="#基本的命令参数" class="headerlink" title="基本的命令参数"></a>基本的命令参数</h4><p>iptables是一款基于命令行的防火墙策略管理工具，由于该命令是基于终端执行且存在有大量参数的，学习起来难度还是较大的，好在对于日常控制防火墙策略来讲，您无需深入的了解诸如“四表五链”的理论概念，只需要掌握常用的参数并做到灵活搭配即可，以便于能够更顺畅的胜任工作所需。iptables命令可以根据数据的流量的源地址，目的地址，传输协议，服务类型等等信息项进行匹配，一旦数据包和策略匹配上之后，iptables就会根据策略所预设的动作来处理这些数据包流量，另外再来提醒下同学们防火墙策略的匹配顺序规则是从上至下的，因此切记要把较为严格、优先级较高的策略放到靠前位置，否则有可能产生错误。下表中为读者们总结归纳了几乎所有常用的iptables命令参数，</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-P</td>
+<td>设置默认策略:iptables -P INPUT (DROP&#124;ACCEPT)</td>
+</tr>
+<tr>
+<td>-F</td>
+<td>清空规则链</td>
+</tr>
+<tr>
+<td>-L</td>
+<td>查看规则链</td>
+</tr>
+<tr>
+<td>-A</td>
+<td>在规则链的末尾加入新规则</td>
+</tr>
+<tr>
+<td>-l num</td>
+<td>在规则链的头部加入新规则</td>
+</tr>
+<tr>
+<td>-D num</td>
+<td>删除某一条规则</td>
+</tr>
+<tr>
+<td>-s</td>
+<td>匹配来源地址IP/MASK，加叹号“!”表示除这个IP外</td>
+</tr>
+<tr>
+<td>-d</td>
+<td>匹配目标地址</td>
+</tr>
+<tr>
+<td>-i 网卡名称</td>
+<td>匹配从这块网卡流入的数据</td>
+</tr>
+<tr>
+<td>-o 网卡名称</td>
+<td>匹配从这块网卡流出的数据</td>
+</tr>
+<tr>
+<td>-p</td>
+<td>匹配协议，如tcp，udp，icmp</td>
+</tr>
+<tr>
+<td>–dport num</td>
+<td>匹配目标端口号</td>
+</tr>
+<tr>
+<td>–sport num</td>
+<td>匹配来源端口号</td>
+</tr>
+</tbody>
+</table>
+<p><strong>使用iptables -L命令来查看已有的防火墙策略：</strong><br><code>[root@localhost ~]# iptables -L</code><br><code>Chain INPUT (policy ACCEPT)</code><br><code>target     prot opt source               destination</code><br><code>ACCEPT     all  --  anywhere             anywhere             ctstate</code> <code>RELATED,ESTABLISHED</code><br><code>ACCEPT     all  --  anywhere             anywhere</code><br><code>INPUT_direct  all  --  anywhere             anywhere</code><br><code>INPUT_ZONES_SOURCE  all  --  anywhere             anywhere</code><br><code>INPUT_ZONES  all  --  anywhere             anywhere</code><br><code>ACCEPT     icmp --  anywhere             anywhere</code><br><code>REJECT     all  --  anywhere             anywhere</code>           <code>reject-with icmp-h</code><br><code>......</code></p>
+<p><strong>使用iptables -F命令来清空已有的防火墙策略：</strong><br><code>[root@localhost ~]# iptables -F</code><br><code>[root@localhost ~]# iptables -L</code><br><code>Chain INPUT (policy ACCEPT)</code><br><code>......</code></p>
+<p><strong>将INPUT链的默认策略设置成拒绝：</strong><br>如前面所提到的防火墙策略设置无非有两种方式，一种是“通”，一种是“堵”，当把INPUT链设置为默认拒绝后，就要往里面写入允许策略了，否则所有流入的数据包都会被默认拒绝掉，同学们需要留意规则链的默认策略拒绝动作只能是DROP，而不能是REJECT。<br><code>[root@localhost ~]# iptables -P INPUT DROP</code><br><code>[root@localhost ~]# iptables -L</code><br><code>Chain INPUT (policy DROP)</code><br><code>target     prot opt source               destination</code><br><code>......</code></p>
+<p><strong>向INPUT链中添加允许icmp数据包流入的允许策略：</strong><br><code>[root@localhost ~]# ping -c 4 192.168.139.128</code><br><code>PING 192.168.139.128 (192.168.139.128) 56(84) bytes of data.</code><br><code>--- 192.168.139.128 ping statistics ---</code><br><code>4 packets transmitted, 0 received, 100% packet loss, time 3001ms</code><br><code>[root@localhost ~]# iptables -I INPUT -p icmp -j ACCEPT</code><br><code>[root@localhost ~]# ping -c 4 192.168.139.128</code><br><code>PING 192.168.139.128 (192.168.139.128) 56(84) bytes of data.</code><br><code>64 bytes from 192.168.139.128: icmp_seq=1 ttl=64 time=0.075 ms</code><br><code>64 bytes from 192.168.139.128: icmp_seq=2 ttl=64 time=0.032 ms</code><br><code>64 bytes from 192.168.139.128: icmp_seq=3 ttl=64 time=0.062 ms</code><br><code>64 bytes from 192.168.139.128: icmp_seq=4 ttl=64 time=0.062 ms</code><br><code>--- 192.168.139.128 ping statistics ---</code><br><code>4 packets transmitted, 4 received, 0% packet loss, time 3004ms</code><br><code>rtt min/avg/max/mdev = 0.032/0.057/0.075/0.018 ms</code></p>
+<p><strong>删除INPUT链中的那条策略，并把默认策略设置成还原：</strong><br><code>[root@localhost ~]# iptables -D INPUT 1</code><br><code>[root@localhost ~]# iptables -P INPUT ACCEPT</code><br><code>[root@localhost ~]# iptables -L</code><br><code>Chain INPUT (policy ACCEPT)</code><br><code>target     prot opt source               destination</code></p>
+<p><strong>设置INPUT链只允许指定网段访问本机的22接口，拒绝其它所有主机的数据请求流量：</strong><br><code>[root@localhost ~]# iptables -I INPUT -s 192.168.139.0/24 -p tcp --dport 22 -j ACCEPT</code><br><code>[root@localhost ~]# iptables -A INPUT -p tcp --dport 22 -j REJECT</code><br><code>[root@localhost ~]# iptables -L</code><br><code>Chain INPUT (policy ACCEPT)</code><br><code>target     prot opt source               destination</code><br><code>ACCEPT     tcp  --  192.168.139.0/24     anywhere             tcp dpt:ssh</code><br><code>REJECT     tcp  --  anywhere             anywhere             tcp dpt:ssh reject-wi</code></p>
+<p>使用IP地址在192.168.10.0/24网段内的主机访问服务器的22端口：<br><code>[root@localhost ~]# ssh 192.168.139.128</code><br><code>The authenticity of host &#39;192.168.139.128 (192.168.139.128)&#39; can&#39;t be established.</code><br><code>ECDSA key fingerprint is 32:fe:4a:7b:85:e9:93:8f:d8:93:e1:94:81:00:c8:f1.</code><br><code>Are you sure you want to continue connecting (yes/no)? yes</code><br><code>Warning: Permanently added &#39;192.168.139.128&#39; (ECDSA) to the list of known hosts.</code><br><code>root@192.168.139.128&#39;s password:</code><br><code>Last login: Mon Sep 18 15:00:26 2017</code></p>
+<p>使用IP地址在192.168.20.0/24网段外的主机访问服务器的22端口：<br><code>[root@Client B ~]# ssh 192.168.139.128</code><br><code>Connecting to 192.168.139.128:22...</code><br><code>Could not connect to &#39;192.168.139.128&#39; (port 22): Connection failed.</code></p>
+<p><strong>向INPUT链中添加拒绝所有人访问本机12345端口的策略：</strong><br><code>[root@localhost ~]# iptables -I INPUT -p tcp --dport 12345 -j REJECT</code><br><code>[root@localhost ~]# iptables -I INPUT -p udp --dport 12345 -j REJECT</code><br><code>[root@localhost ~]# iptables -L</code><br><code>Chain INPUT (policy ACCEPT)</code><br><code>target     prot opt source               destination</code><br><code>REJECT     udp  --  anywhere             anywhere             udp dpt:italk reject-with icmp-port-unreachable</code><br><code>REJECT     tcp  --  anywhere             anywhere             tcp dpt:italk reject-with icmp-port-unreachable</code><br><code>ACCEPT     tcp  --  192.168.139.0/24     anywhere             tcp dpt:ssh</code><br><code>REJECT     tcp  --  anywhere             anywhere             tcp dpt:ssh reject-with icmp-port-unreachable</code><br><code>......</code></p>
+<p><strong>向INPUT链中添加拒绝来自于指定192.168.139.127主机访问本机80端口（web服务）的防火墙策略：</strong><br><code>[root@localhost ~]# iptables -I INPUT -p tcp -s 192.168.139.127 --dport 80 -j REJECT</code><br><code>[root@localhost ~]# iptables -L</code><br><code>Chain INPUT (policy ACCEPT)</code><br><code>target     prot opt source               destination</code><br><code>REJECT     tcp  --  192.168.139.127      anywhere             tcp dpt:http reject-with icmp-port-unreachable</code><br><code>REJECT     udp  --  anywhere             anywhere             udp dpt:italk reject-with icmp-port-unreachable</code><br><code>REJECT     tcp  --  anywhere             anywhere             tcp dpt:italk reject-with icmp-port-unreachable</code><br><code>ACCEPT     tcp  --  192.168.139.0/24     anywhere             tcp dpt:ssh</code><br><code>REJECT     tcp  --  anywhere             anywhere             tcp dpt:ssh reject-with icmp-port-unreachable</code></p>
+<p><strong>向INPUT链中添加拒绝所有主机不能访问本机1000至1024端口的防火墙策略：</strong><br><code>[root@localhost ~]# iptables -A INPUT -p tcp --dport 1000:1024 -j REJECT</code><br><code>[root@localhost ~]# iptables -A INPUT -p udp --dport 1000:1024 -j REJECT</code><br><code>[root@localhost ~]# iptables -L</code><br><code>Chain INPUT (policy ACCEPT)</code><br><code>target     prot opt source               destination</code><br><code>REJECT     tcp  --  192.168.139.127      anywhere             tcp dpt:http reject-with icmp-port-unreachable</code><br><code>REJECT     udp  --  anywhere             anywhere             udp dpt:italk reject-with icmp-port-unreachable</code><br><code>REJECT     tcp  --  anywhere             anywhere             tcp dpt:italk reject-with icmp-port-unreachable</code><br><code>ACCEPT     tcp  --  192.168.139.0/24     anywhere             tcp dpt:ssh</code><br><code>REJECT     tcp  --  anywhere             anywhere             tcp dpt:ssh reject-with icmp-port-unreachable</code><br><code>REJECT     tcp  --  anywhere             anywhere             tcp dpts:cadlock2:1024 reject-with icmp-port-unreachable</code><br><code>REJECT     udp  --  anywhere             anywhere             udp dpts:cadlock2:1024 reject-with icmp-port-unreachable</code><br>是不是还意犹未尽？但对于iptables防火墙管理命令的学习到此就可以结束了，考虑到以后防火墙的发展趋势，同学们只要能把上面的实例看懂看熟就可以完全搞定日常的iptables防火墙配置工作了。但请特别留意下，iptables命令配置的防火墙规则默认会在下一次重启时失效，所以如果您想让配置的防火墙策略永久的生效下去，还要执行一下保存命令：<br><code>[root@localhost ~]# service iptables save</code><br><code>iptables: Saving firewall rules to /etc/sysconfig/iptables:[  OK  ]</code></p>
+<hr>
+<h3 id="Firewalld"><a href="#Firewalld" class="headerlink" title="Firewalld"></a>Firewalld</h3><p>RHEL7是一个集合多款防火墙管理工具并存的系统，Firewalld动态防火墙管理器服务（Dynamic Firewall Manager of Linux systems）是目前默认的防火墙管理工具，同时拥有命令行终端和图形化界面的配置工具，即使是对Linux命令并不熟悉的同学也能快速入门。相比于传统的防火墙管理工具还支持了动态更新技术并加入了“zone区域”的概念，简单来说就是事先为用户预先准备几套防火墙策略集合（策略模板），然后可以根据不同的生产场景而选择合适的策略集合，实现了防火墙策略之间的快速切换。例如咱们有一台笔记本电脑每天都要在办公室、咖啡厅和家里使用，按常理推断最安全的应该是家里的内网，其次是公司办公室，最后是咖啡厅，如果需要在办公室内允许文件共享服务的请求流量、回到家中需要允许所有的服务，而在咖啡店则是除了上网外不允许任何其他请求，这样的需求应该是很常见的，在以前只能频繁的进行手动设置，而现在只需要预设好zone区域集合，然后轻轻点击一下就可以切换过去了上百条策略了，极大的提高了防火墙策略的应用效率，常见的zone区域名称及应用可见下表（默认为public）：</p>
+<table>
+<thead>
+<tr>
+<th>区域</th>
+<th>默认规则策略</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>trusted</td>
+<td>允许所有的数据包</td>
+</tr>
+<tr>
+<td>home</td>
+<td>拒绝流入的数据包，除非与输出流量数据包相关或是ssh,mdns,ipp-client,samba-client与dhcpv6-client服务则允许。</td>
+</tr>
+<tr>
+<td>internal</td>
+<td>等同于home区域</td>
+</tr>
+<tr>
+<td>work</td>
+<td>拒绝流入的数据包，除非与输出流量数据包相关或是ssh,ipp-client与dhcpv6-client服务则允许。</td>
+</tr>
+<tr>
+<td>public</td>
+<td>拒绝流入的数据包，除非与输出流量数据包相关或是ssh,dhcpv6-client服务则允许。</td>
+</tr>
+<tr>
+<td>external</td>
+<td>拒绝流入的数据包，除非与输出流量数据包相关或是ssh服务则允许。</td>
+</tr>
+<tr>
+<td>dmz</td>
+<td>拒绝流入的数据包，除非与输出流量数据包相关或是ssh服务则允许。</td>
+</tr>
+<tr>
+<td>block</td>
+<td>拒绝流入的数据包，除非与输出流量数据包相关。</td>
+</tr>
+<tr>
+<td>drop</td>
+<td>拒绝流入的数据包，除非与输出流量数据包相关。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="终端管理工具"><a href="#终端管理工具" class="headerlink" title="终端管理工具"></a>终端管理工具</h4><p>firewall-cmd命令是Firewalld动态防火墙管理器服务的命令行终端。它的参数一般都是以“长格式”来执行的，但同学们也不用太过于担心，因为红帽RHEL7系统非常酷的支持了部分命令的参数补齐，也正好包括了这条命令，也就是说现在除了能够用Tab键来补齐命令或文件名等等内容，还可以用Tab键来补齐下列长格式参数啦（这点特别的棒）。</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>–get-default-zone</td>
+<td>查询默认的区域名称</td>
+</tr>
+<tr>
+<td>–set-default-zone=&lt;区域名称&gt;</td>
+<td>设置默认的区域，永久生效。</td>
+</tr>
+<tr>
+<td>–get-zones</td>
+<td>显示可用的区域。</td>
+</tr>
+<tr>
+<td>–get-services</td>
+<td>显示预先定义的服务。</td>
+</tr>
+<tr>
+<td>–get-active-zones</td>
+<td>显示当前正在使用的区域与网卡名称。</td>
+</tr>
+<tr>
+<td>–add-source=</td>
+<td>将来源于此IP或子网的流量导向指定的区域。</td>
+</tr>
+<tr>
+<td>–remove-source=</td>
+<td>不再将此IP或子网的流量导向指定的区域。</td>
+</tr>
+<tr>
+<td>–add-interface=&lt;网卡名称&gt;</td>
+<td>将来自于该网卡的所有流量都导向某个指定区域。</td>
+</tr>
+<tr>
+<td>–change-interface=&lt;网卡名称&gt;</td>
+<td>将某个网卡与区域做关联。</td>
+</tr>
+<tr>
+<td>–list-all</td>
+<td>显示当前区域的网卡配置参数，资源，端口号及服务等信息。</td>
+</tr>
+<tr>
+<td>–list-all-zones</td>
+<td>显示所有区域的网卡配置参数，资源，端口号及服务等信息。</td>
+</tr>
+<tr>
+<td>–add-service=&lt;服务名&gt;</td>
+<td>设置默认区域允许该服务的流量。</td>
+</tr>
+<tr>
+<td>–add-port=&lt;端口号/协议&gt;</td>
+<td>设置默认区域允许该端口的流量。</td>
+</tr>
+<tr>
+<td>–remove-service=&lt;服务名&gt;</td>
+<td>设置默认区域不再允许该服务的流量。</td>
+</tr>
+<tr>
+<td>–remove-port=&lt;端口号/协议&gt;</td>
+<td>设置默认区域不再允许该端口的流量。</td>
+</tr>
+<tr>
+<td>–reload</td>
+<td>让“永久生效”的配置规则立即生效，覆盖当前的。</td>
+</tr>
+</tbody>
+</table>
+<p>如同其他的防火墙策略配置工具一样，Firewalld服务对防火墙策略的配置默认是当前生效模式（RunTime），配置信息会随着计算机重启而失效，如果想要让配置的策略一直存在，就需要使用永久生效模式（Permanent）了，方法就是在正常的命令中加入–permanent参数就可以代表针对于永久生效模式的命令了。但这个永久生效模式也有一个“不近人情”的特点，就是对它设置的策略需要重启后才能自动生效，如果想让配置的策略立即生效的话需要手动执行一下–reload参数。</p>
+<p><strong>查看FireWalld服务当前所使用的zone区域。</strong><br><code>[root@localhost ~]# firewall-cmd --get-default-zone</code><br><code>public</code></p>
+<p><strong>查询eno16777728网卡在FireWalld服务中的zone区域。</strong><br><code>[root@localhost ~]# firewall-cmd --get-zone-of-interface=eno16777728</code><br><code>public</code></p>
+<p><strong>把Firewalld防火墙服务中eno16777728网卡的默认区域修改为external，重启后再生效：</strong><br><code>[root@localhost ~]# firewall-cmd --get-zone-of-interface=eno16777728</code><br><code>public</code><br><code>[root@localhost ~]# firewall-cmd --permanent --zone=external --change-interface=eno16777728</code><br><code>success</code><br><code>[root@localhost ~]# firewall-cmd --get-zone-of-interface=eno16777728</code><br><code>public</code><br>重启后：<br><code>[root@localhost ~]# firewall-cmd --permanent --get-zone-of-interface=eno16777728</code><br><code>external</code></p>
+<p><strong>将FireWalld当前的默认区域设置为public：</strong><br><code>[root@localhost ~]# firewall-cmd --set-default-zone=public</code><br><code>Warning: ZONE_ALREADY_SET: public</code><br><code>[root@localhost ~]# firewall-cmd --get-default-zone</code><br><code>public</code></p>
+<p><strong>启动/关闭Firewalld防火墙服务的应急状况模式，阻断一切网络连接（当远程控制服务器时慎用）：</strong><br><code>[root@localhost ~]# firewall-cmd --panic-on</code><br><code>success</code><br><code>[root@localhost ~]# firewall-cmd --panic-off</code><br><code>success</code></p>
+<p><strong>查询在public区域的ssh与https服务请求流量是否被允许.</strong><br><code>[root@localhost ~]# firewall-cmd --zone=public --query-service=ssh</code><br><code>yes</code><br><code>[root@localhost ~]# firewall-cmd --zone=public --query-service=https</code><br><code>no</code></p>
+<p><strong>把Firewalld防火墙服务中https服务的请求流量设置为永久允许，并当前立即生效：</strong><br><code>[root@localhost ~]# firewall-cmd --zone=public --add-service=https
+success</code><br><code>[root@localhost ~]# firewall-cmd --permanent --zone=public --add-service=https</code><br><code>success</code><br><code>[root@localhost ~]# firewall-cmd --reload</code><br><code>success</code></p>
+<p><strong>把FireWalld防火墙服务中http请求流量设置为永久拒绝，并当前立即生效：</strong><br><code>[root@localhost ~]# firewall-cmd --permanent --zone=public --remove-service=http</code><br><code>success</code><br><code>[root@localhost ~]# firewall-cmd --reload</code><br><code>success</code></p>
+<p><strong>把FireWalld防火墙服务中8080和8081的请求流量允许放行，但仅限当前生效：</strong><br><code>[root@localhost ~]# firewall-cmd --zone=public --add-port=8080-8081/tcp</code><br><code>success</code><br><code>[root@localhost ~]# firewall-cmd --zone=public --list-ports</code><br><code>8080-8081/tcp</code></p>
+<p><strong>把原本访问本机888端口号的请求流量转发到22端口号，要求当前和长期均有效：</strong></p>
+<ul>
+<li><strong>流量转发命令格式：firewall-cmd –permanent –zone=&lt;区域&gt; –add-forward-port=port=&lt;源端口号&gt;:proto=&lt;协议&gt;:toport=&lt;目标端口号&gt;:toaddr=&lt;目标IP地址&gt;</strong><br><code>[root@localhost ~]# firewall-cmd --permanent --zone=public --add-forward-port=port=888:proto=tcp:toport=22:toaddr=192.168.139.128</code><br><code>success</code></li>
+</ul>
+<p><strong>在客户机使用ssh命令尝试访问192.168.10.10主机的888端口：</strong></p>
 
       
     </div>
@@ -434,8 +658,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/sakura-hly.github.io/2017/09/12/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
+              <a href="/sakura-hly.github.io/2017/09/17/基础课程07/" rel="next" title="基础课程07">
+                <i class="fa fa-chevron-left"></i> 基础课程07
               </a>
             
           </div>
@@ -444,8 +668,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/sakura-hly.github.io/2017/09/12/基础课程01/" rel="prev" title="基础课程01">
-                基础课程01 <i class="fa fa-chevron-right"></i>
+              <a href="/sakura-hly.github.io/2017/09/19/JDK1-8源码学习-String/" rel="prev" title="JDK1.8源码学习-java.lang.String">
+                JDK1.8源码学习-java.lang.String <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -537,8 +761,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           
             <img class="site-author-image" itemprop="image"
@@ -603,6 +836,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#防火墙管理工具"><span class="nav-number">1.</span> <span class="nav-text">防火墙管理工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Iptables"><span class="nav-number">2.</span> <span class="nav-text">Iptables</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#策略与匹配链"><span class="nav-number">2.1.</span> <span class="nav-text">策略与匹配链</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基本的命令参数"><span class="nav-number">2.2.</span> <span class="nav-text">基本的命令参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Firewalld"><span class="nav-number">3.</span> <span class="nav-text">Firewalld</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#终端管理工具"><span class="nav-number">3.1.</span> <span class="nav-text">终端管理工具</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
