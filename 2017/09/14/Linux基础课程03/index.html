@@ -79,7 +79,7 @@
 <link href="/sakura-hly.github.io/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Linux," />
 
 
 
@@ -95,16 +95,21 @@
 
 
 
-<meta name="description" content="一个Linux菜鸟的博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="破晓">
-<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+<meta name="description" content="我们已经学习了数十个常用的Linux系统命令，以后要把这些命令通过语法结合使用。">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基础课程03">
+<meta property="og:url" content="http://yoursite.com/2017/09/14/Linux基础课程03/index.html">
 <meta property="og:site_name" content="破晓">
-<meta property="og:description" content="一个Linux菜鸟的博客">
+<meta property="og:description" content="我们已经学习了数十个常用的Linux系统命令，以后要把这些命令通过语法结合使用。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/img/09.png">
+<meta property="og:image" content="http://yoursite.com/img/ls+more.png">
+<meta property="og:updated_time" content="2017-09-14T06:02:13.568Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="破晓">
-<meta name="twitter:description" content="一个Linux菜鸟的博客">
+<meta name="twitter:title" content="基础课程03">
+<meta name="twitter:description" content="我们已经学习了数十个常用的Linux系统命令，以后要把这些命令通过语法结合使用。">
+<meta name="twitter:image" content="http://yoursite.com/img/09.png">
 
 
 
@@ -134,13 +139,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/page/2/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/14/Linux基础课程03/"/>
 
 
 
 
 
-  <title>破晓</title>
+  <title>基础课程03 | 破晓</title>
   
 
 
@@ -169,8 +174,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -277,9 +281,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -292,7 +296,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/sakura-hly.github.io/2017/09/12/Linux基础课程01/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/sakura-hly.github.io/2017/09/14/Linux基础课程03/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="caijy">
@@ -309,9 +313,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/sakura-hly.github.io/2017/09/12/Linux基础课程01/" itemprop="url">基础课程01</a></h1>
+          <h1 class="post-title" itemprop="name headline">基础课程03</h1>
         
 
         <div class="post-meta">
@@ -323,8 +325,8 @@
               
                 <span class="post-meta-item-text">Veröffentlicht am</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-12T13:59:19+08:00">
-                2017-09-12
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-14T09:36:31+08:00">
+                2017-09-14
               </time>
             
 
@@ -364,8 +366,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/sakura-hly.github.io/2017/09/12/Linux基础课程01/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count fb-comments-count" data-href="http://yoursite.com/2017/09/12/Linux基础课程01/" itemprop="commentCount">0</span> comments
+                <a href="/sakura-hly.github.io/2017/09/14/Linux基础课程03/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count fb-comments-count" data-href="http://yoursite.com/2017/09/14/Linux基础课程03/" itemprop="commentCount">0</span> comments
                 </a>
               </span>
             
@@ -373,7 +375,7 @@
 
           
           
-             <span id="/sakura-hly.github.io/2017/09/12/Linux基础课程01/" class="leancloud_visitors" data-flag-title="基础课程01">
+             <span id="/sakura-hly.github.io/2017/09/14/Linux基础课程03/" class="leancloud_visitors" data-flag-title="基础课程03">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -404,201 +406,199 @@
       
 
       
-        
-          <p>经济有限，笔者在虚拟机上安装的“红帽”，具体安装步骤在此不展开论述，不会的同学参考<a href="http://www.linuxprobe.com/chapter-01.html" target="_blank" rel="external">虚拟机/红帽安装及工具下载</a>。<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/sakura-hly.github.io/2017/09/12/Linux基础课程01/#more" rel="contents">
-              Weiterlesen &raquo;
-            </a>
+        <p>我们已经学习了数十个常用的Linux系统命令，以后要把这些命令通过语法结合使用。<br><a id="more"></a><br>这里学习Linux命令与文件读写操作有关的重定向技术的五种模式——<em>标准覆盖输出重定向</em>、<em>标准追加输出重定向</em>、<em>错误覆盖输出重定向</em>、<em>错误追加输出重定向</em>、<em>输入重定向</em>。</p>
+<hr>
+<h3 id="输入输出重定向"><a href="#输入输出重定向" class="headerlink" title="输入输出重定向"></a>输入输出重定向</h3><p>简单用一句话来概括即 <em>“使用输入重定向能够把文件导入到命令中，而输出重定向则是能够把原本要输出到屏幕的数据信息写入到指定文件中”</em>。平常输出重定向会使用得多一些，细分之下又有 <em>标准输出重定向</em> 和 <em>错误输出重定向</em> 两种技术以及 <em>清空写入</em> 和 <em>追加写入</em> 两种模式。</p>
+<ul>
+<li>标准输入(STDIN，文件描述符为0)：默认从键盘输入，为0时表示是从其他文件或命令的输入。</li>
+<li>标准输出(STDOUT，文件描述符为1)：默认输出到屏幕，为1时表示是文件。</li>
+<li>错误输出(STDERR，文件描述符为2)：默认输出到屏幕，为2时表示是文件。</li>
+</ul>
+<p><strong>对于输入重定向有这些情况：</strong></p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>命令 &lt; 文件</td>
+<td>将文件作为命令的标准输入</td>
+</tr>
+<tr>
+<td>命令 &lt;&lt; 分界符</td>
+<td>从标准输入中读入，直到遇见“分界符”才停止</td>
+</tr>
+<tr>
+<td>命令 &lt; 文件1 &gt; 文件2</td>
+<td>将文件1作为命令的标准输入并将标准输出到文件2</td>
+</tr>
+</tbody>
+</table>
+<p><strong>对于输出重定向有这些情况：</strong></p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>命令 &gt; 文件</td>
+<td>将标准输出重定向到一个文件中（清空原有文件的数据）</td>
+</tr>
+<tr>
+<td>命令 2&gt; 文件</td>
+<td>将错误输出重定向到一个文件中（清空原有文件的数据）</td>
+</tr>
+<tr>
+<td>命令 &gt;&gt; 文件</td>
+<td>将标准输出重定向到一个文件中（追加到原有内容的后面）</td>
+</tr>
+<tr>
+<td>命令 2&gt;&gt; 文件</td>
+<td>将错误输出重定向到一个文件中（追加到原有内容的后面）</td>
+</tr>
+<tr>
+<td>命令 &gt;&gt; 文件 2&gt; &amp;1 或 命令 &amp;&gt;&gt; 文件</td>
+<td>将标准输出与错误输出共同写入到文件中（追加到原有内容的后面）</td>
+</tr>
+</tbody>
+</table>
+<p>试一下吧，通过标准输出重定向将“man bash”命令原本要输出到屏幕的信息写入到文件中去，效果类似于：<br><img src="/img/09.png" alt=""></p>
+<p>有没有感觉到特别方便呢？那么接下来试试输出重定向技术中的 <em>清空写入</em> 与 <em>追加写入</em> 两种不同模式带来的变化吧~先通过清空模式向文件写入一行数据（该文件中包含上一个实验的man命令信息），然后再通过追加模式向文件再写入一次数据，最终咱们看到的文件内容会是这个样子的：<br><code>[caijy@localhost Desktop]$ echo &quot;Welcome to linux&quot; &gt; readme.txt</code><br><code>[caijy@localhost Desktop]$ echo &quot;Quality linux learning materials&quot; &gt;&gt; readme.txt</code><br><code>[caijy@localhost Desktop]$ cat readme.txt</code><br><code>Welcome to linux</code><br><code>Quality linux learning materials</code></p>
+<p>虽然都是输出重定向技术，但对于不同命令的标准输出和错误输出还都有点区别，例如查看下当前目录中某个文件的信息吧。因为这个文件是真实存在的，因此使用标准输出即可将数据写入到文件中，而错误的输出重定向则不行，依然会把信息输出到了屏幕上。<br><code>[caijy@localhost Desktop]$ touch out.txt</code><br><code>[caijy@localhost Desktop]$ ls -l readme.txt &gt; out.txt</code><br><code>[caijy@localhost Desktop]$ cat out.txt</code><br><code>-rw-rw-r--. 1 caijy caijy 50 Sep 14 10:31 readme.txt</code><br><code>[caijy@localhost Desktop]$ ls -l readme.txt 2&gt; out.txt</code><br><code>-rw-rw-r--. 1 caijy caijy 50 Sep 14 10:31 readme.txt</code></p>
+<p>那如果是想把命令的报错信息写入到文件呢？例如当您在执行一个自动化的Shell脚本时会特别的实用，因为可以通过把整个脚本执行过程中的报错信息都记录到文件中，便于安装后的排错工作。接下来学习实践中咱们就以一个不存在的文件做演示吧：<br><code>[caijy@localhost Desktop]$ touch out.txt</code><br><code>[caijy@localhost Desktop]$ ls -l xxx</code><br><code>ls: cannot access xxx: No such file or directory</code><br><code>[caijy@localhost Desktop]$ ls -l xxx &gt; out.txt</code><br><code>ls: cannot access xxx: No such file or directory</code><br><code>[caijy@localhost Desktop]$ ls -l xxx 2&gt; out.txt</code><br><code>[caijy@localhost Desktop]$ cat out.txt</code><br><code>ls: cannot access xxx: No such file or directory</code></p>
+<p>输入重定向作用是把文件直接导入到命令中。接下来使用输入重定向把文件导入给“wc -l”命令来统计下内容行数吧，这样命令其实等同于接下来要学习的“cat readme.txt | wc-l”的管道符命令组合。<br><code>[caijy@localhost Desktop]$ wc -l &lt; readme.txt</code><br><code>2</code></p>
+<hr>
+<h3 id="管道命令符"><a href="#管道命令符" class="headerlink" title="管道命令符"></a>管道命令符</h3><p>管道符的输入方法是同时按下键盘的“Shift”与“\”键，执行格式为“命令A | 命令B”，其实管道命令符的作用也能用一句话来概括： <em>“把前一个命令原本要输出到屏幕的数据当作是后一个命令的标准输入”</em> 。回想前面学习过的grep文本搜索命令通过匹配关键词/sbin/nologin找出了所有被限制登录系统的用户，其实只要学完了这个小节，完全可以把下面的两条命令合并到一起。<br><code>[caijy@localhost Desktop]$ grep &quot;/sbin/nologin&quot; /etc/passwd | wc -l</code><br><code>33</code></p>
+<p>学习到了这个管道符就像拿到了一个法宝，让咱们来套用到其他不同的命令上吧，比如用翻页的形式查看/etc目录中的文件列表及属性信息吧（默认会一股脑的都显示到屏幕上，根本看不清楚）：<br><img src="/img/ls+more.png" alt=""></p>
+<p><code>[root@localhost Desktop]# echo &quot;linux&quot; | passwd --stdin root</code><br><code>Changing password for user root.</code><br><code>passwd: all authentication tokens updated successfully.</code></p>
+<p>对于这个管道符命令是不是觉得有些相见恨晚？其实玩法还有很多，比如默认发送邮件需要交互式的进行才行，而此时则可以通过一条结合了管道符的命令语句把编辑好的内容与标题一起的“打包”，最终用一条命令就顺利的给用户发送了邮件。<br><code>[root@localhost Desktop]# echo &quot;Context&quot; | mail -s &quot;Subject&quot; caijy</code><br><code>[root@localhost Desktop]# su caijy</code><br><code>[caijy@localhost Desktop]$ mail</code><br><code>Heirloom Mail version 12.5 7/5/10.  Type ? for help.</code><br><code>&quot;/var/spool/mail/caijy&quot;: 1 message 1 new</code><br><code>&gt;N  1 root                  Thu Sep 14 11:01  18/612   &quot;Subject&quot;</code></p>
+<p>能不能让这样方便的命令写的更高级一些呢？下面这条自造命令就是通过把mail邮件命令与输入重定向的分界符来结合使用，效果是让用户可以一直的输入内容，直到系统遇到匹配上了用户定义的分界符才最终结束。<br><code>[root@localhost Desktop]# mail -s &quot;Readme&quot; root@localhost.localdomain</code> <code>&lt;&lt; over</code><br><code>&gt; I think linux is very practical</code><br><code>&gt; I hope to learn more</code><br><code>&gt; can you teach me ?</code><br><code>&gt; over</code></p>
+<p>当然大家可不要误解管道命令符只能用一次哦，完全可以这样用：“命令A|命令B|命令C”。</p>
+<hr>
+<h3 id="命令行的通配符"><a href="#命令行的通配符" class="headerlink" title="命令行的通配符"></a>命令行的通配符</h3><p>例如想批量查看所有硬盘文件的相关权限属性，笨笨的命令会是这样的：<br><code>[root@localhost Desktop]# ls -l /dev/sda</code><br><code>brw-rw----. 1 root disk 8, 0 Sep 13 04:43 /dev/sda</code><br><code>[root@localhost Desktop]# ls -l /dev/sda1</code><br><code>brw-rw----. 1 root disk 8, 1 Sep 13 04:43 /dev/sda1</code><br><code>[root@localhost Desktop]# ls -l /dev/sda2</code><br><code>brw-rw----. 1 root disk 8, 2 Sep 13 04:43 /dev/sda2</code><br><code>[root@localhost Desktop]# ls -l /dev/sda3</code><br><code>ls: cannot access /dev/sda3: No such file or directory</code><br>幸亏我的硬盘文件和分区只有3个，要是有几百个的话，估计一天的工作时间都要忙活这个事了。咱们此时已经能看出一些简单规律了，比如这些硬盘设备文件共性都是以sda开头并且存放到了/dev目录中，那即便不知道分区编号和具体分区的个数也一样可以用通配符来搞定。<strong>通配符顾名思义就是通用的匹配信息的符号，比如星号(*)就是代表匹配零个或多个字符，问号(?)是代表匹配单个字符，中括号内加上数字[0-9]代表匹配单个阿拉伯数字的字符，而中括号内加上字母[abc]则是代表匹配单个指定的英文字母</strong>。<br><code>[root@localhost Desktop]# ls -l /dev/sda*</code><br><code>brw-rw----. 1 root disk 8, 0 Sep 13 04:43 /dev/sda</code><br><code>brw-rw----. 1 root disk 8, 1 Sep 13 04:43 /dev/sda1</code><br><code>brw-rw----. 1 root disk 8, 2 Sep 13 04:43 /dev/sda2</code><br>如果只需要看sda后面一定要有个字符的文件相关信息呢？那就要用到问号来通配了。<br><code>[root@localhost Desktop]# ls -l /dev/sda?</code><br><code>brw-rw----. 1 root disk 8, 1 Sep 13 04:43 /dev/sda1</code><br><code>brw-rw----. 1 root disk 8, 2 Sep 13 04:43 /dev/sda2</code><br>您除了可以用[0-9]来通配所有的单个阿拉伯数字，也可以用[135]这样的方式仅匹配这三个指定数字，若没有通配到即不会显示出来：<br><code>[root@localhost Desktop]# ls -l /dev/sda[0-9]</code><br><code>brw-rw----. 1 root disk 8, 1 Sep 13 04:43 /dev/sda1</code><br><code>brw-rw----. 1 root disk 8, 2 Sep 13 04:43 /dev/sda2</code><br><code>[root@localhost Desktop]# ls -l /dev/sda[135]</code><br><code>brw-rw----. 1 root disk 8, 1 Sep 13 04:43 /dev/sda1</code></p>
+<hr>
+<h3 id="常用的转义字符"><a href="#常用的转义字符" class="headerlink" title="常用的转义字符"></a>常用的转义字符</h3><p>Shell解释器为了能够更好的理解您想表达的意思，还提供了特别丰富的转义符号来帮助程序员处理输入的特殊数据。常见的转义字符包括有：<em>反斜杠()的作用就是转义后面的一个变量变为单纯的字符串，单引号(‘’)则是转义其中所有的变量为单纯的字符串，而双引号（””）是保留其中的变量属性不转义，反引号(``)则是把其中的命令执行后返回一个结果。</em><br>例如咱们先定义一个名称为PRICE的变量并赋值为5，然后通过双引号括起来输出字符串与变量结合的结果：<br><code>[root@localhost Desktop]# PRICE=5</code><br><code>[root@localhost Desktop]# echo &quot;Price is $PRICE&quot;</code><br><code>Price is 5</code><br><code>[root@localhost Desktop]# echo &quot;Price is $$PRICE&quot;</code><br><code>Price is 44837PRICE</code><br>原本刚刚是希望能够进一步输出“Price is $5”即价格是五美元的字符串信息，但碰巧美元符号与变量提取符号冲突了，因此输出的并不是预想的信息。需要用转义符把第一个$符号转换成单纯的字符串，再或者把整段都转义成单纯的字符串吧（当然这个只是让您看下效果，并不符合实验需要）：<br><code>[root@localhost Desktop]# echo &quot;Price is \$$PRICE&quot;</code><br><code>Price is $5</code><br><code>[root@localhost Desktop]# echo &#39;Price is \$$PRICE&#39;</code><br><code>Price is \$$PRICE</code></p>
+<p>最后一个您可能看到结果时会觉得很无用，因此暂且先不用管具体的使用场景，就当作是提前为SHELL编程知识学习做一点小小的铺垫吧。如果只需要某个命令的返回输出值时，就可以用像 <em><code>命令</code></em> 这样用反引号括起来的命令格式来达到效果，例如通过反引号与uname -a命令结合通过返回值来查看下本机版本和内核信息吧：<br><code>[root@localhost Desktop]# echo `uname -a`
+Linux localhost.localdomain 3.10.0-123.el7.x86_64 #1 SMP Mon May 5</code> <code>11:16:57 EDT 2014 x86_64 x86_64 x86_64 GNU/Linux</code></p>
+<hr>
+<h3 id="重要的环境变量"><a href="#重要的环境变量" class="headerlink" title="重要的环境变量"></a>重要的环境变量</h3><p>变量是计算机系统中用于保存可变值的数据类型，在Linux系统中一般变量名称都是大写的，这仅算是一种约定俗成的规范，平时可以直接通过变量名称来提取到对应的变量值。<br><em>Linux系统中的环境变量是用来指定系统运行环境的一些参数，比如每个用户不同的家目录、邮件保存存放位置等等。</em> 前面小节中提到的一个概念——即Linux系统中一切都是文件，因此Linux命令肯定也不例外，那当用户执行了一条命令之后到底发生了什么事情呢？简单来说就是四个步骤：</p>
+<ol>
+<li>第1步骤阶段是判断用户是否以绝对路径或相对路径的方式输入命令（如/bin/ls），如果是的话则直接执行。</li>
+<li>第2步骤阶段是检查用户输入的命令是否为“别名命令”，即用一个自创的命令名称来替换原本的命令名称。可以用alias命令来创建一个属于自己的命令别名，格式为: <em>alias 新的命令=’原命令 -选项/参数’</em>，若要取消一个别名的话则是用unalias命令，格式为：“unalias 别名”。例如以前每次用rm命令删除文件的时候都要被要求再确认是否执行删除操作，其实这就是Linux系统为了防止用户误删除文件而特意设置的rm别名命令，咱们可以把它取消掉：<br><code>[root@localhost Desktop]# alias rm</code><br><code>alias rm=&#39;rm -i&#39;</code><br><code>[root@localhost Desktop]# unalias rm</code><br><code>[root@localhost Desktop]# rm out.txt</code></li>
+<li>第3步骤阶段就是由Bash解释器来判断用户输入的是个内部命令还是个外部命令，内部命令是解释器内部的指令，会被直接的执行，而绝大部分的时候都会是外部命令，交由给第4步骤来继续处理，您可以使用“type 命令名称”来手工判断是内部命令还是外部命令，也是很有趣的。</li>
+<li>第4步骤阶段是系统在多个路径中查找用户输入的命令文件，而定义这些路径的变量叫做PATH，可以简单把它理解成是“解释器的小助手”，作用是告诉Bash解释器要执行的命令可能存放到了那里，然后Bash解释器就会乖乖的在这些目录中逐个查找。PATH是由多个路径值组成的变量，每个路径值之间用冒号间隔，咱们对PATH变量内这些路径的增加和删除操作将会直接影响bash解释器搜索linux命令的位置。<br><code>[root@localhost Desktop]# echo $PATH</code><br><code>/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin:/home/caijy/.local/bin:/home/caijy/bin</code><br><code>[root@localhost Desktop]# echo PATH=$PATH:/root/bin</code><br><code>PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin:/home/caijy/.local/bin:/home/caijy/bin:/root/bin</code></li>
+</ol>
+<p>这里有比较经典的问题：<strong>“为什么不能在$PATH中添加进当前目录(.)?”</strong><br>答案：<em>虽然把$PATH变量添加了当前目录(.)会在一些情况让用户免去输入命令所在路径的麻烦，但如果黑客在比较常用的公共目录/tmp中存放了一个名为”ls”或”cd”的同名木马文件，那么用户就极有可能错误的执行了。</em><br>作为一名态度谨慎、有经验的运维人员在接手了一台Linux系统后一定会在执行命令前先检查下PATH变量中是否有可疑的目录，另外读者们从PATH变量的例子中是不是也感觉到环境变量特别实用呢~您可以使用env命令来查看到linux系统中所有的环境变量，在此摘录最重要的10个环境变量：</p>
+<table>
+<thead>
+<tr>
+<th>变量名称</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HOME</td>
+<td>用户的主目录（即家目录）</td>
+</tr>
+<tr>
+<td>SHELL</td>
+<td>用户在使用的SHELL解释器名称。</td>
+</tr>
+<tr>
+<td>HISTSIZE</td>
+<td>定义了 history 命令输出的记录数</td>
+</tr>
+<tr>
+<td>HISTFILESIZE</td>
+<td>定义了在文件 ~/.bash_history 中保存命令的记录总数</td>
+</tr>
+<tr>
+<td>MAIL</td>
+<td>邮件信箱文件保存路径。</td>
+</tr>
+<tr>
+<td>LANG</td>
+<td>系统语言、语系名称。</td>
+</tr>
+<tr>
+<td>RANDOM</td>
+<td>生成一个随机数字。</td>
+</tr>
+<tr>
+<td>PS1</td>
+<td>bash解释器的提示符。</td>
+</tr>
+<tr>
+<td>PATH</td>
+<td>定义解释器搜索用户执行命令的路径。</td>
+</tr>
+<tr>
+<td>EDITOR</td>
+<td>用户默认的文本编辑器。</td>
+</tr>
+</tbody>
+</table>
+<p>Linux系统为了能够为每个用户提供独立的、合适的工作运行环境，因此在不同的用户身份下提取一个相同的变量也可能会获得不同的值，例如查看下HOME变量在不同用户身份下的值都有那些吧（su是用于切换用户身份的命令）：<br><code>[root@localhost Desktop]# echo $HOME</code><br><code>/root</code><br><code>[root@localhost Desktop]# su - caijy</code><br><code>Last login: Thu Sep 14 11:01:16 CST 2017 on pts/0</code><br><code>[caijy@localhost ~]$ echo $HOME</code><br><code>/home/caijy</code></p>
+<p>其实变量是由固定的变量名与用户或系统设置的变量值两部分组成的，如果工作需要完全可以自己手工创建的，例如设置一个名称为WORKDIR的变量，方便用户更轻松的进入一个很深层的目录：<br><code>[caijy@localhost Desktop]$ mkdir -p c/workdir</code><br><code>[caijy@localhost Desktop]$ WORKDIR=c/workdir</code><br><code>[caijy@localhost Desktop]$ cd $WORKDIR</code><br><code>[caijy@localhost workdir]$ pwd</code><br><code>/home/caijy/Desktop/c/workdir</code></p>
+<p>但是这样的变量不具有全局性，作用范围也是有限的，默认不能够被其他用户使用的，如果工作需要的话咱们可以使用export命令将其提升为全局变量，这样其他的用户也就可以使用到这个变量了。</p>
+<hr>
+<p>转载自：<a href="http://www.linuxprobe.com/chapter-03.html" target="_blank" rel="external">http://www.linuxprobe.com/chapter-03.html</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/sakura-hly.github.io/tags/Linux/" rel="tag"># Linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/sakura-hly.github.io/2017/09/12/Linux基础课程02/" rel="next" title="基础课程02">
+                <i class="fa fa-chevron-left"></i> 基础课程02
+              </a>
+            
           </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
 
-    
+          <span class="post-nav-divider"></span>
 
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/sakura-hly.github.io/2017/09/12/首页/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="caijy">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/sakura-hly.github.io/images/dp.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="破晓">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/sakura-hly.github.io/2017/09/12/首页/" itemprop="url">My Linux Blog</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+          <div class="post-nav-prev post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-12T12:51:48+08:00">
-                2017-09-12
-              </time>
+              <a href="/sakura-hly.github.io/2017/09/14/Linux基础课程04/" rel="prev" title="基础课程04">
+                基础课程04 <i class="fa fa-chevron-right"></i>
+              </a>
             
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">in</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/sakura-hly.github.io/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/sakura-hly.github.io/2017/09/12/首页/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count fb-comments-count" data-href="http://yoursite.com/2017/09/12/首页/" itemprop="commentCount">0</span> comments
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/sakura-hly.github.io/2017/09/12/首页/" class="leancloud_visitors" data-flag-title="My Linux Blog">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">Visitors&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <p>你好，欢迎来到我的个人技术博客。<br>      –《Linux就该这么学》读书笔记</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -608,163 +608,50 @@
   </article>
 
 
-    
-      
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/sakura-hly.github.io/2017/09/12/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="caijy">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/sakura-hly.github.io/images/dp.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="破晓">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/sakura-hly.github.io/2017/09/12/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-12T12:33:41+08:00">
-                2017-09-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/sakura-hly.github.io/2017/09/12/hello-world/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count fb-comments-count" data-href="http://yoursite.com/2017/09/12/hello-world/" itemprop="commentCount">0</span> comments
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/sakura-hly.github.io/2017/09/12/hello-world/" class="leancloud_visitors" data-flag-title="Hello World">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">Visitors&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
+    <div class="post-spread">
       
         
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
 
-          
-        
+<script>
+  //with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
       
     </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
   </div>
-  
-  
-  
-  </article>
-
-
-    
-  </section>
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/sakura-hly.github.io/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/sakura-hly.github.io/">1</a><span class="page-number current">2</span>
-  </nav>
-
 
 
           </div>
@@ -772,6 +659,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -792,8 +683,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           
             <img class="site-author-image" itemprop="image"
@@ -858,6 +758,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#输入输出重定向"><span class="nav-number">1.</span> <span class="nav-text">输入输出重定向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#管道命令符"><span class="nav-number">2.</span> <span class="nav-text">管道命令符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#命令行的通配符"><span class="nav-number">3.</span> <span class="nav-text">命令行的通配符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用的转义字符"><span class="nav-number">4.</span> <span class="nav-text">常用的转义字符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重要的环境变量"><span class="nav-number">5.</span> <span class="nav-text">重要的环境变量</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -983,6 +899,10 @@
 
 
   
+  <script type="text/javascript" src="/sakura-hly.github.io/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/sakura-hly.github.io/js/src/post-details.js?v=5.1.2"></script>
+
+
 
   
 

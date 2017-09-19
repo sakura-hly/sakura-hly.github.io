@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/sakura-hly.github.io/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/sakura-hly.github.io/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/sakura-hly.github.io/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Linux," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/sakura-hly.github.io/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="Linux系统具有多用户、多任务的历史发展特点，所以也迫使其具有了很好的安全性，保障Linux系统安全的背后是复杂的配置工作。">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基础课程05">
+<meta property="og:url" content="http://yoursite.com/2017/09/15/Linux基础课程05/index.html">
+<meta property="og:site_name" content="破晓">
+<meta property="og:description" content="Linux系统具有多用户、多任务的历史发展特点，所以也迫使其具有了很好的安全性，保障Linux系统安全的背后是复杂的配置工作。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/img/权限值.png">
+<meta property="og:image" content="http://yoursite.com/img/文件权限.png">
+<meta property="og:updated_time" content="2017-09-15T09:40:13.324Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基础课程05">
+<meta name="twitter:description" content="Linux系统具有多用户、多任务的历史发展特点，所以也迫使其具有了很好的安全性，保障Linux系统安全的背后是复杂的配置工作。">
+<meta name="twitter:image" content="http://yoursite.com/img/权限值.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/sakura-hly.github.io/',
+    scheme: 'Muse',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/09/15/Linux基础课程05/"/>
+
+
+
+
+
+  <title>基础课程05 | 破晓</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7f1817ded637839eb4e759c996071a39";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/sakura-hly.github.io/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">破晓</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">弱小和无知不是生存的障碍，傲慢才是。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/sakura-hly.github.io/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/sakura-hly.github.io/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archiv
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Suche
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/sakura-hly.github.io/2017/09/15/Linux基础课程05/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="caijy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/sakura-hly.github.io/images/dp.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="破晓">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">基础课程05</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-15T09:14:38+08:00">
+                2017-09-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/sakura-hly.github.io/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/sakura-hly.github.io/2017/09/15/Linux基础课程05/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count fb-comments-count" data-href="http://yoursite.com/2017/09/15/Linux基础课程05/" itemprop="commentCount">0</span> comments
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/sakura-hly.github.io/2017/09/15/Linux基础课程05/" class="leancloud_visitors" data-flag-title="基础课程05">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Linux系统具有多用户、多任务的历史发展特点，所以也迫使其具有了很好的安全性，保障Linux系统安全的背后是复杂的配置工作。<br><a id="more"></a><br>这一节我们学习Linux系统中文件的 <em>所有者、所有组以及其他人</em> 所对应的读(<strong>r</strong>)写(<strong>w</strong>)执行(<strong>x</strong>)的一般权限的作用，会添加、删除、修改用户帐户信息。咱们还可以使用 <em>SUID、SGID与SBIT特殊权限位</em> 让系统权限功能更加的灵活，弥补单纯对文件设置一般权限的功能不足。<em>隐藏权限</em> 能够让系统多一层隐形的防护层，让黑客对关键日志信息最多只能看，而不能修改或删除。通过 <em>ACL访问控制列表</em> 再进一步的针对单一用户、用户组对单一文件或目录进行特殊的权限安排，让文件的权限最大限度满足工作的需求。最后还将学习到使用 <em>su命令与sudo服务</em> 来让普通用户既能够使用到超级管理员的权限来满足日常的工作需求还兼顾系统的安全性，最佳搭配方案。</p>
+<hr>
+<h3 id="用户身份与能力"><a href="#用户身份与能力" class="headerlink" title="用户身份与能力"></a>用户身份与能力</h3><p>安装红帽REHL7操作系统时特别要求设置root用户密码，这个root用户就是存在所有类UNix系统的 <em>超级用户</em>，拥有最高的系统所有权，能够管理系统的各项能力，比如 <em>添加/删除用户，启动/关闭服务进程，开启/禁用硬件设备</em> 等权限。虽然使用root用户工作时不会受到系统的种种限制，但老话讲能力越大，责任越大，一旦使用这个高能的root用户执行了错误的命令有可能会直接回调整个系统~</p>
+<p>Linux系统的超级用户之所以是root，并不是因为它的名字叫root，而是因为该用户身份号码——即UID(User IDentification)的数值为0，在Linux系统中的UID就相当于人类社会中的身份证号码一样权威、唯一性，因此Linux系统是通过用户的UID的值来判断用户身份，RHEL7系统中的用户身份包括有：</p>
+<ul>
+<li>超级用户UID0：系统的超级用户</li>
+<li>系统用户UID1-999：系统中程序服务由不同用户运行，更加安全，默认被限制不能登录系统</li>
+<li>普通用户UID1000-：即管理员创建的用于日常工作而不能管理系统的普通用户。</li>
+</ul>
+<p>注意UID一定是不能冲突的，管理员创建的普通用户UID从1000开始，即便前面有闲置的号码。</p>
+<p>为了方便管理同一组的用户还有一个用户组的概念，用户组号码——GID（Group IDentification），使得咱们可以把多个用户加入到同一个组中，方便统一规划权限或任务，想象公司中有多个部门，而每个部门中又有很多同事，那么如果只想让员工获取到本部门内的共享资源，则就可以针对部门设置权限，而非针对于某个人，例如只有属于技术部分组的人才可以访问公司的数据库信息等等。另外在Linux系统中每个用户在建立时也会自动创建一个与其同名的 <em>基本用户组</em>，这个基本用户组只有该用户一个人，而该用户以后被归纳入的用户组则叫做 <em>扩展用户组</em>，因此一个用户只有一个基本用户组，而可以有多个扩展用户组，来满足日常的工作需要。</p>
+<p><strong>useradd命令用于创建新的用户，格式为：“useradd [选项]  用户名”。</strong><br>可以使用这个命令来创建用户账户，默认的用户家目录会被存放在/home目录，默认的Shell解释器是/bin/bash，默认会创建一个与该用户同名的基本用户组以及默认该用户不包含其他的扩展用户组，这些默认值可以依据下面useradd命令的参数来自行修改：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-d</td>
+<td>指定用户的家目录（默认为/home/username）</td>
+</tr>
+<tr>
+<td>-e</td>
+<td>账号有效截至日期，格式：YYYY-MM-DD.</td>
+</tr>
+<tr>
+<td>-u</td>
+<td>指定该用户的默认UID</td>
+</tr>
+<tr>
+<td>-g</td>
+<td>指定该用户的默认UID</td>
+</tr>
+<tr>
+<td>-G</td>
+<td>指定一个或多个扩展用户组</td>
+</tr>
+<tr>
+<td>-N</td>
+<td>不创建与用户同名的基本用户组</td>
+</tr>
+<tr>
+<td>-s</td>
+<td>指定该用户的默认Shell</td>
+</tr>
+</tbody>
+</table>
+<p>创建一个普通用户并指定家目录路径、UID用户身份号码以及Shell解释器，其中/sbin/nologin是终端解释器的一员，它与bash解释器有着天壤之别，<strong>因为一旦用户的解释器被设置成了nologin，那么则代表该用户不能登录到系统：</strong><br><code>[root@caijy Desktop]# useradd -d /home/linux -u 8888 -s /sbin/nologin</code> <code>linuxprobe</code><br><code>[root@caijy Desktop]# id linuxprobe</code><br><code>uid=8888(linuxprobe) gid=8888(linuxprobe) groups=8888(linuxprobe)</code></p>
+<p><strong>groupadd命令用于创建群组，格式为：”groupadd [选项] 群组名”。</strong><br>为了能够让系统中各个用户的权限指派更加的有效率，工作中常常会把几个用户组设置成某个用户的扩展用户组，这样的话就可以针对于一类用户进行统一的权限安排了，而这个步骤非常的简单，例如创建一个名字叫做ronny的用户组：<br><code>[root@caijy Desktop]# groupadd ronny</code></p>
+<p><strong>usermod命令用于修改用户的属性，格式为“usermod [选项] 用户名”。</strong><br>在Linux系统中一切都是文件，因此在系统中创建用户也是修改配置文件的过程，用户的信息被保存在/etc/passwd文件中，可以直接使用文本编辑器来修改其中的数值项目，也可以用usermod命令来修改已经创建的用户信息项目，诸如用户身份号码、基本/扩展用户组、默认终端等等：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-c</td>
+<td>填写帐号的备注信息</td>
+</tr>
+<tr>
+<td>-d -m</td>
+<td>-m与-d连用，可重新指定用户的家目录并自动把旧的数据转移过去。</td>
+</tr>
+<tr>
+<td>-e</td>
+<td>账户到期时间，格式“YYYY-MM-DD”</td>
+</tr>
+<tr>
+<td>-g</td>
+<td>变更所属用户组</td>
+</tr>
+<tr>
+<td>-G</td>
+<td>变更扩展用户组</td>
+</tr>
+<tr>
+<td>-L</td>
+<td>锁定用户禁止其登陆系统</td>
+</tr>
+<tr>
+<td>-U</td>
+<td>解锁用户，允许其登陆系统</td>
+</tr>
+<tr>
+<td>-s</td>
+<td>变更默认终端</td>
+</tr>
+<tr>
+<td>-u</td>
+<td>修改用户UID</td>
+</tr>
+</tbody>
+</table>
+<p>不要被这么多参数吓坏啦~先来看下某个帐户的默认信息：<br><code>[root@caijy Desktop]# id caijy</code><br><code>uid=1000(caijy) gid=1000(caijy) groups=1000(caijy),10(wheel)</code><br>接下来学习如何为用户增添到一个额外的扩展用户组中，以及修改该用户的身份号码：<br><code>[root@caijy Desktop]# usermod -G root linuxprobe</code><br><code>[root@caijy Desktop]# id linuxprobe</code><br><code>uid=8888(linuxprobe) gid=8888(linuxprobe) groups=8888(linuxprobe)  0(root)</code><br><code>[root@caijy Desktop]# usermod -u 8889 linuxprobe</code><br><code>[root@caijy Desktop]# id linuxprobe</code><br><code>uid=8889(linuxprobe) gid=8888(linuxprobe) groups=8888(linuxprobe),0(root)</code></p>
+<p><strong>passwd命令用于修改用户的密码，格式为：“passwd [选项] [用户名]”。</strong><br>该命令用于修改用户的密码，，过期时间，认证信息等，普通的用户只有权限修改自身的系统密码，而超级用户则有权限来修改其它所有人的密码。更酷的是Linux系统中root管理员修改自己或他人的密码是不需要验证旧密码的，这点特别的方便。既然root用户都有权限修改或登录了该用户，就代表已经对该用户有完全的管理权限了，因此尝试修改该用户密码时不再重复要求验证旧密码其实也并不存在安全隐患：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-l</td>
+<td>锁定用户禁止其登录</td>
+</tr>
+<tr>
+<td>-u</td>
+<td>解除锁定，允许用户登录</td>
+</tr>
+<tr>
+<td>–stdin</td>
+<td>允许从标准输入修改用户密码，如(echo “NewPassWord” &#124; passwd –stdin Username)</td>
+</tr>
+<tr>
+<td>-d</td>
+<td>使账号无密码</td>
+</tr>
+<tr>
+<td>-e</td>
+<td>强制用户下次登陆时修改密码</td>
+</tr>
+<tr>
+<td>-S</td>
+<td>显示用户的密码状态</td>
+</tr>
+</tbody>
+</table>
+<p>接下来学习如何修改用户自己的密码，以及如何修改其他人的密码（该动作仅限root管理员用户可使用）：<br><code>[root@caijy Desktop]# passwd</code><br><code>Changing password for user root.</code><br><code>New password:</code><br><code>BAD PASSWORD: The password is shorter than 8 characters</code><br><code>Retype new password:</code><br><code>passwd: all authentication tokens updated successfully.</code><br><code>[root@caijy Desktop]# passwd linuxprobe</code><br><code>Changing password for user linuxprobe.</code><br><code>New password:</code><br><code>BAD PASSWORD: The password is shorter than 8 characters</code><br><code>Retype new password:</code><br><code>passwd: all authentication tokens updated successfully.</code><br>当有个同事请了长假时，还可以用这个命令来禁止或允许某个用户登录到本系统，而不是删除该用户，这样既保证了这段时间内系统的安全，也避免频繁添加、删除用户带来的麻烦：<br><code>[root@caijy Desktop]# passwd -l linuxprobe</code><br><code>Locking password for user linuxprobe.</code><br><code>passwd: Success</code><br><code>[root@caijy Desktop]# passwd -S linuxprobe</code><br><code>linuxprobe LK 2017-09-15 0 99999 7 -1 (Password locked.)</code><br><code>[root@caijy Desktop]# passwd -u linuxprobe</code><br><code>Unlocking password for user linuxprobe.</code><br><code>passwd: Success</code><br><code>[root@caijy Desktop]# passwd -S linuxprobe</code><br><code>linuxprobe PS 2017-09-15 0 99999 7 -1 (Password set, SHA512 crypt.)</code></p>
+<p><strong>userdel命令用于删除用户，格式为：“userdel [选项] 用户名”。</strong><br>如果咱们确认以后不需要再让某个用户登录到本地系统中，则可以通过userdel命令来删除有关该用户的所有信息，默认该用户的家目录数据会被保留下来，而如果想要一起删除的话可以加上 <strong>-r</strong> 参数即可：<br><code>[root@caijy Desktop]# id linuxprobe</code><br><code>uid=8889(linuxprobe) gid=8888(linuxprobe)</code> <code>groups=8888(linuxprobe),0(root)</code><br><code>[root@caijy Desktop]# userdel -r linuxprobe</code><br><code>[root@caijy Desktop]# id linuxprobe</code><br><code>id: linuxprobe: no such user</code></p>
+<hr>
+<h3 id="文件权限与归属"><a href="#文件权限与归属" class="headerlink" title="文件权限与归属"></a>文件权限与归属</h3><p>Linux系统中一切都是文件，但每个文件的类型不尽相同，并且Linux系统会用不同的符号进行区分，常见的包括有：</p>
+<p><strong>-:普通文件, d:目录文件, l:链接文件, b:块设备文件, c:字符设备文件, p:管道文件</strong><br>每个文件都有其相对应的所有者和所有组，还有分别规定对所有者、所有组和其他人的可读、可写、可执行的权限。对于一般文件来讲的权限比较好理解，可读权限就是能够读取该文件的实际内容，可写权限就是能够编辑、新增、修改文件的实际内容，可执行则代表能够运行一个脚本程序的权限。但对于目录文件的权限设置就不太好掌握了，首先对于目录文件的可读权限就是能够读取该目录内的结构和文件列表，可写权限就是能够更改目录内文件结构列表，新增，删除，重命名文件，而可执行的实质是代表进入该目录的权限。</p>
+<p>读(read)，写(write)，执行（execute）简写即为 <strong>(r,w,x)</strong>，亦可用数字 <strong>(4,2,1)</strong> 表示，如下表：<br><img src="/img/权限值.png" alt=""><br>数字法是基于rwx的权限计算而来，主要是为了简化权限的表示信息。举例来说若某个文件的权限为7则代表可读，可写，可执行(4+2+1)，若权限为6则代表可读，可写(4+2)。因此例如说一个文件可以让所有者可读可写也可执行，对于文件的所属组来讲可读可写，而除了所有者和所有组以外的其他人则只有可读的权限，那么权限就是rwxrw-r–，数字法表示即为764，不过千万别算出来7+6+4=17，这是小学的数学加减法，不是Linux系统的权限数字法，三组之间没有相通关系。</p>
+<p>下面一起分析下图的文件信息：<br><img src="/img/文件权限.png" alt=""><br>图中所示包括有文件的类型、访问权限、所属者（属主）、所有组（属组）、占用大小、修改时间和文件名称等信息。通过分析可得知该文件类型为一般文件，所有者权限为可读可写（rw-），所有组权限为可读（r–），除此以外的其他人也只有可读权限（r–），文件的磁盘占用大小是34298字节，最近一次的修改时间为4月2日的凌晨23分，文件的名称为install.log。</p>
+<hr>
+<h3 id="文件的特殊权限"><a href="#文件的特殊权限" class="headerlink" title="文件的特殊权限"></a>文件的特殊权限</h3><p>在复杂多变的生产环境中，单纯对文件设置rwx权限肯定不能满足咱们对安全、便捷工作的需求，因此便有了SUID、SGID与SBIT的特殊权限机制。特殊权限位是针对于文件设置的一种特殊的功能，而且与一般权限可同时出现使用，用于弥补一般权限不能实现的功能。<br><strong>SUID:让执行者临时拥有属主的权限（仅对拥有执行权限的二进制程序有效）</strong><br>考虑下面一种情形，我们知道在Linux系统中，所有的账号密码都记录在/etc/shadow这个文件中，这个文件的权限为———- 1 root root，也就是说只有root用户才能修改这个文件，但是我们一般账号可使用passwd命令来修改密码，从而修改这个文件，这是怎么做到呢？答案就是SUID。<strong>该权限仅在执行该程序的过程中（run-time）有效</strong><br><code>[root@caijy Desktop]# ls -l /etc/shadow</code><br><code>----------. 1 root root 1891 Sep 15 11:12 /etc/shadow</code><br><code>[root@caijy Desktop]# ls -l /bin/passwd</code><br><code>-rwsr-xr-x. 1 root root 27832 Jan 30  2014 /bin/passwd</code></p>
+<p><strong>SGID功能一：让执行者临时拥有属组的权限（对拥有执行权限的二进制程序设置）</strong><br>这种特殊权限就是参考SUID而设计的，不同点就是让程序的执行者获取的不再是文件所有者的临时权限，而是获取到文件的所有组的权限。举例来说，在早期的Linux系统中/dev/kmem是一个字符设备文件，用于存储内核程序要访问的数据，权限为：</p>
+<ul>
+<li>cr–r—–   1 root system 2,  1 Feb 11 2017  kmem</li>
+</ul>
+<p>也就是除了root超级用户身份或属于system组成员外的所有用户都没有读取该文件的权限，但平时咱们需要查看系统进程状态，为了让用户能够获取到系统状态信息，因此将用于查看系统进程状态的ps命令权限上增加了SGID特殊权限位：</p>
+<ul>
+<li>-r-xr-sr-x   1 bin system 59346 Feb 11 2017  ps</li>
+</ul>
+<p>这样的话因为ps命令被赋予了SGID特殊权限位，所以当用户执行了该命令，实际上临时获取到了有效用户组system的权限啦，能够顺利的读取设备文件啦~</p>
+<p><strong>SGID功能二：在该目录中创建的文件自动继承此目录的用户组（只可以对目录设置）</strong><br>正如前面提到过每个文件都有其归属的所有者和所有组，而当创建或传送一个文件后，这个文件就会自动的归属于执行这个操作的用户。那么比如工作中需要设置一个部门内的共享目录，让所有组内的人都能够读取里面的内容，那么咱们就可以创建部门共享目录后，把该目录设置上SGID特殊权限位，这样任何用户在里面创建的任何文件都会归属于本目录的所有组，而不再是自己的基本用户组。<br><code>[root@caijy ~]# cd /tmp</code><br><code>[root@caijy tmp]# mkdir testdir</code><br><code>[root@caijy tmp]# ls -ald testdir/</code><br><code>drwxr-xr-x. 2 root root 6 Sep 15 15:04 testdir/</code><br><code>[root@caijy tmp]# chmod -Rf 777 testdir/</code><br><code>[root@caijy tmp]# chmod -Rf g+s testdir/</code><br><code>[root@caijy tmp]# ls -ald testdir/</code><br><code>drwxrwsrwx. 2 root root 6 Sep 15 15:04 testdir/</code><br>这样设置好777权限以保证普通用户可以写入文件，并为该目录设置了SGID特殊权限位后，就可以切换至一个普通用户尝试在该目录创建文件，看看新建出来的文件是否会继承上级目录的所有组名称：<br><code>[root@caijy tmp]# su - caijy</code><br><code>Last login: Fri Sep 15 10:30:27 CST 2017 on :0</code><br><code>[caijy@caijy ~]$ cd /tmp/testdir</code><br><code>[caijy@caijy testdir]$ echo &quot;linux&quot; &gt; test</code><br><code>[caijy@caijy testdir]$ ls -al test</code><br><code>-rw-rw-r--. 1 caijy root 6 Sep 15 15:11 test</code></p>
+<p><strong>chmod命令用于修改文件或目录的权限，格式为：”chmod [参数] 权限 文件或目录名称”。</strong><br>这是一个非常实用的命令，能够用来设置文件或目录的权限，例如想要把一个文件的权限设置成所有者都可以可读写执行、所有组可读写而其他人没有任何权限，这样对应起来就是rwxrw—-，用数字法来设置也就是760啦，于是通过前面的基础学习到当前实践操作，同学们马上就能感受到了数字法设置权限的便捷性了吧~<br><code>[root@caijy ~]# cd /tmp/testdir</code><br><code>[root@caijy testdir]# ls -al test</code><br><code>-rw-rw-r--. 1 caijy root 6 Sep 15 15:11 test</code><br><code>[root@caijy testdir]# chmod 760 test</code><br><code>[root@caijy testdir]# ls -al test</code><br><code>-rwxrw----. 1 caijy root 6 Sep 15 15:11 test</code></p>
+<p><strong>chown命令用于修改文件或目录的所属主与所属组，格式为：“chown [参数] 所属主:所属组 文件或目录名称”。</strong><br>除了修改文件的权限外，还可以使用chown命令来设置文件的所有者和所有组。chmod和chown命令是对文件属性和权限修改最常用的命令，它们还有一个特别的共性，就是对于目录文件时需要加上大写参数-R来表示递归操作，即对目录内所有的文件进行整体操作的意思。<br><code>[root@caijy testdir]# ls -l test</code><br><code>-rwxrw----. 1 caijy root 6 Sep 15 15:11 test</code><br><code>[root@caijy testdir]# chown root:bin test</code><br><code>[root@caijy testdir]# ls -l test</code><br><code>-rwxrw----. 1 root bin 6 Sep 15 15:11 test</code></p>
+<p><strong>SBIT(Sticky Bit):只可管理自己的数据而不能删除他人文件(仅对目录有效)</strong><br>SBIT特殊权限位的设置目的和效果是不让其他人删除自己的文件，换句话说就是文件只能被所有者执行删除操作。在RHEL7系统中的/tmp作为一个共享文件的目录默认已经被设置了SBIT特殊权限位，因此这里面的文件其他人是不能乱删除的：<br><code>[andy@caijy tmp]$ su - caijy</code><br><code>Password:</code><br><code>Last login: Fri Sep 15 15:25:26 CST 2017 on pts/0</code><br><code>[caijy@caijy ~]$ ls -ald /tmp</code><br><code>drwxrwxrwt. 16 root root 4096 Sep 15 15:30 /tmp</code><br><code>[caijy@caijy ~]$ cd /tmp</code><br><code>[caijy@caijy tmp]$ ls -ald</code><br><code>drwxrwxrwt. 16 root root 4096 Sep 15 15:30 .</code><br><code>[caijy@caijy tmp]$ echo &quot;Welcome to linux&quot; &gt; test</code><br><code>[caijy@caijy tmp]$ chmod 777 test</code><br><code>[caijy@caijy tmp]$ ls -ald test</code><br><code>-rwxrwxrwx. 1 caijy caijy 17 Sep 15 15:31 test</code><br>其实文件能否被删除并不取决于自身的权限大小，而是看上级目录是否有写入权限，这个是前面提到过的，但为了避免很多同学不放心，所以还是赋予了这个文件最大的777权限(rwxrwxrwx)。切换到另外一个普通用户然后尝试删除这个别人的文件就会发现，即便权限十分的充足，但是由于SBIT特殊权限位的缘故依然导致了无法删除其他人的文件：<br><code>[caijy@caijy tmp]$ su - andy</code><br><code>Password:</code><br><code>Last login: Fri Sep 15 15:29:12 CST 2017 on pts/0</code><br><code>[andy@caijy ~]$ cd /tmp</code><br><code>[andy@caijy tmp]$ rm -f test</code><br><code>rm: cannot remove ‘test’: Operation not permitted</code></p>
+<hr>
+<h3 id="文件的隐藏属性"><a href="#文件的隐藏属性" class="headerlink" title="文件的隐藏属性"></a>文件的隐藏属性</h3><p>在Linux系统中除了能对文件设置一般权限和特殊权限外还有一种叫做隐藏权限的功能，顾名思义就是被隐藏起来的权限，即在默认情况下是不能直接被用户发觉的。在真实的工作环境和红帽RHCE考试题目中碰到过明明权限很充足但却不能删除某个文件的情况，或者仅仅能对日志文件进行追加内容而不能删除或减少，一定程度上阻止了黑客篡改系统日志的图谋，因此这种很“奇怪”的文件让Linux系统更加的安全。</p>
+<p><strong>chattr命令用于设置文件的隐藏权限，格式为：“chattr [参数] 文件”。</strong><br>可以使用chattr命令来设置文件的隐藏权限，如果想要把某个隐藏功能添加到文件上面，则使用 <strong>+参数</strong>，如果想要把某个隐藏功能移出文件，则使用 <strong>-参数</strong>。可供咱们选择的隐藏权限功能非常丰富，常见的隐藏权限包括有：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>i</td>
+<td>将无法对文件进行修改,若对目录设置后则仅能修改子文件而不能新建或删除。</td>
+</tr>
+<tr>
+<td>a</td>
+<td>仅允许补充（追加）内容.无法覆盖/删除(Append Only)。</td>
+</tr>
+<tr>
+<td>S</td>
+<td>文件内容变更后立即同步到硬盘(sync)。</td>
+</tr>
+<tr>
+<td>s</td>
+<td>彻底从硬盘中删除，不可恢复(用0填充原文件所在硬盘区域)。</td>
+</tr>
+<tr>
+<td>A</td>
+<td>不再修改这个文件的最后访问时间（atime）</td>
+</tr>
+<tr>
+<td>b</td>
+<td>不再修改这个文件的存取时间</td>
+</tr>
+<tr>
+<td>D</td>
+<td>检查压缩文件中的错误</td>
+</tr>
+<tr>
+<td>d</td>
+<td>当使用“dump”命令备份时忽略本文件/目录</td>
+</tr>
+<tr>
+<td>c</td>
+<td>默认将文件或目录进行压缩</td>
+</tr>
+<tr>
+<td>u</td>
+<td>当删除此文件后依然保留其在硬盘中的数据，以便日后恢复</td>
+</tr>
+<tr>
+<td>t</td>
+<td>让文件系统支持尾部合并（tail-merging）</td>
+</tr>
+<tr>
+<td>X</td>
+<td>直接访问压缩文件中的内容</td>
+</tr>
+</tbody>
+</table>
+<p>为了能更好的见识到隐藏权限的效果，先来创建一个普通文件后立即尝试删除，这个肯定是毫无悬念会成功的：<br><code>[root@caijy ~]# echo &quot;for test&quot; &gt; test</code><br><code>[root@caijy ~]# rm test</code><br><code>rm: remove regular file ‘test’? y</code><br>实践是检验真理的唯一标准，如果没有亲眼见见隐藏权限强大功能的美妙，就一定不会相信原来Linux系统会如此的安全且复杂。当咱们再次新建了一个普通文件并设置了不允许删除与覆盖(+a参数)权限后的效果：<br><code>[root@caijy ~]# echo &quot;for test&quot; &gt; test</code><br><code>[root@caijy ~]# chattr +a test</code><br><code>[root@caijy ~]# rm test</code><br><code>rm: remove regular file ‘test’? y</code><br><code>rm: cannot remove ‘test’: Operation not permitted</code></p>
+<p><strong>lsattr命令用于显示文件的隐藏权限，格式为：“lsattr [参数] 文件”。</strong><br>对于Linux系统中的隐藏权限必须用lsattr命令才能够看到，平时使用的ls之类的命令是看不出异样的：<br><code>[root@caijy ~]# ls -al test</code><br><code>-rw-r--r--. 1 root root 9 Sep 15 15:50 test</code><br>一旦使用了lsattr命令后文件上被赋予的隐藏权限就会马上原形毕露出来，只需要按照提示的隐藏权限的类型（字母）来使用chattr命令去掉即可：<br><code>[root@caijy ~]# lsattr test</code><br><code>-----a---------- test</code><br><code>[root@caijy ~]# chattr -a test</code><br><code>[root@caijy ~]# lsattr test</code><br><code>---------------- test</code><br><code>[root@caijy ~]# rm test</code><br><code>rm: remove regular file ‘test’? y</code></p>
+<hr>
+<h3 id="文件访问控制列表"><a href="#文件访问控制列表" class="headerlink" title="文件访问控制列表"></a>文件访问控制列表</h3><p>不知大家有没有发现其实上面讲到的一般权限、特殊权限、隐藏权限其实有个共性——权限是针对某一类用户设置的。而如果希望对某个指定的用户进行单独的权限控制，那么就需要用文件的访问控制列表来实现啦。基于普通文件或目录设置ACL访问控制策略，<strong>通俗来说就是设置指定的特定用户或用户组对某个文件的操作权限</strong>，另外如果对某个目录设置了访问控制策略，那么子文件则继承其访问策略，而若对文件设置了访问控制策略则不再继承上级目录的控制策略。</p>
+<p>为了更直观的看到ACL访问控制列表对文件权限控制的强大效果，因此先切换到普通用户后尝试进入到root超级用户的家目录中：<br><code>[root@caijy ~]# su - caijy</code><br><code>Last login: Fri Sep 15 15:30:25 CST 2017 on pts/0</code><br><code>[caijy@caijy ~]$ cd /root</code><br><code>-bash: cd: /root: Permission denied</code><br><code>[caijy@caijy ~]$ exit</code><br>ACL提供的是在所有者，所有组，其它人的读写执行权限外的特殊权限控制，使用setfacl命令可以让咱们能够针对单一用户或用户组，单一文件或目录来进行读写执行权限的控制，其中对于目录文件需要用到递归-R参数，对普通文件需要用到-m参数，而如果想要删除某个文件的访问控制策略的话可以使用-b参数，于是快来设置下用户在/root目录上面的权限吧：<br><code>[root@caijy ~]# setfacl -Rm u:caijy:wrx /root</code><br><code>[root@caijy ~]# su - caijy</code><br><code>Last login: Fri Sep 15 16:05:49 CST 2017 on pts/0</code><br><code>[caijy@caijy ~]$ cd /root</code><br><code>[caijy@caijy root]$ ls</code><br><code>anaconda-ks.cfg  initial-setup-ks.cfg</code><br><code>[caijy@caijy root]$ cat anaconda-ks.cfg</code><br><code>#version=RHEL7</code><br><code># System authorization information</code><br><code>auth --enableshadow --passalgo=sha512</code><br><code>......</code></p>
+<p>是不是觉得效果很酷呢？但是又遇到了一个小问题——怎么样去查看文件上面有那些ACL策略呢？常用的ls命令是看不到访问控制列表信息的，但是却可以看到文件的权限最后一个点(.)变成了加号（+）,而这就意味着这个文件已经被设置有了ACL访问策略啦。现在是不是感觉学得越多，越不敢说自己精通于Linux系统了呢？这么一个不起眼的点(.)竟然还意味着这么一种重要的权限呢。<br><code>[caijy@caijy root]$ ls -ld /root</code><br><code>dr-xrwx---+ 5 root root 4096 Sep 15 15:53 /root</code></p>
+<p><strong>getfacl命令用于显示文件的ACL规则，格式为：”getfacl 文件名称”。</strong><br>在Linux系统中的命令就是这么又可爱又好记，想要设置ACL访问策略的话就是setfacl命令，而查看ACL访问策略的话就是getfacl命令。使用getfacl命令能够显示出在文件上设置的所有访问策略规则信息。<br><code>[caijy@caijy root]$ getfacl /root</code><br><code>getfacl: Removing leading &#39;/&#39; from absolute path names</code><br><code># file: root</code><br><code># owner: root</code><br><code># group: root</code><br><code>user::r-x</code><br><code>user:caijy:rwx</code><br><code>group::r-x</code><br><code>mask::rwx</code><br><code>other::---</code></p>
+<hr>
+<h3 id="su命令与sudo服务"><a href="#su命令与sudo服务" class="headerlink" title="su命令与sudo服务"></a>su命令与sudo服务</h3><p>使用su命令可以让使用者在不注销的情况下顺畅的切换至其他用户，例如从root超级用户切换至普通用户：<br><code>[root@caijy ~]# id</code><br><code>uid=0(root) gid=0(root) groups=0(root) context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023</code><br><code>[root@caijy ~]# su - caijy</code><br><code>Last login: Fri Sep 15 16:14:54 CST 2017 on pts/0</code><br><code>[caijy@caijy ~]$ id</code><br><code>uid=1000(caijy) gid=1000(caijy) groups=1000(caijy),10(wheel) context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023</code><br>细心的同学一定会发现上面的su命令与用户名之间有一个减号(-)，这意味着完全的切换到新的用户，即把环境变量信息也变更为新的用户，而不保留原始的用户信息，这个是推荐必加的参数，一定要记下哦~另外当超级用户切换到普通用户时是不需要密码验证的，而普通用户切换成超级用户身份就需要密码验证后才能成功了，这是一个必要的安全检查：<br><code>[caijy@caijy ~]$ su - root</code><br><code>Password:</code><br><code>Last login: Fri Sep 15 16:20:16 CST 2017 on pts/0</code><br><code>[root@caijy ~]# su - caijy</code><br><code>Last login: Fri Sep 15 16:20:27 CST 2017 on pts/0</code><br><code>[caijy@caijy ~]$ exit</code><br><code>logout</code><br><code>[root@caijy ~]#</code><br>虽说像上面使用su命令允许普通用户完全变更为root用户身份来完成工作，但这也无疑会暴露了root超级管理员的密码，使得系统密码被黑客获取的几率也大大提高了，这似乎并不是最安全的方案。因此我们来学习使用sudo程序来把特定命令的执行权限赋予给指定的用户，这样既可保证了正常工作的同时也避免了泄露root超级用户密码，平时只要合理的配置sudo服务便可以合理的兼顾系统的安全性和用户便捷性，配置的原则也很简单—— <em>在保证普通用户完成工作的前提下，尽可能少的给予额外的权限</em>，总结来说sudo服务程序的特色功能有：</p>
+<ol>
+<li>限制用户执行指定的命令。</li>
+<li>记录用户执行的每一条命令。</li>
+<li>配置文件（/etc/sudoers）提供集中的管理用户、权限与主机等参数。</li>
+<li>验证过密码后5分钟(默认值)内无须再让用户验证密码，更加的方便。</li>
+</ol>
+<p><strong>sudo服务用于给普通用户提供额外权利来完成原本超级用户才能完成的任务，格式为：“sudo [参数] 命令名称”。</strong></p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-h</td>
+<td>列出帮助信息</td>
+</tr>
+<tr>
+<td>-l</td>
+<td>列出当前用户可执行的命令</td>
+</tr>
+<tr>
+<td>-u 用户名或UID值</td>
+<td>以指定的用户身份执行命令</td>
+</tr>
+<tr>
+<td>-k</td>
+<td>清空安全时间，下次执行sudo时需要再次验证密码</td>
+</tr>
+<tr>
+<td>-b</td>
+<td>在后台执行指定的命令</td>
+</tr>
+<tr>
+<td>-p</td>
+<td>更改询问密码的提示语</td>
+</tr>
+</tbody>
+</table>
+<p>当然如果感觉直接修改配置文件不太放心，担心出现问题的话还可以使用sudo服务提供的visudo命令来配置用户权限，这条命令在配置用户权限时可以避免多个用户同时修改配置文件，以及对配置文件内的参数进行语法检查，在发现错误参数时会直接提示并报错。</p>
+<p>只用超级用户才可以使用visudo命令编辑sudo程序的配置文件（/etc/sudoers），平时还可以使用visudo命令来配置用户权限吧，这样既能防止多个用户同时修改配置文件，还能对配置文件内的参数进行语法检查，对于错误的参数会直接提示并报错：<br><code>visudo: &gt;&gt;&gt; /etc/sudoers: syntax error near line 111 &lt;&lt;&lt;</code><br><code>What now?</code><br><code>Options are:</code><br><code>(e)dit sudoers file again</code><br><code>(x)it without saving changes to sudoers file</code><br><code>(Q)uit and save changes to sudoers file (DANGER!)</code></p>
+<p>使用visudo命令配置sudo服务的服务文件时，操作的方法与咱们学习过的vim编辑器是一致的，因此在编写完成后记得在末行模式下保存并退出。sudo服务程序配置文件中约第99行按照下面的格式填写上指定的信息即可：</p>
+<ul>
+<li><strong>谁可以使用超级用户身份     允许使用sudo命令的主机=（以谁的身份执行命令）     可执行命令的列表</strong></li>
+</ul>
+<p><code>[root@caijy ~]# visudo</code><br><code>## Allow root to run any commands anywhere</code><br><code>root    ALL=(ALL)       ALL</code><br><code>caijy    ALL=(ALL)       ALL</code></p>
+<p>这样填写后记得要保存后再退出，然后切换至指定的用户身份就可以用sudo -l命令查看到所有可执行的命令啦（此处验证的是该普通用户的密码，而不是root用户的密码，同学们不要搞混喽）：<br><code>[root@caijy ~]# su - caijy</code><br><code>Last login: Fri Sep 15 16:22:01 CST 2017 on pts/0</code><br><code>[caijy@caijy ~]$ sudo -l</code><br><code>[sudo] password for caijy:</code><br><code>Matching Defaults entries for caijy on this host:</code><br><code>requiretty, !visiblepw, always_set_home, env_reset, env_keep=&quot;COLORS</code><br><code>DISPLAY HOSTNAME HISTSIZE INPUTRC KDEDIR LS_COLORS&quot;,</code> <code>env_keep+=&quot;MAIL PS1</code><br><code>PS2 QTDIR USERNAME LANG LC_ADDRESS LC_CTYPE&quot;, env_keep+=&quot;LC_COLLATE</code><br><code>LC_IDENTIFICATION LC_MEASUREMENT LC_MESSAGES&quot;,</code><br><code>env_keep+=&quot;LC_MONETARY</code><br><code>LC_NAME LC_NUMERIC LC_PAPER LC_TELEPHONE&quot;, env_keep+=&quot;LC_TIME LC_ALL</code><br><code>LANGUAGE LINGUAS _XKB_CHARSET XAUTHORITY&quot;,</code><br><code>secure_path=/sbin\:/bin\:/usr/sbin\:/usr/bin</code><br><code>User caijy may run the following commands on this host:</code><br><code>(ALL) ALL</code><br><code>(ALL) ALL</code><br>接下来就是见证奇迹的时刻，因为作为一名普通用户是肯定不能查看到root超级用户家目录(/root)中的文件信息的，但咱们只需要在想执行的命令前面加上sudo命令就变得有权限了：<br><code>[caijy@caijy root]$ ls /root</code><br><code>ls: cannot open directory /root: Permission denied</code><br><code>[caijy@caijy root]$ sudo ls /root</code><br><code>[sudo] password for caijy:</code><br><code>anaconda-ks.cfg  initial-setup-ks.cfg</code><br>效果非常明显哦！但是考虑到真实的工作环境中肯定不能允许某个普通用户拥有了整个系统中所有命令的最高执行权，也不符合刚刚提到的权限赋予原则——在保证普通用户完成工作的前提下，尽可能少的给予额外的权限，因此ALL的参数就显得有些不合适了，应该代之以具体的命令来既让用户满足了工作需求，也能够受到必要的权限约束。<em>如果需要让某个用户只能使用超级用户的身份执行指定的命令，切记一定要写上的是该命令的绝对路径，否则系统会识别不出来哦，咱们可以先用whereis命令找出命令所对应的保存路径</em>，然后把刚刚配置文件中约第99行的用户权限参数修改成对应的路径即可：<br><code>[root@caijy ~]# whereis cat</code><br><code>cat: /usr/bin/cat /usr/share/man/man1/cat.1.gz /usr/share/man/man1p/cat.1p.gz</code><br><code>[root@caijy ~]# visudo</code><br><code>## Allow root to run any commands anywhere</code><br><code>root    ALL=(ALL)       ALL</code><br><code>caijy    ALL=(ALL)       /bin/cat</code><br>这样编辑好后依然是记得要保存退出，然后咱们再次切换到指定的普通用户上面，尝试正常查看某个文件的内容被提示没有权限，然后再用sudo命令后就可以顺利的查看文件内容啦：<br><code>[root@caijy ~]# su - caijy</code><br><code>Last login: Fri Sep 15 16:46:38 CST 2017 on pts/0</code><br><code>[caijy@caijy ~]$ cat /etc/shadow</code><br><code>cat: /etc/shadow: Permission denied</code><br><code>[caijy@caijy ~]$ sudo cat /etc/shadow</code><br><code>[sudo] password for caijy:</code><br><code>root:$6$dVUdyi82$u11lUZwsCwYv92m92nCjP9My1dT.QH.j463.MUeREj5C6pkOmNpY2ugpg5pGJ2kXrphOC7qFViD8mrfvZs.9W/:17424:0:99999:7:::</code><br><code>bin:*:16141:0:99999:7:::</code><br><code>......</code><br>这样当咱们切换到普通用户后再执行命令时，就不用再频繁麻烦的要求验证密码了，在日常工作会一定会感觉到痛快极了~</p>
+<hr>
+<p>转载自：<a href="http://www.linuxprobe.com/chapter-05.html" target="_blank" rel="external">http://www.linuxprobe.com/chapter-05.html</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/sakura-hly.github.io/tags/Linux/" rel="tag"># Linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/sakura-hly.github.io/2017/09/14/Linux基础课程04/" rel="next" title="基础课程04">
+                <i class="fa fa-chevron-left"></i> 基础课程04
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/sakura-hly.github.io/2017/09/15/Linux基础课程06/" rel="prev" title="基础课程06">
+                基础课程06 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  //with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="/sakura-hly.github.io/images/dp.jpg"
+              alt="caijy" />
+          
+            <p class="site-author-name" itemprop="name">caijy</p>
+            <p class="site-description motion-element" itemprop="description">一个Linux菜鸟的博客</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/sakura-hly.github.io/archives/">
+            
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">Artikel</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">Kategorien</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">Tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=448226072&auto=1&height=66"></iframe>
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#用户身份与能力"><span class="nav-number">1.</span> <span class="nav-text">用户身份与能力</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件权限与归属"><span class="nav-number">2.</span> <span class="nav-text">文件权限与归属</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件的特殊权限"><span class="nav-number">3.</span> <span class="nav-text">文件的特殊权限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件的隐藏属性"><span class="nav-number">4.</span> <span class="nav-text">文件的隐藏属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件访问控制列表"><span class="nav-number">5.</span> <span class="nav-text">文件访问控制列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#su命令与sudo服务"><span class="nav-number">6.</span> <span class="nav-text">su命令与sudo服务</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">caijy</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/sakura-hly.github.io/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/sakura-hly.github.io/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/sakura-hly.github.io/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/sakura-hly.github.io/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/sakura-hly.github.io/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/sakura-hly.github.io/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/sakura-hly.github.io/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("jsI2BP061jWWrjY7NlFVHOOQ-gzGzoHsz", "WQFdrAUtgTXisdJ8TFShl3a7");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+  
+</body>
+</html>

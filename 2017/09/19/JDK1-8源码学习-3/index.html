@@ -79,7 +79,7 @@
 <link href="/sakura-hly.github.io/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="jdk1.8,Integer," />
 
 
 
@@ -95,16 +95,18 @@
 
 
 
-<meta name="description" content="一个Linux菜鸟的博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="破晓">
-<meta property="og:url" content="http://yoursite.com/archives/page/2/index.html">
+<meta name="description" content="Integer 类在对象中包装了一个基本类型 int 的值。Integer 类型的对象包含一个 int 类型的字段。">
+<meta name="keywords" content="jdk1.8,Integer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JDK1-8源码学习-Integer">
+<meta property="og:url" content="http://yoursite.com/2017/09/19/JDK1-8源码学习-3/index.html">
 <meta property="og:site_name" content="破晓">
-<meta property="og:description" content="一个Linux菜鸟的博客">
+<meta property="og:description" content="Integer 类在对象中包装了一个基本类型 int 的值。Integer 类型的对象包含一个 int 类型的字段。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-09-19T07:50:11.243Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="破晓">
-<meta name="twitter:description" content="一个Linux菜鸟的博客">
+<meta name="twitter:title" content="JDK1-8源码学习-Integer">
+<meta name="twitter:description" content="Integer 类在对象中包装了一个基本类型 int 的值。Integer 类型的对象包含一个 int 类型的字段。">
 
 
 
@@ -134,13 +136,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/page/2/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/19/JDK1-8源码学习-3/"/>
 
 
 
 
 
-  <title>Archiv | 破晓</title>
+  <title>JDK1-8源码学习-Integer | 破晓</title>
   
 
 
@@ -169,7 +171,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -277,152 +279,235 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/sakura-hly.github.io/2017/09/19/JDK1-8源码学习-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="caijy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/sakura-hly.github.io/images/dp.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="破晓">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">JDK1-8源码学习-Integer</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-19T15:38:25+08:00">
+                2017-09-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        Öhm..! Insgesamt 13 Artikel. Bleib dran.
-      </span>
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/sakura-hly.github.io/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2017">2017</h1>
-          </div>
-        
-        
 
-        
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/sakura-hly.github.io/2017/09/19/JDK1-8源码学习-3/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count fb-comments-count" data-href="http://yoursite.com/2017/09/19/JDK1-8源码学习-3/" itemprop="commentCount">0</span> comments
+                </a>
+              </span>
+            
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
+             <span id="/sakura-hly.github.io/2017/09/19/JDK1-8源码学习-3/" class="leancloud_visitors" data-flag-title="JDK1-8源码学习-Integer">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/sakura-hly.github.io/2017/09/12/Linux基础课程01/" itemprop="url">
-              
-                <span itemprop="name">基础课程01</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-12T13:59:19+08:00"
-              content="2017-09-12" >
-          09-12
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+          
 
+        </div>
+      </header>
+    
 
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/sakura-hly.github.io/2017/09/12/首页/" itemprop="url">
-              
-                <span itemprop="name">My Linux Blog</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-12T12:51:48+08:00"
-              content="2017-09-12" >
-          09-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/sakura-hly.github.io/2017/09/12/hello-world/" itemprop="url">
-              
-                <span itemprop="name">Hello World</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-12T12:33:41+08:00"
-              content="2017-09-12" >
-          09-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
+      
+        <p>Integer 类在对象中包装了一个基本类型 int 的值。Integer 类型的对象包含一个 int 类型的字段。<br><a id="more"></a></p>
+<h4 id="Integer-valueOf-int-i"><a href="#Integer-valueOf-int-i" class="headerlink" title="Integer valueOf(int i)"></a>Integer valueOf(int i)</h4><p>个人觉得是比较重要的方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public static Integer valueOf(int i) &#123;</div><div class="line">    //通常情况下，IntegerCache.low=-128，IntegerCache.high=127（除非显示声明java.lang.Integer.IntegerCache.high的值）</div><div class="line">    if (i &gt;= IntegerCache.low &amp;&amp; i &lt;= IntegerCache.high)</div><div class="line">        return IntegerCache.cache[i + (-IntegerCache.low)];</div><div class="line">    return new Integer(i);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里关系到一个静态内部类，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">private static class IntegerCache &#123;</div><div class="line">    static final int low = -128;</div><div class="line">    static final int high;</div><div class="line">    static final Integer cache[];</div><div class="line"></div><div class="line">    static &#123;</div><div class="line">        // high value may be configured by property</div><div class="line">        int h = 127;</div><div class="line">        String integerCacheHighPropValue =</div><div class="line">            sun.misc.VM.getSavedProperty(&quot;java.lang.Integer.IntegerCache.high&quot;);</div><div class="line">        if (integerCacheHighPropValue != null) &#123;</div><div class="line">            try &#123;</div><div class="line">                int i = parseInt(integerCacheHighPropValue);</div><div class="line">                i = Math.max(i, 127);</div><div class="line">                // Maximum array size is Integer.MAX_VALUE</div><div class="line">                h = Math.min(i, Integer.MAX_VALUE - (-low) -1);</div><div class="line">            &#125; catch( NumberFormatException nfe) &#123;</div><div class="line">                // If the property cannot be parsed into an int, ignore it.</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        high = h;</div><div class="line"></div><div class="line">        cache = new Integer[(high - low) + 1];</div><div class="line">        int j = low;</div><div class="line">        for(int k = 0; k &lt; cache.length; k++)</div><div class="line">            cache[k] = new Integer(j++);</div><div class="line"></div><div class="line">        // range [-128, 127] must be interned (JLS7 5.1.7)</div><div class="line">        assert IntegerCache.high &gt;= 127;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private IntegerCache() &#123;&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里明显可用看到，当Integer类被加载时，就新建了-128到127的所有数字并缓存在Integer数组cache中。</p>
+<p>再回到valueOf()代码，可以得出结论。当调用valueOf方法（包括后面会提到的重载的参数类型包含String的valueOf方法）时，如果参数的值在-127到128之间，则直接从缓存中返回一个已经存在的对象。如果参数的值不在这个范围内，则new一个Integer对象返回。</p>
+
+      
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/sakura-hly.github.io/tags/jdk1-8/" rel="tag"># jdk1.8</a>
+          
+            <a href="/sakura-hly.github.io/tags/Integer/" rel="tag"># Integer</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/sakura-hly.github.io/2017/09/19/JDK1-8源码学习-2/" rel="next" title="JDK1-8源码学习-StringBUilder，StringBUffer">
+                <i class="fa fa-chevron-left"></i> JDK1-8源码学习-StringBUilder，StringBUffer
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/sakura-hly.github.io/archives/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/sakura-hly.github.io/archives/">1</a><span class="page-number current">2</span>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+        
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  //with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
 
 
           </div>
@@ -430,6 +515,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -450,8 +539,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           
             <img class="site-author-image" itemprop="image"
@@ -516,6 +614,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Integer-valueOf-int-i"><span class="nav-number">1.</span> <span class="nav-text">Integer valueOf(int i)</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -641,6 +755,10 @@
 
 
   
+  <script type="text/javascript" src="/sakura-hly.github.io/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/sakura-hly.github.io/js/src/post-details.js?v=5.1.2"></script>
+
+
 
   
 

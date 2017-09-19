@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/sakura-hly.github.io/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/sakura-hly.github.io/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/sakura-hly.github.io/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Linux," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/sakura-hly.github.io/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="保证数据的安全性是继可用性之后最为重要的一项工作，防火墙技术作为公网与内网之间的保护屏障，起着至关重要的作用。大家一起先来学习在红帽RHEL7系统中firewalld防火墙服务与iptables防火墙服务之间的关系，从理论和事实层面剖析真相。 本节将会分别使用iptables，firewall-cmd，firewall-config和Tcp_wrappers等防火墙策略配置服务来完成数十个根据真实">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基础课程08">
+<meta property="og:url" content="http://yoursite.com/2017/09/18/Linux基础课程08/index.html">
+<meta property="og:site_name" content="破晓">
+<meta property="og:description" content="保证数据的安全性是继可用性之后最为重要的一项工作，防火墙技术作为公网与内网之间的保护屏障，起着至关重要的作用。大家一起先来学习在红帽RHEL7系统中firewalld防火墙服务与iptables防火墙服务之间的关系，从理论和事实层面剖析真相。 本节将会分别使用iptables，firewall-cmd，firewall-config和Tcp_wrappers等防火墙策略配置服务来完成数十个根据真实">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/img/防火墙拓扑.png">
+<meta property="og:image" content="http://yoursite.com/img/firewall-config界面.png">
+<meta property="og:image" content="http://yoursite.com/img/允许其他主机访问http服务.png">
+<meta property="og:image" content="http://yoursite.com/img/允许其他主机访问8080-8088端口.png">
+<meta property="og:image" content="http://yoursite.com/img/重启后依然有效.png">
+<meta property="og:image" content="http://yoursite.com/img/未用SNAT1.png">
+<meta property="og:image" content="http://yoursite.com/img/使用SNAT1.png">
+<meta property="og:image" content="http://yoursite.com/img/开启伪装功能.png">
+<meta property="og:image" content="http://yoursite.com/img/将向本机888端口的请求转发至本机的22端口.png">
+<meta property="og:image" content="http://yoursite.com/img/reload立即生效.png">
+<meta property="og:image" content="http://yoursite.com/img/仅允许192.168.10.20主机访问本机的1234端口.png">
+<meta property="og:image" content="http://yoursite.com/img/查看网卡设备信息.png">
+<meta property="og:updated_time" content="2017-09-19T13:39:42.013Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基础课程08">
+<meta name="twitter:description" content="保证数据的安全性是继可用性之后最为重要的一项工作，防火墙技术作为公网与内网之间的保护屏障，起着至关重要的作用。大家一起先来学习在红帽RHEL7系统中firewalld防火墙服务与iptables防火墙服务之间的关系，从理论和事实层面剖析真相。 本节将会分别使用iptables，firewall-cmd，firewall-config和Tcp_wrappers等防火墙策略配置服务来完成数十个根据真实">
+<meta name="twitter:image" content="http://yoursite.com/img/防火墙拓扑.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/sakura-hly.github.io/',
+    scheme: 'Muse',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/09/18/Linux基础课程08/"/>
+
+
+
+
+
+  <title>基础课程08 | 破晓</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7f1817ded637839eb4e759c996071a39";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/sakura-hly.github.io/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">破晓</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">弱小和无知不是生存的障碍，傲慢才是。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/sakura-hly.github.io/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/sakura-hly.github.io/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archiv
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Suche
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/sakura-hly.github.io/2017/09/18/Linux基础课程08/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="caijy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/sakura-hly.github.io/images/dp.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="破晓">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">基础课程08</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-18T13:55:22+08:00">
+                2017-09-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/sakura-hly.github.io/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/sakura-hly.github.io/2017/09/18/Linux基础课程08/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count fb-comments-count" data-href="http://yoursite.com/2017/09/18/Linux基础课程08/" itemprop="commentCount">0</span> comments
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/sakura-hly.github.io/2017/09/18/Linux基础课程08/" class="leancloud_visitors" data-flag-title="基础课程08">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>保证数据的安全性是继可用性之后最为重要的一项工作，防火墙技术作为公网与内网之间的保护屏障，起着至关重要的作用。大家一起先来学习在红帽RHEL7系统中firewalld防火墙服务与iptables防火墙服务之间的关系，从理论和事实层面剖析真相。</p>
+<p>本节将会分别使用iptables，firewall-cmd，firewall-config和Tcp_wrappers等防火墙策略配置服务来完成数十个根据真实工作需求而设计的防火墙策略配置实验，让大家不仅能够熟练的对请求包流量进行过滤，还能够基于服务程序进行允许和关闭操作，做到保证Linux系统安全万无一失。<br><a id="more"></a></p>
+<h3 id="防火墙管理工具"><a href="#防火墙管理工具" class="headerlink" title="防火墙管理工具"></a>防火墙管理工具</h3><p>保证数据的安全性是继可用性之后最为重要的一项工作，众所周知外部公网相比企业内网更加的“罪恶丛生”，因此防火墙技术作为公网与内网之间的保护屏障，虽然有硬件和软件之分，但主要功能都是 <strong>依据策略对外部请求进行过滤</strong>，防火墙技术能够做到监控每一个数据包并判断是否有相应的匹配策略，直到匹配到其中一条策略规则或执行默认策略为止，防火墙策略可以基于来源地址，请求动作或协议等信息来定制，<strong>最终仅让合法的用户请求流入到内网，其余的均被抛弃。</strong><br><img src="/img/防火墙拓扑.png" alt=""><br>在红帽RHEL7系统中Filewalld服务取代了Iptables服务，对于接触Linux系统比较早或学习过红帽RHEL6系统的读者来讲，突然改用Firewalld服务后确实不免会有些抵触心理，或许会觉得Firewalld服务是一次不小的改变。但其实Iptables服务与Firewalld服务都不是真正的防火墙，它们都是用来定义防火墙策略功能的“防火墙管理工具”而已，iptables服务会把配置好的防火墙策略交由内核层面的netfilter网络过滤器来处理，而filewalld服务则是把配置好的防火墙策略交由内核层面的nftables包过滤框架来处理。换句话说，当前在Linux系统中其实同时有多个防火墙管理工具共同存在，它们的作用都是为了方便运维人员管理Linux系统的防火墙策略，而咱们只要配置妥当其中一个就足够了。虽然各个工具之间各有优劣特色，但对于防火墙策略的配置思路上是保持一致的，同学们甚至可以不用完全掌握本章节内的知识，而是在这诸多个防火墙管理工具中任选一款来学透即可，完全能够满足日常的工作所需。</p>
+<hr>
+<h3 id="Iptables"><a href="#Iptables" class="headerlink" title="Iptables"></a>Iptables</h3><p>在较早期的Linux系统中想配置防火墙默认使用的都是iptables防火墙管理命令，而新型firewalld防火墙管理服务已经被投入使用多年。</p>
+<h4 id="策略与匹配链"><a href="#策略与匹配链" class="headerlink" title="策略与匹配链"></a>策略与匹配链</h4><p>防火墙会从上至下来读取规则策略，一旦匹配到了合适的就会去执行并立即结束匹配动作，但也有转了一圈之后发现没有匹配到合适规则的时候，那么就回去执行默认策略。因此对防火墙的策略无非就是两种，一种是“通”，另一种是“堵”————当防火墙的默认策略是拒绝的，就要设置允许规则，否则谁都进不来了，而如果防火墙的默认策略是允许的，就要设置拒绝规则，否则谁都能进来了，起不到防范的作用。</p>
+<p>iptables命令把对数据进行过滤或处理数据包的策略叫做规则，把多条规则又存放到一个规则链中，规则链是依据处理数据包位置的不同而进行的分类，包括有：在进行路由选择前处理数据包（PREROUTING），处理流入的数据包（INPUT），处理流出的数据包（OUTPUT），处理转发的数据包（FORWARD），在进行路由选择后处理数据包（POSTROUTING）。从内网向外网发送的数据一把都是可控且良性的，<strong>因此显而易见咱们使用最多的就是INPUT数据链，这个链中定义的规则起到了保证私网设施不受外网骇客侵犯的作用。</strong></p>
+<p>比如您所居住的社区物业保安有两条规定——“禁止小商贩进入社区，各种车辆都需要登记”，这两条安保规定很明显应该是作用到了社区的正门（流量必须经过的地方），而不是每家每户的防盗门上。根据前面提到的防火墙策略的匹配顺序规则，咱们可以猜想有多种情况——比如来访人员是小商贩，则会被物业保安直接拒绝在大门外，也无需再对车辆进行登记，而如果来访人员是一辆汽车，那么因为第一条禁止小商贩策略就没有被匹配到，因而按顺序匹配到第二条策略，需要对车辆进行登记，再有如果来访的是社区居民，则既不满足小商贩策略，也不满足车辆登记策略，因此会执行默认的放行策略。</p>
+<p>不过只有规则策略还不能保证社区的安全，物业保安还应该知道该怎么样处理这些被匹配到的流量，比如包括有“允许”、“登记”、“拒绝”、“不理他”，这些动作对应到iptables命令术语中是 <strong>ACCEPT（允许流量通过）</strong>，<strong>LOG（记录日志信息）</strong>，<strong>REJECT（拒绝流量通过）</strong>，<strong>DROP（拒绝流量通过）</strong>。允许动作和记录日志工作都比较好理解，着重需要讲解的是这两条拒绝动作的的不同点，其中REJECT和DROP的动作操作都是把数据包拒绝，<strong>DROP是直接把数据包抛弃不响应，而REJECT会拒绝后在回复一条“您的信息我已收到，但被扔掉了”</strong>，让对方清晰的看到数据被拒绝的响应。就好比说您有一天正在家里看电视，突然有人敲门，透过“猫眼”一看是推销商品的，咱们如果不需要的情况下就会直接拒绝他们（REJECT）。但如果透过“猫眼”看到的是债主带了几十个小弟来讨债，这种情况不光要拒绝开门，还要默不作声，伪装成自己不在家的样子（DROP），这就是两种拒绝动作的不同之处。</p>
+<p><strong>把Linux系统设置成REJECT拒绝动作策略后，对方会看到本机的端口不可达的响应：</strong></p>
+<h4 id="基本的命令参数"><a href="#基本的命令参数" class="headerlink" title="基本的命令参数"></a>基本的命令参数</h4><p>iptables是一款基于命令行的防火墙策略管理工具，由于该命令是基于终端执行且存在有大量参数的，学习起来难度还是较大的，好在对于日常控制防火墙策略来讲，您无需深入的了解诸如“四表五链”的理论概念，只需要掌握常用的参数并做到灵活搭配即可，以便于能够更顺畅的胜任工作所需。iptables命令可以根据数据的流量的源地址，目的地址，传输协议，服务类型等等信息项进行匹配，一旦数据包和策略匹配上之后，iptables就会根据策略所预设的动作来处理这些数据包流量，另外再来提醒下同学们防火墙策略的匹配顺序规则是从上至下的，因此切记要把较为严格、优先级较高的策略放到靠前位置，否则有可能产生错误。下表中为读者们总结归纳了几乎所有常用的iptables命令参数，</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-P</td>
+<td>设置默认策略:iptables -P INPUT (DROP&#124;ACCEPT)</td>
+</tr>
+<tr>
+<td>-F</td>
+<td>清空规则链</td>
+</tr>
+<tr>
+<td>-L</td>
+<td>查看规则链</td>
+</tr>
+<tr>
+<td>-A</td>
+<td>在规则链的末尾加入新规则</td>
+</tr>
+<tr>
+<td>-l num</td>
+<td>在规则链的头部加入新规则</td>
+</tr>
+<tr>
+<td>-D num</td>
+<td>删除某一条规则</td>
+</tr>
+<tr>
+<td>-s</td>
+<td>匹配来源地址IP/MASK，加叹号“!”表示除这个IP外</td>
+</tr>
+<tr>
+<td>-d</td>
+<td>匹配目标地址</td>
+</tr>
+<tr>
+<td>-i 网卡名称</td>
+<td>匹配从这块网卡流入的数据</td>
+</tr>
+<tr>
+<td>-o 网卡名称</td>
+<td>匹配从这块网卡流出的数据</td>
+</tr>
+<tr>
+<td>-p</td>
+<td>匹配协议，如tcp，udp，icmp</td>
+</tr>
+<tr>
+<td>–dport num</td>
+<td>匹配目标端口号</td>
+</tr>
+<tr>
+<td>–sport num</td>
+<td>匹配来源端口号</td>
+</tr>
+</tbody>
+</table>
+<p><strong>使用iptables -L命令来查看已有的防火墙策略：</strong><br><code>[root@localhost ~]# iptables -L</code><br><code>Chain INPUT (policy ACCEPT)</code><br><code>target     prot opt source               destination</code><br><code>ACCEPT     all  --  anywhere             anywhere             ctstate</code> <code>RELATED,ESTABLISHED</code><br><code>ACCEPT     all  --  anywhere             anywhere</code><br><code>INPUT_direct  all  --  anywhere             anywhere</code><br><code>INPUT_ZONES_SOURCE  all  --  anywhere             anywhere</code><br><code>INPUT_ZONES  all  --  anywhere             anywhere</code><br><code>ACCEPT     icmp --  anywhere             anywhere</code><br><code>REJECT     all  --  anywhere             anywhere</code>           <code>reject-with icmp-h</code><br><code>......</code></p>
+<p><strong>使用iptables -F命令来清空已有的防火墙策略：</strong><br><code>[root@localhost ~]# iptables -F</code><br><code>[root@localhost ~]# iptables -L</code><br><code>Chain INPUT (policy ACCEPT)</code><br><code>......</code></p>
+<p><strong>将INPUT链的默认策略设置成拒绝：</strong><br>如前面所提到的防火墙策略设置无非有两种方式，一种是“通”，一种是“堵”，当把INPUT链设置为默认拒绝后，就要往里面写入允许策略了，否则所有流入的数据包都会被默认拒绝掉，同学们需要留意规则链的默认策略拒绝动作只能是DROP，而不能是REJECT。<br><code>[root@localhost ~]# iptables -P INPUT DROP</code><br><code>[root@localhost ~]# iptables -L</code><br><code>Chain INPUT (policy DROP)</code><br><code>target     prot opt source               destination</code><br><code>......</code></p>
+<p><strong>向INPUT链中添加允许icmp数据包流入的允许策略：</strong><br><code>[root@localhost ~]# ping -c 4 192.168.139.128</code><br><code>PING 192.168.139.128 (192.168.139.128) 56(84) bytes of data.</code><br><code>--- 192.168.139.128 ping statistics ---</code><br><code>4 packets transmitted, 0 received, 100% packet loss, time 3001ms</code><br><code>[root@localhost ~]# iptables -I INPUT -p icmp -j ACCEPT</code><br><code>[root@localhost ~]# ping -c 4 192.168.139.128</code><br><code>PING 192.168.139.128 (192.168.139.128) 56(84) bytes of data.</code><br><code>64 bytes from 192.168.139.128: icmp_seq=1 ttl=64 time=0.075 ms</code><br><code>64 bytes from 192.168.139.128: icmp_seq=2 ttl=64 time=0.032 ms</code><br><code>64 bytes from 192.168.139.128: icmp_seq=3 ttl=64 time=0.062 ms</code><br><code>64 bytes from 192.168.139.128: icmp_seq=4 ttl=64 time=0.062 ms</code><br><code>--- 192.168.139.128 ping statistics ---</code><br><code>4 packets transmitted, 4 received, 0% packet loss, time 3004ms</code><br><code>rtt min/avg/max/mdev = 0.032/0.057/0.075/0.018 ms</code></p>
+<p><strong>删除INPUT链中的那条策略，并把默认策略设置成还原：</strong><br><code>[root@localhost ~]# iptables -D INPUT 1</code><br><code>[root@localhost ~]# iptables -P INPUT ACCEPT</code><br><code>[root@localhost ~]# iptables -L</code><br><code>Chain INPUT (policy ACCEPT)</code><br><code>target     prot opt source               destination</code></p>
+<p><strong>设置INPUT链只允许指定网段访问本机的22接口，拒绝其它所有主机的数据请求流量：</strong><br><code>[root@localhost ~]# iptables -I INPUT -s 192.168.139.0/24 -p tcp --dport 22 -j ACCEPT</code><br><code>[root@localhost ~]# iptables -A INPUT -p tcp --dport 22 -j REJECT</code><br><code>[root@localhost ~]# iptables -L</code><br><code>Chain INPUT (policy ACCEPT)</code><br><code>target     prot opt source               destination</code><br><code>ACCEPT     tcp  --  192.168.139.0/24     anywhere             tcp dpt:ssh</code><br><code>REJECT     tcp  --  anywhere             anywhere             tcp dpt:ssh reject-wi</code></p>
+<p>使用IP地址在192.168.10.0/24网段内的主机访问服务器的22端口：<br><code>[root@localhost ~]# ssh 192.168.139.128</code><br><code>The authenticity of host &#39;192.168.139.128 (192.168.139.128)&#39; can&#39;t be established.</code><br><code>ECDSA key fingerprint is 32:fe:4a:7b:85:e9:93:8f:d8:93:e1:94:81:00:c8:f1.</code><br><code>Are you sure you want to continue connecting (yes/no)? yes</code><br><code>Warning: Permanently added &#39;192.168.139.128&#39; (ECDSA) to the list of known hosts.</code><br><code>root@192.168.139.128&#39;s password:</code><br><code>Last login: Mon Sep 18 15:00:26 2017</code></p>
+<p>使用IP地址在192.168.20.0/24网段外的主机访问服务器的22端口：<br><code>[root@Client B ~]# ssh 192.168.139.128</code><br><code>Connecting to 192.168.139.128:22...</code><br><code>Could not connect to &#39;192.168.139.128&#39; (port 22): Connection failed.</code></p>
+<p><strong>向INPUT链中添加拒绝所有人访问本机12345端口的策略：</strong><br><code>[root@localhost ~]# iptables -I INPUT -p tcp --dport 12345 -j REJECT</code><br><code>[root@localhost ~]# iptables -I INPUT -p udp --dport 12345 -j REJECT</code><br><code>[root@localhost ~]# iptables -L</code><br><code>Chain INPUT (policy ACCEPT)</code><br><code>target     prot opt source               destination</code><br><code>REJECT     udp  --  anywhere             anywhere             udp dpt:italk reject-with icmp-port-unreachable</code><br><code>REJECT     tcp  --  anywhere             anywhere             tcp dpt:italk reject-with icmp-port-unreachable</code><br><code>ACCEPT     tcp  --  192.168.139.0/24     anywhere             tcp dpt:ssh</code><br><code>REJECT     tcp  --  anywhere             anywhere             tcp dpt:ssh reject-with icmp-port-unreachable</code><br><code>......</code></p>
+<p><strong>向INPUT链中添加拒绝来自于指定192.168.139.127主机访问本机80端口（web服务）的防火墙策略：</strong><br><code>[root@localhost ~]# iptables -I INPUT -p tcp -s 192.168.139.127 --dport 80 -j REJECT</code><br><code>[root@localhost ~]# iptables -L</code><br><code>Chain INPUT (policy ACCEPT)</code><br><code>target     prot opt source               destination</code><br><code>REJECT     tcp  --  192.168.139.127      anywhere             tcp dpt:http reject-with icmp-port-unreachable</code><br><code>REJECT     udp  --  anywhere             anywhere             udp dpt:italk reject-with icmp-port-unreachable</code><br><code>REJECT     tcp  --  anywhere             anywhere             tcp dpt:italk reject-with icmp-port-unreachable</code><br><code>ACCEPT     tcp  --  192.168.139.0/24     anywhere             tcp dpt:ssh</code><br><code>REJECT     tcp  --  anywhere             anywhere             tcp dpt:ssh reject-with icmp-port-unreachable</code></p>
+<p><strong>向INPUT链中添加拒绝所有主机不能访问本机1000至1024端口的防火墙策略：</strong><br><code>[root@localhost ~]# iptables -A INPUT -p tcp --dport 1000:1024 -j REJECT</code><br><code>[root@localhost ~]# iptables -A INPUT -p udp --dport 1000:1024 -j REJECT</code><br><code>[root@localhost ~]# iptables -L</code><br><code>Chain INPUT (policy ACCEPT)</code><br><code>target     prot opt source               destination</code><br><code>REJECT     tcp  --  192.168.139.127      anywhere             tcp dpt:http reject-with icmp-port-unreachable</code><br><code>REJECT     udp  --  anywhere             anywhere             udp dpt:italk reject-with icmp-port-unreachable</code><br><code>REJECT     tcp  --  anywhere             anywhere             tcp dpt:italk reject-with icmp-port-unreachable</code><br><code>ACCEPT     tcp  --  192.168.139.0/24     anywhere             tcp dpt:ssh</code><br><code>REJECT     tcp  --  anywhere             anywhere             tcp dpt:ssh reject-with icmp-port-unreachable</code><br><code>REJECT     tcp  --  anywhere             anywhere             tcp dpts:cadlock2:1024 reject-with icmp-port-unreachable</code><br><code>REJECT     udp  --  anywhere             anywhere             udp dpts:cadlock2:1024 reject-with icmp-port-unreachable</code><br>是不是还意犹未尽？但对于iptables防火墙管理命令的学习到此就可以结束了，考虑到以后防火墙的发展趋势，同学们只要能把上面的实例看懂看熟就可以完全搞定日常的iptables防火墙配置工作了。但请特别留意下，iptables命令配置的防火墙规则默认会在下一次重启时失效，所以如果您想让配置的防火墙策略永久的生效下去，还要执行一下保存命令：<br><code>[root@localhost ~]# service iptables save</code><br><code>iptables: Saving firewall rules to /etc/sysconfig/iptables:[  OK  ]</code></p>
+<hr>
+<h3 id="Firewalld"><a href="#Firewalld" class="headerlink" title="Firewalld"></a>Firewalld</h3><p>RHEL7是一个集合多款防火墙管理工具并存的系统，Firewalld动态防火墙管理器服务（Dynamic Firewall Manager of Linux systems）是目前默认的防火墙管理工具，同时拥有命令行终端和图形化界面的配置工具，即使是对Linux命令并不熟悉的同学也能快速入门。相比于传统的防火墙管理工具还支持了动态更新技术并加入了“zone区域”的概念，简单来说就是事先为用户预先准备几套防火墙策略集合（策略模板），然后可以根据不同的生产场景而选择合适的策略集合，实现了防火墙策略之间的快速切换。例如咱们有一台笔记本电脑每天都要在办公室、咖啡厅和家里使用，按常理推断最安全的应该是家里的内网，其次是公司办公室，最后是咖啡厅，如果需要在办公室内允许文件共享服务的请求流量、回到家中需要允许所有的服务，而在咖啡店则是除了上网外不允许任何其他请求，这样的需求应该是很常见的，在以前只能频繁的进行手动设置，而现在只需要预设好zone区域集合，然后轻轻点击一下就可以切换过去了上百条策略了，极大的提高了防火墙策略的应用效率，常见的zone区域名称及应用可见下表（默认为public）：</p>
+<table>
+<thead>
+<tr>
+<th>区域</th>
+<th>默认规则策略</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>trusted</td>
+<td>允许所有的数据包</td>
+</tr>
+<tr>
+<td>home</td>
+<td>拒绝流入的数据包，除非与输出流量数据包相关或是ssh,mdns,ipp-client,samba-client与dhcpv6-client服务则允许。</td>
+</tr>
+<tr>
+<td>internal</td>
+<td>等同于home区域</td>
+</tr>
+<tr>
+<td>work</td>
+<td>拒绝流入的数据包，除非与输出流量数据包相关或是ssh,ipp-client与dhcpv6-client服务则允许。</td>
+</tr>
+<tr>
+<td>public</td>
+<td>拒绝流入的数据包，除非与输出流量数据包相关或是ssh,dhcpv6-client服务则允许。</td>
+</tr>
+<tr>
+<td>external</td>
+<td>拒绝流入的数据包，除非与输出流量数据包相关或是ssh服务则允许。</td>
+</tr>
+<tr>
+<td>dmz</td>
+<td>拒绝流入的数据包，除非与输出流量数据包相关或是ssh服务则允许。</td>
+</tr>
+<tr>
+<td>block</td>
+<td>拒绝流入的数据包，除非与输出流量数据包相关。</td>
+</tr>
+<tr>
+<td>drop</td>
+<td>拒绝流入的数据包，除非与输出流量数据包相关。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="终端管理工具"><a href="#终端管理工具" class="headerlink" title="终端管理工具"></a>终端管理工具</h4><p>firewall-cmd命令是Firewalld动态防火墙管理器服务的命令行终端。它的参数一般都是以“长格式”来执行的，但同学们也不用太过于担心，因为红帽RHEL7系统非常酷的支持了部分命令的参数补齐，也正好包括了这条命令，也就是说现在除了能够用Tab键来补齐命令或文件名等等内容，还可以用Tab键来补齐下列长格式参数啦（这点特别的棒）。</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>–get-default-zone</td>
+<td>查询默认的区域名称</td>
+</tr>
+<tr>
+<td>–set-default-zone=&lt;区域名称&gt;</td>
+<td>设置默认的区域，永久生效。</td>
+</tr>
+<tr>
+<td>–get-zones</td>
+<td>显示可用的区域。</td>
+</tr>
+<tr>
+<td>–get-services</td>
+<td>显示预先定义的服务。</td>
+</tr>
+<tr>
+<td>–get-active-zones</td>
+<td>显示当前正在使用的区域与网卡名称。</td>
+</tr>
+<tr>
+<td>–add-source=</td>
+<td>将来源于此IP或子网的流量导向指定的区域。</td>
+</tr>
+<tr>
+<td>–remove-source=</td>
+<td>不再将此IP或子网的流量导向指定的区域。</td>
+</tr>
+<tr>
+<td>–add-interface=&lt;网卡名称&gt;</td>
+<td>将来自于该网卡的所有流量都导向某个指定区域。</td>
+</tr>
+<tr>
+<td>–change-interface=&lt;网卡名称&gt;</td>
+<td>将某个网卡与区域做关联。</td>
+</tr>
+<tr>
+<td>–list-all</td>
+<td>显示当前区域的网卡配置参数，资源，端口号及服务等信息。</td>
+</tr>
+<tr>
+<td>–list-all-zones</td>
+<td>显示所有区域的网卡配置参数，资源，端口号及服务等信息。</td>
+</tr>
+<tr>
+<td>–add-service=&lt;服务名&gt;</td>
+<td>设置默认区域允许该服务的流量。</td>
+</tr>
+<tr>
+<td>–add-port=&lt;端口号/协议&gt;</td>
+<td>设置默认区域允许该端口的流量。</td>
+</tr>
+<tr>
+<td>–remove-service=&lt;服务名&gt;</td>
+<td>设置默认区域不再允许该服务的流量。</td>
+</tr>
+<tr>
+<td>–remove-port=&lt;端口号/协议&gt;</td>
+<td>设置默认区域不再允许该端口的流量。</td>
+</tr>
+<tr>
+<td>–reload</td>
+<td>让“永久生效”的配置规则立即生效，覆盖当前的。</td>
+</tr>
+</tbody>
+</table>
+<p>如同其他的防火墙策略配置工具一样，Firewalld服务对防火墙策略的配置默认是当前生效模式（RunTime），配置信息会随着计算机重启而失效，如果想要让配置的策略一直存在，就需要使用永久生效模式（Permanent）了，方法就是在正常的命令中加入–permanent参数就可以代表针对于永久生效模式的命令了。但这个永久生效模式也有一个“不近人情”的特点，就是对它设置的策略需要重启后才能自动生效，如果想让配置的策略立即生效的话需要手动执行一下–reload参数。</p>
+<p><strong>查看FireWalld服务当前所使用的zone区域。</strong><br><code>[root@localhost ~]# firewall-cmd --get-default-zone</code><br><code>public</code></p>
+<p><strong>查询eno16777728网卡在FireWalld服务中的zone区域。</strong><br><code>[root@localhost ~]# firewall-cmd --get-zone-of-interface=eno16777728</code><br><code>public</code></p>
+<p><strong>把Firewalld防火墙服务中eno16777728网卡的默认区域修改为external，重启后再生效：</strong><br><code>[root@localhost ~]# firewall-cmd --get-zone-of-interface=eno16777728</code><br><code>public</code><br><code>[root@localhost ~]# firewall-cmd --permanent --zone=external --change-interface=eno16777728</code><br><code>success</code><br><code>[root@localhost ~]# firewall-cmd --get-zone-of-interface=eno16777728</code><br><code>public</code><br>重启后：<br><code>[root@localhost ~]# firewall-cmd --permanent --get-zone-of-interface=eno16777728</code><br><code>external</code></p>
+<p><strong>将FireWalld当前的默认区域设置为public：</strong><br><code>[root@localhost ~]# firewall-cmd --set-default-zone=public</code><br><code>Warning: ZONE_ALREADY_SET: public</code><br><code>[root@localhost ~]# firewall-cmd --get-default-zone</code><br><code>public</code></p>
+<p><strong>启动/关闭Firewalld防火墙服务的应急状况模式，阻断一切网络连接（当远程控制服务器时慎用）：</strong><br><code>[root@localhost ~]# firewall-cmd --panic-on</code><br><code>success</code><br><code>[root@localhost ~]# firewall-cmd --panic-off</code><br><code>success</code></p>
+<p><strong>查询在public区域的ssh与https服务请求流量是否被允许.</strong><br><code>[root@localhost ~]# firewall-cmd --zone=public --query-service=ssh</code><br><code>yes</code><br><code>[root@localhost ~]# firewall-cmd --zone=public --query-service=https</code><br><code>no</code></p>
+<p><strong>把Firewalld防火墙服务中https服务的请求流量设置为永久允许，并当前立即生效：</strong><br><code>[root@localhost ~]# firewall-cmd --zone=public --add-service=https
+success</code><br><code>[root@localhost ~]# firewall-cmd --permanent --zone=public --add-service=https</code><br><code>success</code><br><code>[root@localhost ~]# firewall-cmd --reload</code><br><code>success</code></p>
+<p><strong>把FireWalld防火墙服务中http请求流量设置为永久拒绝，并当前立即生效：</strong><br><code>[root@localhost ~]# firewall-cmd --permanent --zone=public --remove-service=http</code><br><code>success</code><br><code>[root@localhost ~]# firewall-cmd --reload</code><br><code>success</code></p>
+<p><strong>把FireWalld防火墙服务中8080和8081的请求流量允许放行，但仅限当前生效：</strong><br><code>[root@localhost ~]# firewall-cmd --zone=public --add-port=8080-8081/tcp</code><br><code>success</code><br><code>[root@localhost ~]# firewall-cmd --zone=public --list-ports</code><br><code>8080-8081/tcp</code></p>
+<p><strong>把原本访问本机888端口号的请求流量转发到22端口号，要求当前和长期均有效：</strong></p>
+<ul>
+<li><strong>流量转发命令格式：firewall-cmd –permanent –zone=&lt;区域&gt; –add-forward-port=port=&lt;源端口号&gt;:proto=&lt;协议&gt;:toport=&lt;目标端口号&gt;:toaddr=&lt;目标IP地址&gt;</strong><br><code>[root@localhost ~]# firewall-cmd --permanent --zone=public --add-forward-port=port=888:proto=tcp:toport=22:toaddr=192.168.139.128</code><br><code>success</code></li>
+</ul>
+<p><strong>在客户机使用ssh命令尝试访问192.168.10.10主机的888端口：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[root@client ~]# ssh -p 888 192.168.139.128</div><div class="line">The authenticity of host &apos;[192.168.139.128]:888 ([192.168.139.128]:888)&apos; can&apos;t be established.</div><div class="line">ECDSA key fingerprint is 32:fe:4a:7b:85:e9:93:8f:d8:93:e1:94:81:00:c8:f1.</div><div class="line">Are you sure you want to continue connecting (yes/no)? yes</div><div class="line">Warning: Permanently added &apos;[192.168.139.128]:888&apos; (ECDSA) to the list of known hosts.</div><div class="line">root@192.168.139.128&apos;s password:</div><div class="line">Last login: Mon Sep 18 21:01:17 2017</div></pre></td></tr></table></figure></p>
+<p><strong>在Firewalld防火墙服务中配置一条富规则，拒绝所有来自于192.168.10.0/24网段的用户访问本机ssh服务（22端口）：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# firewall-cmd --permanent --zone=public --add-rich-rule=&quot;rule family=&quot;ipv4&quot; source address=&quot;192.168.139.0/24&quot; service name=&quot;ssh&quot; reject&quot;</div><div class="line">success</div><div class="line">[root@localhost ~]# firewall-cmd --reload</div><div class="line">success</div></pre></td></tr></table></figure></p>
+<p><strong>在客户机使用ssh命令尝试访问192.168.10.10主机的ssh服务（22端口）：</strong><br><code>[root@client ~]# ssh 192.168.139.128</code><br><code>ssh: connect to host 192.168.139.128 port 22: Connection refused</code></p>
+<hr>
+<h4 id="图形管理工具"><a href="#图形管理工具" class="headerlink" title="图形管理工具"></a>图形管理工具</h4><p>firewall-config命令是管理Firewalld防火墙策略的图形化工具，界面和操作都颇为出人意料，几乎可以实现所有命令行终端的操作，可以毫不夸张的说，即使初学者没有扎实的Linux命令基础，也一样可以通过这款图形化工具配置好RHEL7系统的防火墙策略。<br>输入一下命令：<br><code>[root@localhost ~]# firewall-config &amp;``
+</code>[1] 6177`<br>Firewalld防火墙图形化的界面如下图所示，功能分别为1:选择”当前立即生效（Runtime）”或”重启后长期生效(Permanent)”配置、2:可选策略集合区域列表、3:常用系统服务列表、4:当前正在使用的区域、5:管理当前被选中区域中的服务、6:管理当前被选中区域中的端口、7:开启或关闭SNAT（伪装）技术、8:设置端口转发策略、9:控制ICMP协议请求流量、10:管理防火墙的富规则、11:管理网卡设备、12:被选中区域的服务，前面有√的表示允许放行、13:Firewalld防火墙图形化工具的状态。<br><img src="/img/firewall-config界面.png" alt=""><br>这款Firewall-config图形化管理工具在配置策略后，您不需要点击保存或完成按钮，只要有修改内容工具就会自动保存好。例如咱们先来动手试一试把当前区域中http服务的请求流量允许放行吧，但仅限当前生效，如图所示：<br><img src="/img/允许其他主机访问http服务.png" alt=""><br>咱们尝试添加一条允许放行8080-8088端口号（tcp协议）入站请求数据的策略，并且把配置模式提前设置为永久长期生效，以达到重启后依然生效的目的，配置过程如图8-4所示，并且可以如图8-5所示，在菜单中点击Reload Firewalld选项，来让配置文件立即生效，这与在命令行终端中执行了–reload参数的效果是一样的。<br><img src="/img/允许其他主机访问8080-8088端口.png" alt=""><br><img src="/img/重启后依然有效.png" alt=""></p>
+<p>SNAT源地址转换协议是为了解决IP地址资源匮乏问题而设计的技术协议，SNAT技术能够使得多个内网用户通过一个外网IP地址上网。如图，在一个局域网中有多台主机，如果网关之上没有经过SNAT处理，那么请求过后的回复数据包就不能在互联网中找到这个私网IP地址，所以用户也就不能顺利取得想要的资源了，<br><img src="/img/未用SNAT1.png" alt=""><br>但是若使用了SNAT源地址转换技术，服务器应答后先由网关服务器接收，再分发给内网的用户主机，从而使得用户顺利的拿到了所需资源。<br><img src="/img/使用SNAT1.png" alt=""></p>
+<p>使用iptables命令做SNAT源地址转换是一件很麻烦的事情，但在Firewalld防火墙图形化工具中只需要点击开启伪装区域技术就自动开启了SNAT源地址转换技术，<br><img src="/img/开启伪装功能.png" alt=""></p>
+<p>比如刚刚把所有向本机888端口请求的流量转发到22端口上，然后让防火墙配置策略当前及重启后都生效。<br><img src="/img/将向本机888端口的请求转发至本机的22端口.png" alt=""><br><img src="/img/reload立即生效.png" alt=""></p>
+<p>在Firewalld中的“富规则”代表着更细致、更详细的策略配置方法，咱们可以针对某个系统服务、端口号、来源地址、目的地址等诸多元素进行有针对性的策略配置，富规则策略的优先级是在策略中最高的。例如可以让192.168.139.0的主机能够访问到本机的1234端口号。<br><img src="/img/仅允许192.168.10.20主机访问本机的1234端口.png" alt=""><br>当然，如果生成环境中有多块网卡在提供着服务（这种情况很常见），自然对内网和外网的网卡要选择的防火墙策略区域也不应是一样的，可用把网卡同防火墙策略zone区域做绑定，这样对不同网卡来源的请求流量进行不同策略区域的有针对性监控，效果会更好哦~<br><img src="/img/查看网卡设备信息.png" alt=""></p>
+<hr>
+<h3 id="服务的访问控制列表"><a href="#服务的访问控制列表" class="headerlink" title="服务的访问控制列表"></a>服务的访问控制列表</h3><p>Tcp_wrappers是红帽RHEL7系统中默认已经启用的一款流量监控程序，它能够根据来访主机地址与本机目标服务程序做允许或拒绝操作。换句话说，Linux系统中其实有两个层面的防火墙，第一种是前面讲到的基于TCP/IP协议的流量过滤防护工具，而Tcp_wrappers服务则是能够对系统服务进行允许和禁止的防火墙，从而在更高层面保护了Linux系统的安全运行。控制列表文件修改后会立即生效，系统会先检查允许策略规则文件（/etc/hosts.allow），如果匹配到相应的允许策略则直接放行请求，如果没有匹配就会进一步匹配拒绝策略规则文件（/etc/hosts.deny）的内容，有匹配到相应的拒绝策略就会直接拒绝该请求流量，如果两个文件全都没有匹配到的话也会默认放行这次的请求流量。配置服务的参数并不复杂，如下表中就已经列出了几乎所有常见的情况：</p>
+<table>
+<thead>
+<tr>
+<th>客户端类型</th>
+<th>示例</th>
+<th>满足示例的客户端列表</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>单一主机</td>
+<td>192.168.139.128</td>
+<td>IP地址为192.168.139.128的主机。</td>
+</tr>
+<tr>
+<td>指定网段</td>
+<td>192.168.139.</td>
+<td>IP段为192.168.139.0/24的主机。</td>
+</tr>
+<tr>
+<td>指定网段</td>
+<td>192.168.139.0/255.255.255.0</td>
+<td>IP段为192.168.139.0/24的主机。</td>
+</tr>
+<tr>
+<td>指定DNS后缀</td>
+<td>.linuxprobe.com</td>
+<td>所有DNS后缀为.linuxprobe.com的主机</td>
+</tr>
+<tr>
+<td>指定主机名称</td>
+<td>www.linuxprobe.com</td>
+<td>主机名称为www.linuxprobe.com的主机。</td>
+</tr>
+<tr>
+<td>指定所有客户端</td>
+<td>ALL</td>
+<td>所有主机全部包括在内。</td>
+</tr>
+</tbody>
+</table>
+<p>在正式配置Tcp_wrappers服务前有两点原则必须要提前讲清楚，第一，在写禁止项目的时候一定要写上的是服务名称，而不是某种协议的名称，第二，推荐先来编写拒绝规则，这样可以比较直观的看到相应的效果。例如先来通过拒绝策略文件禁止下所有访问本机sshd服务的请求数据吧（无需修改原有的注释信息）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# vim /etc/hosts.deny</div><div class="line">#</div><div class="line"># hosts.deny    This file contains access rules which are used to</div><div class="line">#               deny connections to network services that either use</div><div class="line">#               the tcp_wrappers library or that have been</div><div class="line">#               started through a tcp_wrappers-enabled xinetd.</div><div class="line">#</div><div class="line">#               The rules in this file can also be set up in</div><div class="line">#               /etc/hosts.allow with a &apos;deny&apos; option instead.</div><div class="line">#</div><div class="line">#               See &apos;man 5 hosts_options&apos; and &apos;man 5 hosts_access&apos;</div><div class="line">#               for information on rule syntax.</div><div class="line">#               See &apos;man tcpd&apos; for information on tcp_wrappers</div><div class="line">sshd:*</div><div class="line">[root@localhost ~]# ssh 192.168.139.128</div><div class="line">ssh_exchange_identification: read: Connection reset by peer</div></pre></td></tr></table></figure></p>
+<p>接下来在允许策略文件中添加放行所有来自于192.168.139.0/24这个网段访问本机sshd服务请求的策略，咱们的服务器马上就允许了访问sshd服务的请求，效果非常直观：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# vim /etc/hosts.allow</div><div class="line">#</div><div class="line"># hosts.allow   This file contains access rules which are used to</div><div class="line">#               allow or deny connections to network services that</div><div class="line">#               either use the tcp_wrappers library or that have been</div><div class="line">#               started through a tcp_wrappers-enabled xinetd.</div><div class="line">#</div><div class="line">#               See &apos;man 5 hosts_options&apos; and &apos;man 5 hosts_access&apos;</div><div class="line">#               for information on rule syntax.</div><div class="line">#               See &apos;man tcpd&apos; for information on tcp_wrappers</div><div class="line">sshd:192.168.139.</div><div class="line">[root@localhost ~]# ssh 192.168.139.128</div><div class="line">root@192.168.139.128&apos;s password:</div><div class="line">Last login: Tue Sep 19 20:52:34 2017 from 192.168.139.129</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/sakura-hly.github.io/tags/Linux/" rel="tag"># Linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/sakura-hly.github.io/2017/09/17/Linux基础课程07/" rel="next" title="基础课程07">
+                <i class="fa fa-chevron-left"></i> 基础课程07
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/sakura-hly.github.io/2017/09/19/JDK1.8源码学习-1/" rel="prev" title="JDK1.8源码学习-String">
+                JDK1.8源码学习-String <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  //with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="/sakura-hly.github.io/images/dp.jpg"
+              alt="caijy" />
+          
+            <p class="site-author-name" itemprop="name">caijy</p>
+            <p class="site-description motion-element" itemprop="description">一个Linux菜鸟的博客</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/sakura-hly.github.io/archives/">
+            
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">Artikel</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">Kategorien</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">Tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=448226072&auto=1&height=66"></iframe>
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#防火墙管理工具"><span class="nav-number">1.</span> <span class="nav-text">防火墙管理工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Iptables"><span class="nav-number">2.</span> <span class="nav-text">Iptables</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#策略与匹配链"><span class="nav-number">2.1.</span> <span class="nav-text">策略与匹配链</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基本的命令参数"><span class="nav-number">2.2.</span> <span class="nav-text">基本的命令参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Firewalld"><span class="nav-number">3.</span> <span class="nav-text">Firewalld</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#终端管理工具"><span class="nav-number">3.1.</span> <span class="nav-text">终端管理工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#图形管理工具"><span class="nav-number">3.2.</span> <span class="nav-text">图形管理工具</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务的访问控制列表"><span class="nav-number">4.</span> <span class="nav-text">服务的访问控制列表</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">caijy</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/sakura-hly.github.io/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/sakura-hly.github.io/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/sakura-hly.github.io/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/sakura-hly.github.io/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/sakura-hly.github.io/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/sakura-hly.github.io/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/sakura-hly.github.io/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("jsI2BP061jWWrjY7NlFVHOOQ-gzGzoHsz", "WQFdrAUtgTXisdJ8TFShl3a7");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+  
+</body>
+</html>

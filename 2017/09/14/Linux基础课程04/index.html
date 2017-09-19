@@ -1,0 +1,1590 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/sakura-hly.github.io/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/sakura-hly.github.io/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/sakura-hly.github.io/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Linux," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/sakura-hly.github.io/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="首先来学习如何使用vim编辑器来编写、修改文档，然后通过逐个配置主机名称、系统网卡以及Yum仓库参数文件等实验来加深对vim编辑器中诸多命令、快捷键的执行方法与各个模式切换的方法。然后把前面的Linux命令、命令语法与Shell脚本中的if条件测试语句、for条件测试循环语句、while条件循环语句以及case条件测试语句通过vim编辑器写到Shell脚本中结合到一起，实现最终能够自动化工作的软件">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基础课程04">
+<meta property="og:url" content="http://yoursite.com/2017/09/14/Linux基础课程04/index.html">
+<meta property="og:site_name" content="破晓">
+<meta property="og:description" content="首先来学习如何使用vim编辑器来编写、修改文档，然后通过逐个配置主机名称、系统网卡以及Yum仓库参数文件等实验来加深对vim编辑器中诸多命令、快捷键的执行方法与各个模式切换的方法。然后把前面的Linux命令、命令语法与Shell脚本中的if条件测试语句、for条件测试循环语句、while条件循环语句以及case条件测试语句通过vim编辑器写到Shell脚本中结合到一起，实现最终能够自动化工作的软件">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/img/vim不同模式间的切换.png">
+<meta property="og:image" content="http://yoursite.com/img/vim-输入.png">
+<meta property="og:image" content="http://yoursite.com/img/vim-末行.png">
+<meta property="og:image" content="http://yoursite.com/img/vim-q!.png">
+<meta property="og:image" content="http://yoursite.com/img/配置网卡.png">
+<meta property="og:image" content="http://yoursite.com/img/脚本中的位置变量.png">
+<meta property="og:image" content="http://yoursite.com/img/测试语句格式.png">
+<meta property="og:image" content="http://yoursite.com/img/单分支结构-2.png">
+<meta property="og:image" content="http://yoursite.com/img/双分支结构-1.png">
+<meta property="og:image" content="http://yoursite.com/img/多分支结构-2.png">
+<meta property="og:image" content="http://yoursite.com/img/for条件语句-1.png">
+<meta property="og:image" content="http://yoursite.com/img/while条件语句-1.png">
+<meta property="og:image" content="http://yoursite.com/img/case条件语句-1.png">
+<meta property="og:image" content="http://yoursite.com/img/cron计划任务的参数.png">
+<meta property="og:updated_time" content="2017-09-14T12:35:30.688Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基础课程04">
+<meta name="twitter:description" content="首先来学习如何使用vim编辑器来编写、修改文档，然后通过逐个配置主机名称、系统网卡以及Yum仓库参数文件等实验来加深对vim编辑器中诸多命令、快捷键的执行方法与各个模式切换的方法。然后把前面的Linux命令、命令语法与Shell脚本中的if条件测试语句、for条件测试循环语句、while条件循环语句以及case条件测试语句通过vim编辑器写到Shell脚本中结合到一起，实现最终能够自动化工作的软件">
+<meta name="twitter:image" content="http://yoursite.com/img/vim不同模式间的切换.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/sakura-hly.github.io/',
+    scheme: 'Muse',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/09/14/Linux基础课程04/"/>
+
+
+
+
+
+  <title>基础课程04 | 破晓</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7f1817ded637839eb4e759c996071a39";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/sakura-hly.github.io/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">破晓</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">弱小和无知不是生存的障碍，傲慢才是。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/sakura-hly.github.io/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/sakura-hly.github.io/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archiv
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Suche
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/sakura-hly.github.io/2017/09/14/Linux基础课程04/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="caijy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/sakura-hly.github.io/images/dp.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="破晓">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">基础课程04</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-14T13:51:07+08:00">
+                2017-09-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/sakura-hly.github.io/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/sakura-hly.github.io/2017/09/14/Linux基础课程04/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count fb-comments-count" data-href="http://yoursite.com/2017/09/14/Linux基础课程04/" itemprop="commentCount">0</span> comments
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/sakura-hly.github.io/2017/09/14/Linux基础课程04/" class="leancloud_visitors" data-flag-title="基础课程04">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>首先来学习如何使用vim编辑器来编写、修改文档，然后通过逐个配置主机名称、系统网卡以及Yum仓库参数文件等实验来加深对vim编辑器中诸多命令、快捷键的执行方法与各个模式切换的方法。然后把前面的Linux命令、命令语法与Shell脚本中的if条件测试语句、for条件测试循环语句、while条件循环语句以及case条件测试语句通过vim编辑器写到Shell脚本中结合到一起，实现最终能够自动化工作的软件脚本工具。最后为读者们演示了怎样通过at命令与crond计划任务服务来分别实现一次性与长期性的系统任务设置方法，让日常的工作更加高效自动化，一劳永逸。<br><a id="more"></a></p>
+<h3 id="Vim文本编辑器"><a href="#Vim文本编辑器" class="headerlink" title="Vim文本编辑器"></a>Vim文本编辑器</h3><p><strong>“Linux系统中一切都是文件，而配置一个服务就是在修改其配置文件的参数”</strong>。而且在日常工作中也一定免不了遇到编写文档的事情吧，这些都是要通过文本编辑器来完成的，咱们选择学习vim这个当前整个linux操作系统中都会默认安装好的一款超棒文本编辑器，学会后绝对会能让您“通吃”当前主流的系统。<br>Vim能够得到广大厂商与众多用户的认可，原因就是在Vim编辑器中内设有的三种模式——<strong>命令模式</strong>、<strong>末行模式</strong> 和 <strong>编辑模式</strong>，每种模式分别又支持多种不同的命令快捷键组合，大大的提高了工作效率，用习惯后会觉得非常的顺手。而要想在文本操作时更加高效率，就必须先搞清Vim编辑器的三种模式的操作不同与切换方法：<br><img src="/img/vim不同模式间的切换.png" alt="vim不同模式间的切换"></p>
+<ul>
+<li><strong>命令模式：控制光标移动，可对文本进行删除、复制、粘贴和查找等工作。</strong></li>
+<li><strong>输入模式：正常的文本录入。</strong></li>
+<li><strong>末行模式：保存、退出与设置编辑环境。</strong></li>
+</ul>
+<p>每次运行vim编辑器后都默认会是 <em>“命令模式”</em>，需要先进入到 <em>“输入模式”</em> 后再进行编写文档的工作，而每次编辑完成需先返回到 <em>“命令模式”</em> 后再进入 <em>“末行模式”</em> 中执行对文本的保存或退出操作，并不能直接从 <em>“输入模式”</em> 切换到 <em>“末行模式”</em> 。vim编辑器内设支持的命令有成百上千种用法，为了能够帮助读者更快的掌握vim编辑器，刘遄老师分别总结了在 <strong>命令模式</strong> 和 <strong>末行模式</strong> 中最常用的一些快捷键命令，如下表所示：</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>dd</td>
+<td>删除（剪切）光标所在整行。</td>
+</tr>
+<tr>
+<td>5dd</td>
+<td>删除(剪切)从光标处开始的5行。</td>
+</tr>
+<tr>
+<td>yy</td>
+<td>复制光标所在整行</td>
+</tr>
+<tr>
+<td>5yy</td>
+<td>复制从光标处开始的5行。</td>
+</tr>
+<tr>
+<td>n</td>
+<td>显示搜索命令定位到的下一个字符串</td>
+</tr>
+<tr>
+<td>N</td>
+<td>显示搜索命令定位到的上一个字符串</td>
+</tr>
+<tr>
+<td>u</td>
+<td>撤销上一步操作</td>
+</tr>
+<tr>
+<td>p</td>
+<td>将之前删除（dd）或复制（yy）过的数据粘贴到光标后。</td>
+</tr>
+<tr>
+<td>/字符串</td>
+<td>在文本中从上至下搜索该字符串。</td>
+</tr>
+<tr>
+<td>?字符串</td>
+<td>在文本中从下至上搜索该字符串。</td>
+</tr>
+</tbody>
+</table>
+<p>末行模式主要用于保存或退出文件，能够设置vim编辑器的整体使用环境，还可以让用户执行外部Linux命令或跳转到特定的行数，切换到末行模式的方式就是在命令模式中输入一个冒号就可以的，末行模式中可用的命令如下表：</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>:w</td>
+<td>保存</td>
+</tr>
+<tr>
+<td>:q</td>
+<td>推出</td>
+</tr>
+<tr>
+<td>:q!</td>
+<td>强制推出</td>
+</tr>
+<tr>
+<td>:wq!</td>
+<td>强制保存退出</td>
+</tr>
+<tr>
+<td>:set nu</td>
+<td>设置行号</td>
+</tr>
+<tr>
+<td>:set nonu</td>
+<td>不显示行号</td>
+</tr>
+<tr>
+<td>:命令</td>
+<td>执行该命令</td>
+</tr>
+<tr>
+<td>:整数</td>
+<td>跳转到该行</td>
+</tr>
+<tr>
+<td>:s/one/two</td>
+<td>将当前光标所在行的第一个one替换成two</td>
+</tr>
+<tr>
+<td>:s/one/two/g</td>
+<td>将当前光标所在行的所有one替换成two</td>
+</tr>
+<tr>
+<td>:%s/one/two/g</td>
+<td>将全文中的所有one替换成two</td>
+</tr>
+</tbody>
+</table>
+<h4 id="编写简单文档"><a href="#编写简单文档" class="headerlink" title="编写简单文档"></a>编写简单文档</h4><p>现在就让咱们一起动手编写个简单的文档吧，编写脚本的第1步就是给文件取个名字，如果文档的名称存在则打开它，如果不存在则是创建一个临时的输入文件。<br><code>[root@localhost workdir]# vim practice.txt</code><br>进入文件后默认看到的是vim编辑器的命令模式，这时只能够执行命令快捷键而不能随意输入文本内容，必须切换到输入模式才可以开始编写工作。有些读者应该能够猜出a、i、o三键的区别了吧，对，就是光标的位置不同！a键与i键分别是在光标右一位和光标当前位置切换到输入模式，而o键则是在光标的下面再创建一个空行，此时可敲击a键进入到编辑器的输入模式，<br>输入模式是可以随意输入文本内容的，更不会把您输入的文本内容当作命令而执行:<br><img src="/img/vim-输入.png" alt=""><br>如果想要保存并退出这个文本文件，必须先从 <em>输入模式</em> 返回到 <em>命令模式</em>，然后切换至 <em>末行模式</em> 中才能完成保存退出操作。<br><img src="/img/vim-末行.png" alt=""><br>当咱们在末行模式中键入:wq!时就意味着强制保存并退出文件，然后便可以用cat命令查看到保存文件后的信息了<br><code>[root@localhost workdir]# cat practice.txt</code><br><code>You can write in it.</code></p>
+<p>感觉是不是很简单，咱们接下来继续编辑这个文件，因为要在原有文本的内容下面追加内容，所以在命令模式中敲击o键的话会更高效呢.<br><img src="/img/vim-q!.png" alt=""><br>现在是不是感觉对vim编辑器有了一些实战经验呢，也不是想象中的那么难吧~现在咱们查看下文本的内容会发现果然后面一次输入的内容并没有被保存下来:<br><code>[root@localhost workdir]# cat practice.txt</code><br><code>You can write in it.</code></p>
+<h4 id="配置主机名称"><a href="#配置主机名称" class="headerlink" title="配置主机名称"></a>配置主机名称</h4><p>为了便于在局域网中指定查找某个用户的电脑或区别主机的作用，除了要有IP地址外还要配置一个主机名，用户之间可以通过这个类似于域名的名称来便捷的相互访问。绝大部分的Linux系统主机名都是保存在/etc/hostname文件中的，咱们要想将其内容修改为”linuxprobe.com”，思路大致如下：</p>
+<ol>
+<li>使用vim编辑器修改”/etc/hostname”主机名称文件。</li>
+<li>把原始主机名称删除后追加”linuxprobe.com”。</li>
+<li>保存退出文档并用hostname命令检查是否修改成功。</li>
+</ol>
+<p>使用hostname命令查看当前的主机名称，但有时系统不能立即同步到主机名称已经发生改变，所以如果您确认修改完成却还显示原来的主机名称，可重启虚拟机后再查看下：<br><code>[root@localhost workdir]# hostname</code><br><code>caijy.com</code></p>
+<h4 id="配置网卡信息"><a href="#配置网卡信息" class="headerlink" title="配置网卡信息"></a>配置网卡信息</h4><p>能够正确的配置网卡IP地址是保证两台服务器互相通信的前提，而Linux系统中的一切都是文件，配置网络的工作其实就是在编辑网卡配置文件，因此这个小任务不仅是帮助您熟练操作vim编辑器的过程，还是在为以后学习各种服务课程打下深深的基础。</p>
+<p>在红帽RHEL7系统中的网卡配置文件前缀则以 <em>“ifcfg-eno”</em> 开始的,例如现在要想配置一个名称为eno16777736的网卡设备开机自启动并且IP地址、子网、网关等信息由人工指定的话思路应该是：</p>
+<ol>
+<li>首先要切换到”/etc/sysconfig/network-scripts”目录中（该目录存放着网卡的配置文件）。</li>
+<li>使用vim编辑器修改网卡文件”ifcfg-eno16777736”，逐项写入配置参数并保存退出，因每台电脑的硬件及架构情况都是不一样的，同学们的网卡默认名称请通过ifconfig命令自行确认。<ul>
+<li>设备类型:TYPE=Ethernet</li>
+<li>地址分配模式:BOOTPROTO=static</li>
+<li>网卡名称:NAME=eno16777736</li>
+<li>是否启动:ONBOOT=yes</li>
+<li>IP地址:IPADDR=192.168.10.10</li>
+<li>子网掩码:NETMASK=255.255.255.0</li>
+<li>网关地址:GATEWAY=192.168.10.1</li>
+<li>DNS地址:DNS1=192.168.10.1</li>
+</ul>
+</li>
+<li>重启网卡设备并测试网络是否联通。</li>
+</ol>
+<p>进入到网卡配置文件所在的目录，然后编辑网卡配置文件填入下面的信息：<br><img src="/img/配置网卡.png" alt=""><br>执行重启网卡设备的命令，正常情况不会有提示信息，然后通过ping命令测试网络能否联通。<br><code>[root@localhost network-scripts]# systemctl restart network</code><br><code>[root@localhost network-scripts]# ping 192.168.10.10</code><br><code>PING 192.168.10.10 (192.168.10.10) 56(84) bytes of data.</code><br><code>64 bytes from 192.168.10.10: icmp_seq=1 ttl=64 time=0.029 ms</code><br><code>64 bytes from 192.168.10.10: icmp_seq=2 ttl=64 time=0.032 ms</code><br><code>64 bytes from 192.168.10.10: icmp_seq=3 ttl=64 time=0.032 ms</code><br><code>64 bytes from 192.168.10.10: icmp_seq=4 ttl=64 time=0.040 ms</code><br><code>64 bytes from 192.168.10.10: icmp_seq=5 ttl=64 time=0.066 ms</code><br><code>64 bytes from 192.168.10.10: icmp_seq=6 ttl=64 time=0.031 ms</code><br><code>^C</code><br><code>--- 192.168.10.10 ping statistics ---</code><br><code>6 packets transmitted, 6 received, 0% packet loss, time 5002ms</code><br><code>rtt min/avg/max/mdev = 0.029/0.038/0.066/0.013 ms</code></p>
+<h4 id="配置Yum仓库"><a href="#配置Yum仓库" class="headerlink" title="配置Yum仓库"></a>配置Yum仓库</h4><p>前面了解过Yum软件仓库的作用是为了进一步简化RPM管理软件难度以及自动分析所需软件包及其依赖关系的技术。您可以把Yum想象成是一个硕大的软件仓库，里面保存有几乎所有常用的工具，而只需要说出所需的软件包名称，系统就会自动的为您搞定一切。那么既然要使用Yum技术，就要先把软件仓库搭建起来，然后将其配置规则确定好才行</p>
+<ol>
+<li>首先要进入到”/etc/yum.repos.d/“目录中（因为该目录存放着yum仓库的配置文件）</li>
+<li>使用vim编辑器创建一个名为rhel7.repo的新配置文件（文件名称可随意，但后缀必须为repo），逐项写入下面加粗的配置参数并保存退出（不写中文注释）。<ul>
+<li>[rhel-media] yum仓库唯一标识符，避免与其他仓库冲突。</li>
+<li>name=linuxprobe yum仓库的名称描述，易于识别仓库用处。。</li>
+<li>baseurl=file:///media/cdrom 提供方式包括FTP（ftp://..）、HTTP（<a href="http://..）、本地（file:///..）" target="_blank" rel="external">http://..）、本地（file:///..）</a></li>
+<li>enabled=1 设置此源是否可用，1为可用，0为禁用。</li>
+<li>gpgcheck=1 设置此源是否校验文件，1为校验，0为不校验。</li>
+<li>gpgkey=file:///media/cdrom/RPM-GPG-KEY-redhat-release 若为校验请指定公钥文件地址。</li>
+</ul>
+</li>
+<li>按配置参数的路径把光盘挂载，并把光盘挂载信息写入到/etc/fstab文件中。  </li>
+<li>使用”yum install httpd -y”命令检查Yum仓库是否已经可用。</li>
+</ol>
+<p>进入到/etc/yum.repos.d目录中后创建Yum配置文件：<br><code>[root@localhost network-scripts]# cd /etc/yum.repos.d/</code><br><code>[root@localhost yum.repos.d]# vim rehl17.repo</code><br><code>[rhel7]</code><br><code>name=rhel7</code><br><code>baseurl=file:///media/cdrom</code><br><code>enabled=1</code><br><code>gpgcheck=0</code></p>
+<p>创建挂载点后进行挂载操作，并设置成开机自动挂载<br><code>[root@localhost yum.repos.d]# mkdir -p /media/cdrom</code><br><code>[root@localhost yum.repos.d]# mount /dev/cdrom /media/cdrom</code><br><code>mount: /dev/sr0 is write-protected, mounting read-only</code><br><code>[root@localhost yum.repos.d]# vim /etc/fstab</code><br><code>/dev/cdrom /media/cdrom iso9660 defaults 0 0</code></p>
+<p>尝试使用Yum软件仓库来安装Web服务，出现Complete（完成）则代表Yum仓库配置正确：<br><code>[root@localhost yum.repos.d]# yum install httpd</code><br><code>Loaded plugins: langpacks, product-id, subscription-manager</code><br><code>This system is not registered to Red Hat Subscription Management. You can use subscription-manager to register.</code><br><code>......</code><br><code>Complete!</code></p>
+<hr>
+<h3 id="编写Shell脚本"><a href="#编写Shell脚本" class="headerlink" title="编写Shell脚本"></a>编写Shell脚本</h3><p>Shell终端解释器被形容是人与计算机硬件的“翻译官”，它作为用户与Linux系统内部通讯的媒介，除了允许了各种变量与参数外还提供了诸如循环、分支等高级语言才有的控制结构特性，如何正确的使用这些功能，准确下达命令尤为重要。Shell脚本的工作方式有两种，首先是前面所接触的交互方式(Interactive)，即当用户每输入一条命令就执行一次，而批处理(Batch)则是由用户事先编写好一个完整的Shell脚本，Shell会一次性执行脚本中诸多的命令。因此在Shell脚本中不仅需要用到很多前面学习过的Linux命令以及正则表达式、管道符、数据流重定向等语法规则，还需要把内部功能模块化后通过逻辑语句进行加工，最终才能成为日常所见的Shell脚本程序，可以通过SHELL变量来查看到当前系统已经默认使用bash解释器作为命令行终端了：<br><code>[root@localhost Desktop]# echo $SHELL</code><br><code>/bin/bash</code></p>
+<h4 id="编写简单的脚本"><a href="#编写简单的脚本" class="headerlink" title="编写简单的脚本"></a>编写简单的脚本</h4><p>估计读者看完上面对Shell脚本如此复杂的描述都有一种心累想放弃的感觉了吧，但这仅指的是一个高深Shell脚本的编写原则，其实使用vim编辑器把linux命令按照顺序依次写入文件就是编写完成一个最简单的脚本啦。例如想查看当前所在工作路径并列出当前目录下所有文件及属性信息，编写一个脚本来完成的话是这样：<br><code>[root@localhost Desktop]# vim example.sh</code><br><code>#! /bin/bash</code><br><code>#For Example</code><br><code>pwd</code><br><code>ls -al</code><br>Shell脚本文件的名称是可以任意起，但咱们应该遵守运维行业人员大众的规范把.sh后缀写上，这样让其他人一看就知道是个脚本文件，与人方便自己方便。在这个脚本中实际上出现了三种不同的元素，第一行脚本声明(#!)是用来告知系统用何种shell解释器来执行本脚本程序，第二行注释信息(#)是对程序功能和某些命令的介绍信息，使得自己或他人再次看到这个脚本内容时可以快速知道这些功能的作用或一些警告信息，第三、四行可执行语句也就是咱们平时执行的Linux命令啦~什么？同学们不相信这么简单就编写出来了一个脚本程序，那来执行看一看吧：<br><code>[root@localhost Desktop]# bash example.sh</code><br><code>/home/caijy/Desktop</code><br><code>total 4848</code><br><code>drwxr-xr-x.  4 caijy caijy      93 Sep 14 16:29 .</code><br><code>drwx------. 14 caijy caijy    4096 Sep 14 11:05 ..</code><br><code>drwxrwxr-x.  3 caijy caijy      20 Sep 14 12:34 c</code><br><code>-rw-rw-r--.  1 caijy caijy 4946304 Sep 13 20:29 etc.tar.gz</code><br><code>-rw-r--r--.  1 root  root       38 Sep 14 16:28 example.sh</code><br><code>-rw-rw-r--.  1 caijy caijy       0 Sep 13 20:21 linux.log</code><br><code>drwxrwxr-x.  2 caijy caijy    4096 Sep 13 21:06 mydir</code><br><code>-rw-rw-r--.  1 caijy caijy      50 Sep 14 10:31 readme.txt</code><br>第二种运行脚本程序的方法是以输入完整路径的方式来执行，但默认会因为权限不足而提示报错信息，这种情况只需要为脚本文件增加执行权限即可:<br><code>[root@localhost Desktop]# ./example.sh</code><br><code>bash: ./example.sh: Permission denied</code><br><code>[root@localhost Desktop]# chmod u+x example.sh</code><br><code>[root@localhost Desktop]# bash example.sh</code><br><code>/home/caijy/Desktop</code><br><code>total 4848</code><br><code>drwxr-xr-x.  4 caijy caijy      93 Sep 14 16:29 .</code><br><code>drwx------. 14 caijy caijy    4096 Sep 14 11:05 ..</code><br><code>drwxrwxr-x.  3 caijy caijy      20 Sep 14 12:34 c</code><br><code>-rw-rw-r--.  1 caijy caijy 4946304 Sep 13 20:29 etc.tar.gz</code><br><code>-rw-r--r--.  1 root  root       38 Sep 14 16:28 example.sh</code><br><code>-rw-rw-r--.  1 caijy caijy       0 Sep 13 20:21 linux.log</code><br><code>drwxrwxr-x.  2 caijy caijy    4096 Sep 13 21:06 mydir</code><br><code>-rw-rw-r--.  1 caijy caijy      50 Sep 14 10:31 readme.txt</code></p>
+<h4 id="接收用户的参数"><a href="#接收用户的参数" class="headerlink" title="接收用户的参数"></a>接收用户的参数</h4><p>但是像上面这样的脚本程序在功能上真的太过于“死板”，为了能够让Shell脚本程序更好的满足用户对灵活完成工作的热切需要，必须要让脚本程序能够像咱们以前执行命令时那样来接收用户输入进来的参数。</p>
+<p>其实Shell脚本早就考虑到了这些，已经在脚本中定义好了很多变量功能，例如$0对应当前Shell脚本程序的名称，$#对应总共有几个参数，$*对应所有位置的参数值，而$1,$2,$3……依次类推则分别对应着第N个位置的参数:<br><img src="/img/脚本中的位置变量.png" alt=""><br>尝试来编写一个测试用的脚本程序，通过引用上面的变量参数来看下真实效果：<br><code>[root@localhost Desktop]# vim example.sh</code><br><code>#! /bin/bash</code><br><code>echo &quot;当前脚本名称为$0.&quot;</code><br><code>echo &quot;总共有$#个参数，分别是$*.&quot;</code><br><code>echo &quot;第1个参数为$1,第5个为$5.&quot;</code><br><code>[root@localhost Desktop]# bash example.sh one two three four five</code><br><code>当前脚本名称为example.sh.</code><br><code>总共有5个参数，分别是one two three four five.</code><br><code>第1个参数为one,第5个为five.</code></p>
+<h4 id="判断用户的参数"><a href="#判断用户的参数" class="headerlink" title="判断用户的参数"></a>判断用户的参数</h4><p>学习就像是在登台阶，在您学习完执行linux命令，掌握脚本语法变量和接收用户输入信息等方法后就要踏上新的高度——<em>即能够进一步去处理接收到的用户的参数</em>。因为有时咱们也需要像前面学习过的mkdir命令一样来判断用户输入的信息，从而判断用户指定的文件夹名称是否已经存在，已存在则提示报错，不存在则自动的创建。条件测试语法能够判断表达式是否成立，若条件成立则返回数字0，否则便返回其他随机数值。<br><img src="/img/测试语句格式.png" alt=""></p>
+<p>条件判断语句按照测试对象可分为 <strong>文件测试、逻辑测试、整数值比较与字符串比较</strong>，文件测试即用来按照指定条件来判断文件是否存在或权限是否满足，具体的参数包括有：</p>
+<table>
+<thead>
+<tr>
+<th>操作符</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-d</td>
+<td>测试是否为目录</td>
+</tr>
+<tr>
+<td>-e</td>
+<td>测试文件或目录是否存在</td>
+</tr>
+<tr>
+<td>-f</td>
+<td>判断是否为文件</td>
+</tr>
+<tr>
+<td>-r</td>
+<td>测试当前用户是否有权限读取</td>
+</tr>
+<tr>
+<td>-w</td>
+<td>测试当前用户是否有权限写入</td>
+</tr>
+<tr>
+<td>-x</td>
+<td>测试当前用户是否有权限执行</td>
+</tr>
+</tbody>
+</table>
+<p>好啦，那么先通过文件测试语句来判断/etc/fstab是否为一个目录文件，然后通过$?变量来显示上一条命令执行后的返回值，这样就可以通过返回的非零值判断目录是不存在的了（即文件测试语句判断结果不符合）：<br><code>[root@localhost Desktop]# [ -d /etc/fstab ]</code><br><code>[root@localhost Desktop]# echo $?</code><br><code>1</code><br>再来用文件测试语句来判断下/etc/fstab是否为一般文件，这样看到返回值是0即代表这个一般文件是存在的：<br><code>[root@localhost Desktop]# [ -f /etc/fstab ]</code><br><code>[root@localhost Desktop]# echo $?</code><br><code>0</code><br>逻辑测试则是用于判断用户给出的条件是为真还是假，从而把条件测试语句与逻辑语句相搭配结合使用可以实现一个更高级的使用方法，例如在Shell终端中逻辑“与”符号是&amp;&amp;，它代表当前面的命令执行成功后才会执行后面的命令，因此可以用来判断/dev/cdrom设备是否存在，若存在时才输出Exist字样。<br><code>[root@localhost Desktop]# [ -e /dev/cdrom ] &amp;&amp; echo &quot;exist&quot;</code><br><code>exist</code><br>除了“与”逻辑测试符号外,还有逻辑“或”，“非”符号，在Linux系统中逻辑“非”的符号就是一个叹号，它代表把条件测试中的判断结果取相反值。</p>
+<p>整数比较运算符是仅对数字的测试操作，不能把数字与字符串、文件等内容一起操作，而且不能想当然的使用日常生活中的等号、大于号、小于号等来做判断，因为等号与是赋值命令符冲突，大于号和小于号分别是和输出重定向命令符和输入重定向命令符冲突。虽然有时候碰巧也能执行成功，但是在后面脚本程序中普遍会产生错误，一定要使用规范的整数比较运算符来进行操作：</p>
+<table>
+<thead>
+<tr>
+<th>操作符</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-eq</td>
+<td>判断是否等于</td>
+</tr>
+<tr>
+<td>-ne</td>
+<td>判断是否不等于</td>
+</tr>
+<tr>
+<td>-gt</td>
+<td>判断是否大于</td>
+</tr>
+<tr>
+<td>-lt</td>
+<td>判断是否小于</td>
+</tr>
+<tr>
+<td>-le</td>
+<td>判断是否等于或小于</td>
+</tr>
+<tr>
+<td>-ge</td>
+<td>判断是否大于或等于</td>
+</tr>
+</tbody>
+</table>
+<p>咱们先小试牛刀的测试下10是否大于10以及10是否等于10，依次通过判断输出的返回值内容来进行判断：<br><code>[root@caijy Desktop]# [ 10 -gt 10 ]</code><br><code>[root@caijy Desktop]# echo $?</code><br><code>1</code><br><code>[root@caijy Desktop]# [ 10 -eq 10 ]</code><br><code>[root@caijy Desktop]# echo $?</code><br><code>0</code><br>在前面第2章的第四小节中学习过一个叫做free的命令，它能够获取到当前系统正在使用及可用的内存量信息。接下来咱们先用free -m命令查看以兆为单位的内存使用量情况，然后通过grep Mem:命令对关键词匹配过滤出剩余内存量的行，再用awk ‘{print $4}’命令过滤只保留第三列，最后用FreeMem=`语句`的方式把语句内执行的结果赋值给变量，这个演示确实有些难度，但看懂后会觉得很有意思，写到笔记本上在运维工作时也会用得上。<br><code>[root@caijy Desktop]# free -m</code><br><code>total       used       free     shared    buffers     cached</code><br><code>Mem:          1826        867        959          9          0        278</code><br><code>-/+ buffers/cache:        588       1238</code><br><code>Swap:         2047          0       2047</code><br><code>[root@caijy Desktop]# free -m | grep -n Mem</code><br><code>2:Mem:          1826        867        959          9          0        278</code><br><code>[root@caijy Desktop]# free -m | grep -n Mem | awk &#39;{print $4}&#39;</code><br><code>955</code><br><code>[root@caijy Desktop]# FreeMem=`free -m | grep Mem | awk &#39;{print $4}&#39;</code><br><code>[root@caijy Desktop]# echo $FreeMem</code><br><code>953</code><br>上面做的获取内存可用量的步骤有些难度“超纲”了，如果不能够马上理解也不用担心，接下来才是重点，需要通过整数运算符来判断内存可用量的值是否小于1024，若小于则会提示内存不足的字样：<br><code>[root@caijy Desktop]# [ $FreeMem -lt 1024 ] &amp;&amp; echo &quot;Insufficient Memory&quot;</code><br><code>Insufficient Memory</code><br>字符串比较是判断测试字符串是否为空值，或两个字符串是否相同的操作，常常用来判断某个变量是否未被定义（即内容为空值），理解起来也比较简单，常见的操作运算符如下：</p>
+<table>
+<thead>
+<tr>
+<th>操作符</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>=</td>
+<td>比较字符串内容是否相同。</td>
+</tr>
+<tr>
+<td>!=</td>
+<td>比较字符串内容是否不同。</td>
+</tr>
+<tr>
+<td>-z</td>
+<td>判断字符串内容是否为空。</td>
+</tr>
+</tbody>
+</table>
+<p>咱们可以通过判断String变量是否为空值，进而判断是否未被定义：<br><code>[root@caijy Desktop]# [ -z $String ]</code><br><code>[root@caijy Desktop]# echo $?</code><br><code>0</code><br>最后再尝试把逻辑运算符引入来试试，当判断用于保存当前语系的环境变量值LANG不是为英语（en.US）则会满足逻辑条件并输出非英语的字样：<br><code>[root@caijy Desktop]# echo $LANG</code><br><code>en_US.utf8</code><br><code>[root@caijy Desktop]# [ $LANG != &quot;en.US.utf8&quot; ] &amp;&amp; echo &quot;Not en.US.utf8&quot;</code><br><code>Not en.US.utf8</code></p>
+<hr>
+<h3 id="流程控制语句"><a href="#流程控制语句" class="headerlink" title="流程控制语句"></a>流程控制语句</h3><p>接下来咱们通过if、for、while、case四种条件、循环语句来学习相对更高难度级别的Shell脚本.</p>
+<h4 id="if条件测试语句"><a href="#if条件测试语句" class="headerlink" title="if条件测试语句"></a>if条件测试语句</h4><p>if条件语句可以让脚本根据实际情况的不同而自动切换命令执行方案，从技术角度上来说分为单分支结构、双分支结构、多分支结构，复杂度随着灵活度一起逐级上升。</p>
+<p>单分支的if条件语句结构，这种结构仅用if、then、fi关键词组成，只在条件成立后才执行预设命令，相当于口语的“如果……那么……”，属于最简单的一种条件判断结构，操作语法如图4-17所示：<br><img src="/img/单分支结构-2.png" alt=""><br>使用单分支的if条件语句来判断某个目录是否存在，若已经存在就结束条件判断和整个Shell脚本，而如果不存在则去创建这个目录：<br><code>[root@caijy Desktop]# vim mkcdrom.sh</code><br><code>#! /bin/bash</code><br><code>DIR=&quot;/media/cdrom&quot;</code><br><code>if [ ! -e $DIR ]</code><br><code>then</code><br><code>mkdir -p $DIR</code><br><code>fi</code></p>
+<p>双分支的if条件语句结构，这种结构仅用if、then、else、fi关键词组成，进行两次条件判断匹配，两次判断中任何一项匹配成功后都会执行预设命令，相当于口语的“如果……那么……或者……那么……”，也是属于很简单的一种条件判断结构，操作语法如图4-18所示：<br><img src="/img/双分支结构-1.png" alt=""></p>
+<p>使用双分支的if条件语句来验证某个主机是否在线，然后根据判断执行返回值结果分别给予对方主机是在线还是不在线的提示信息。脚本中我主要是使用ping命令来测试与对方主机的网络联通性，而linux系统中的ping命令不像windows系统一样仅会尝试四次就结束，因此为了避免用户等待时间过长，而通过-c参数来规定尝试的次数，-i参数定义每个数据包的发送间隔时间以及-W参数定义最长的等待超时时间。<br><code>[root@caijy Desktop]# vim chkhost.sh</code><br><code>#! /bin/bash</code><br><code>ping -c 3 -i 0.2 -W 3 $1  &amp;&gt; /dev/null</code><br><code>if [ $? -eq 0 ]</code><br><code>then</code><br><code>echo &quot;Host $1 is On-line.&quot;</code><br><code>else</code><br><code>echo &quot;Host $1 is Off-line.&quot;</code><br><code>fi</code><br>192.168.10.10是服务器本机地址，验证下脚本的效果吧：<br><code>[root@caijy Desktop]# bash chkhost.sh 192.168.10.10</code><br><code>Host 192.168.10.10 is On-line.</code><br><code>[root@caijy Desktop]# bash chkhost.sh 192.168.10.20</code><br><code>Host 192.168.10.20 is Off-line.</code><br>多分支的if条件语句结构，这种结构需要使用if、then、else、elif、fi关键词组成，进行多次条件判断匹配，多次判断中任何一项匹配成功后都会执行预设命令，相当于口语的“如果……那么……如果……那么……N次等等”，这是一种工作中最常使用的条件判断结构，虽然相对复杂但更加灵活，操作语法如图4-19所示：<br><img src="/img/多分支结构-2.png" alt=""><br>使用多分支的if条件语句来判断用户输入的分数在那个成绩区间内，然后输出如优秀、合格、不合格等提示信息。read是用来读取用户输入信息的命令，它能够把接收到的用户输入信息赋值给后面的指定变量，而-p参数则是给予了用户一定的提示信息。下面实例中判断用户输入的分数是否同时具备大于等于85分且小于等于100分，这样的话才输出Excellent字样，若上一条件没有匹配成功则继续判断用户输入分数是否大于等于70分且小于等于84分，这样的话输出Pass字样，如果两次都落空没有匹配成功，则最终输出Fail字样：<br><code>[root@caijy Desktop]# vim chkscore.sh</code><br><code>#!/bin/bash</code><br><code>read -p &quot;Enter your score(0-100): &quot; GRADE</code><br><code>if [ $GRADE -ge 85 ] &amp;&amp; [ $GRADE -le 100 ]</code><br><code>then echo &quot;$GRADE is Excellent&quot;</code><br><code>elif [ $GRADE -ge 70 ] &amp;&amp; [ $GRADE -le 84 ]</code><br><code>then echo &quot;$GRADE is Pass&quot;</code><br><code>else</code><br><code>echo &quot;$GRADE is Fail&quot;</code><br><code>fi</code><br><code>[root@caijy Desktop]# bash chkscore.sh</code><br><code>Enter your score(0-100): 89</code><br><code>89 is Excellent</code><br><code>[root@caijy Desktop]# bash chkscore.sh</code><br><code>Enter your score(0-100): 75</code><br><code>75 is Pass</code><br><code>[root@caijy Desktop]# bash chkscore.sh</code><br><code>Enter your score(0-100): 56</code><br><code>56 is Fail</code></p>
+<h4 id="for条件循环语句"><a href="#for条件循环语句" class="headerlink" title="for条件循环语句"></a>for条件循环语句</h4><p>for循环语句可以让脚本一次性读取多个信息值，然后逐一对信息值进行循环操作处理，因此当您要处理的数据是有目标和范围时简直再适合不过了~例如使用for循环语句来从列表文件中读取多个用户名，然后逐一创建用户帐号并为其设置密码。<br><img src="/img/for条件语句-1.png" alt=""><br><code>[root@caijy Desktop]# vim users.txt</code><br><code>andy</code><br><code>barry</code><br><code>carl</code><br><code>duke</code><br><code>eric</code><br><code>george</code><br>Shell脚本中使用read命令来读取用户输入的密码值后赋值给PASSWD变量，并通过-p参数来显示一段给用户的提示内容，告诉用户正在输入的内容即将作为帐号密码。当下面的脚本执行后会自动的用users.txt列表文件中获取到所有的用户名称值，然后逐一使用id 用户名的方式查看用户的信息，并使用$?变量判断这条命令是否执行成功，也就是判断该用户是否已经存在。而/dev/null是被称作Linux的黑洞的文件，把输出信息重定向到这个文件后等同于删除数据（没有回收功能的垃圾箱），让用户的屏幕窗口保持简洁。<br><code>[root@caijy Desktop]# vim Example.sh</code><br><code>#!/bin/bash</code><br><code>read -p &quot;Enter The Users Password :&quot; PASSWD</code><br><code>`for UNAME in</code>cat users.txt<code>``
+</code>do<code>`id $UNAME &amp;&gt; /dev/null</code><br><code>if [ $? -eq 0 ]</code><br><code>then</code><br><code>echo &quot;Already exists&quot;</code><br><code>else</code><br><code>useradd $UNAME &amp;&gt; /dev/null</code><br><code>echo &quot;$PASSWD&quot; | passwd --stdin $UNAME &amp;&gt; /dev/null</code><br><code>if [ $? -eq 0 ]</code><br><code>then</code><br><code>echo &quot;$UNAME, Create success&quot;</code><br><code>else</code><br><code>echo &quot;$UNAME, Create failure&quot;</code><br><code>fi</code><br><code>fi</code><br><code>done</code><br><code>[root@caijy Desktop]# bash Example.sh</code><br><code>Enter The Users Password :123456</code><br><code>andy, Create success</code><br><code>barry, Create success</code><br><code>carl, Create success</code><br><code>duke, Create success</code><br><code>eric, Create success</code><br><code>george, Create success</code><br><code>[root@caijy Desktop]# tail -6 /etc/passwd</code><br><code>andy:x:1001:1001::/home/andy:/bin/bash</code><br><code>barry:x:1002:1002::/home/barry:/bin/bash</code><br><code>carl:x:1003:1003::/home/carl:/bin/bash</code><br><code>duke:x:1004:1004::/home/duke:/bin/bash</code><br><code>eric:x:1005:1005::/home/eric:/bin/bash</code><br><code>george:x:1006:1006::/home/george:/bin/bash</code></p>
+<h4 id="while条件循环语句"><a href="#while条件循环语句" class="headerlink" title="while条件循环语句"></a>while条件循环语句</h4><p>这是一种让脚本根据某些条件来重复执行命令的条件循环语句，而这种循环结构往往在执行前并不确定最终执行的次数，完全不同于for循环语句中有目的、有范围的使用场景。而while循环语句判断是否继续执行命令的依据一般是检查若条件为真就继续执行，而条件为假就结束循环，循环结构如图4-21所示：<br><img src="/img/while条件语句-1.png" alt=""><br>接下来就来利用多重分支的if条件测试语句与while条件循环语句来结合写一个用来判断数值的脚本吧，脚本中会使用$RANDOM变量来调取出一个随机的数值（范围:0–32767），然后通过expr命令计算取整出1000以内的一个随机数值，用这个数值来跟用户通过read命令输入的数值做比较判断。判断语句结构分为三项，分别是判断是否相等、是否大于随机值以及是否小于随机值，但这不是重点~关键是在于while条件循环语句的判断值为true，因此会无限的运行下去，直到猜中后运行exit 0命令才终止脚本。<br><code>[root@caijy Desktop]# vim Guess.sh</code><br><code>#!/bin/bash</code><br><code>PRICE=$(expr $RANDOM % 1000)</code><br><code>TIMES=0</code><br><code>echo &quot;商品实际价格为0-999之间，猜猜看是多少？&quot;</code><br><code>while true</code><br><code>do</code><br><code>read -p &quot;请输入您猜测的价格数目：&quot; INT</code><br><code>let TIMES++</code><br><code>if [ $INT -eq $PRICE ]</code><br><code>then</code><br><code>echo &quot;恭喜您答对了，实际价格是 $PRICE&quot;</code><br><code>echo &quot;您总共猜测了 $TIMES 次&quot;</code><br><code>exit 0</code><br><code>elif [ $INT -gt $PRICE ]</code><br><code>then</code><br><code>echo &quot;太高了！&quot;</code><br><code>else</code><br><code>echo &quot;太低了！&quot;</code><br><code>fi</code><br><code>done</code><br><code>[root@caijy Desktop]# bash Guess.sh</code><br><code>商品实际价格为0-999之间，猜猜看是多少？</code><br><code>请输入您猜测的价格数目：500</code><br><code>太低了！</code><br><code>请输入您猜测的价格数目：750</code><br><code>太低了！</code><br><code>请输入您猜测的价格数目：850</code><br><code>太低了！</code><br><code>请输入您猜测的价格数目：920</code><br><code>太高了！</code><br><code>请输入您猜测的价格数目：880</code><br><code>太高了！</code><br><code>请输入您猜测的价格数目：865</code><br><code>太低了！</code><br><code>请输入您猜测的价格数目：870</code><br><code>太低了！</code><br><code>请输入您猜测的价格数目：875</code><br><code>太高了！</code><br><code>请输入您猜测的价格数目：873</code><br><code>恭喜您答对了，实际价格是 873</code><br><code>您总共猜测了 9 次</code></p>
+<h4 id="case条件测试语句"><a href="#case条件测试语句" class="headerlink" title="case条件测试语句"></a>case条件测试语句</h4><p>如果您学习过C语言，此刻一定是会心一笑，这不就是switch语句吗？是的，功能非常相似！case条件测试语句是在多个范围内匹配数据，若匹配到则执行相关命令并结束整个条件测试，而如果数据不在所列出的范围内，则会去执行<em>)中所规定的默认命令，测试结构如图4-22所示：<br><img src="/img/case条件语句-1.png" alt=""><br>刚刚学习的脚本普遍有一个致命的弱点，不信您就输入一个字母或乱码试一试~脚本立即就崩溃了。这是由于字母是不能跟数字做大小比较的，例如a是否大于等于3，这样的命题完全错误，变量操作会直接导致系统崩溃。咱们必须马上想出一个办法来判断用户的输入内容，一旦碰到字母或乱码也能予以提示，不至于因错误输入而崩溃，因此这样的需求用case条件测试语句和第3章节中学习的通配符来一起组合写一个脚本简直再适合不过了~提示用户输入一个字符并将其赋值给变量KEY，判断变量KEY为何种字符后分别输出是字母、数字还是其他字符：<br><code>[root@caijy Desktop]# vim CheckKeys.sh</code><br><code>#!/bin/bash</code><br><code>read -p &quot;请输入一个字符，并按Enter键确认：&quot; KEY</code><br><code>case &quot;$KEY&quot; in</code><br><code>[a-z]|[A-Z])</code><br><code>echo &quot;您输入的是 字母。&quot;</code><br><code>;;</code><br><code>[0-9])</code><br><code>echo &quot;您输入的是 数字。&quot;</code><br><code>;;</code><br>`</em>)<code>`echo &quot;您输入的是 空格、功能键或其他控制字符。&quot;</code><br><code>esac</code><br><code>[root@caijy Desktop]# bash CheckKeys.sh</code><br><code>请输入一个字符，并按Enter键确认：w</code><br><code>您输入的是 字母。</code><br><code>[root@caijy Desktop]# bash CheckKeys.sh</code><br><code>请输入一个字符，并按Enter键确认：1</code><br><code>您输入的是 数字。</code><br><code>[root@caijy Desktop]# bash CheckKeys.sh</code><br><code>请输入一个字符，并按Enter键确认：` </code><br><code>您输入的是 空格、功能键或其他控制字符。</code></p>
+<hr>
+<h3 id="计划任务服务程序"><a href="#计划任务服务程序" class="headerlink" title="计划任务服务程序"></a>计划任务服务程序</h3><p>厉害的系统运维工程师能够让Linux系统实现自动化工作，无需人工的干预就可以让各个服务、命令在指定的时间段执行、服务或停止。更何况咱们已经有了如此彪悍的脚本程序，如果只是需要每天凌晨两点敲一下回车去执行这个Shell脚本程序，这样的工作简直就是痛苦死了（或者训练您家的小猫半夜按下回车键）。接下来学习如何来设置服务器的计划任务服务，把有周期规律性的工作交给系统去自动完成。计划任务有“一次性”与“长期性”的区分，可以理解为：</p>
+<ul>
+<li>一次性计划任务:今晚11点30分开启网站服务（例如新网站的公测）</li>
+<li>长期性计划任务:每周一的凌晨3点25分把/home/wwwroot目录打包备份为backup.tar.gz</li>
+</ul>
+<p>一次性计划任务顾名思义就只是一次性有效，一般用于临时的工作需要，咱们可以用at命令实现这种功能，只需要写成”at 时间”的形式就可以，如果想要查看已设置好但还未执行的计划任务可以用”at -l”命令，而删除的话可以用”atrm 任务序号”即可，默认用at命令来设置计划任务的话是通过交互式的方法，例如设置系统在今晚23:30分自动重启网站服务吧：<br><code>[root@caijy Desktop]# at 20.30</code><br><code>at&gt; systemctl restart httpd</code><br><code>at&gt; &lt;EOT&gt;  --注：此处请同时按下Ctrl+d来结束编写计划任务</code><br><code>job 1 at Thu Sep 14 20:30:00 2017</code><br><code>[root@caijy Desktop]# al -l</code><br><code>bash: al: command not found...</code><br><code>[root@caijy Desktop]# at -l</code><br><code>1    Thu Sep 14 20:30:00 2017 a root</code><br>当然如果您想挑战一下更加高难度但又简便的方式，可以把前面章节中学习的管道符（任意门）放到两条命令之间，让at命令接收前面echo命令的输出信息，以达到通过非交互式的方式创建计划任务，这样的话在Shell脚本中都可以做引用了~<br><code>[root@caijy Desktop]# echo &quot;systemctl restart httpd&quot; | at 21.00</code><br><code>job 2 at Thu Sep 14 21:00:00 2017</code><br><code>[root@caijy Desktop]# at -l</code><br><code>1    Thu Sep 14 20:30:00 2017 a root</code><br><code>2    Thu Sep 14 21:00:00 2017 a root</code><br>如果一不不小心设置了两条，想要删除其中一条的话也是很简单的：<br><code>[root@caijy Desktop]# atrm 1</code><br><code>[root@caijy Desktop]# at -l</code><br><code>2    Thu Sep 14 21:00:00 2017 a root</code><br>而如果您的工作需要是有周期规律性的，那Linux系统中默认启用的crond服务简直再适合不过了，创建、编辑计划任务的命令为”crontab -e”，查看当前计划任务的命令为”crontab -l”，删除某条计划任务的命令为”crontab -r”，另外如果您登录的是超级用户的话，还可以通过加上-u参数来编辑其他人的计划任务。不过在正式的部署计划任务前，请念一下口诀“分、时、日、月、星期 命令”，这是使用crond服务设置任务的参数格式，没有设置的位置也要用*号占位：<br><img src="/img/cron计划任务的参数.png" alt=""></p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>分钟</td>
+<td>取值为从0到59之间的整数</td>
+</tr>
+<tr>
+<td>小时</td>
+<td>取值为从0到23之间的任意整数</td>
+</tr>
+<tr>
+<td>日期</td>
+<td>取值为1到31之间的任意整数</td>
+</tr>
+<tr>
+<td>月份</td>
+<td>取值为1到12之间的任意整数</td>
+</tr>
+<tr>
+<td>星期</td>
+<td>取值为0到7之间的任意整数，其中0与7均为星期日</td>
+</tr>
+<tr>
+<td>命令</td>
+<td>要执行的命令或程序脚本</td>
+</tr>
+</tbody>
+</table>
+<p>参考上面crond计划任务实现的参数格式，假设目前每周一、三、五的凌晨3点25分都需要把某个网站数据目录通过tar命令打包成一个压缩包来当做备份文件，那么除了用减号(-)来表示一段连续的时间周期，例如12-15就可以代表每月的12-15日，除号（/）代表任务的间隔时间，例如/2就是每隔2分钟执行一次的意思，还可以用逗号（,）来分别表示多个时间段，如8,9,12来代表八月、九月和12月执行任务，那么来尝试做一下吧：<br><code>[root@caijy Desktop]# crontab -e</code><br><code>no crontab for root - using an empty one</code><br><code>crontab: installing new crontab</code><br><code>[root@caijy Desktop]# crontab -l</code><br><code>25 3 * * 1,3,5 /usr/bin/tar -czvf backup.tar.gz /home/wwwroot</code><br>而如果计算机服务器中需要有多条计划任务，并且这次的工作是每周一至五的每天的凌晨1点钟清空/tmp临时目录中的所有文件，就可以把相应的参数依次写到下面。而在crond服务的计划任务参数中所有的命令请一定要用绝对路径的方式来写，如果不知道的话用whereis命令来查下吧：<br><code>[root@caijy Desktop]# whereis rm</code><br><code>rm: /usr/bin/rm /usr/share/man/man1/rm.1.gz</code> <code>/usr/share/man/man1p/rm.1p.gz</code><br><code>[root@caijy Desktop]# crontab -e</code><br><code>crontab: installing new crontab</code><br><code>[root@caijy Desktop]# crontab -l</code><br><code>25 3 * * 1,3,5 /usr/bin/tar -czvf backup.tar.gz /home/wwwroot</code><br><code>0 1 * * 1-5 /usr/bin/rm -rf /tmp/*</code><br>对同学们今后工作中使用计划服务来嘱咐几句建议，首先是crond服务的配置参数中可以像Shell脚本一样以#号开头来写上注释信息，这样方便以后再看到这段命令代码时快速回忆起功能、需求以及当时编写人等等重要信息，其次是计划任务中的分钟项目必须有数值，绝对不能为空或是*号，而日和周不能同时使用，否则就会发生冲突，这些细节我想您一定要记下。</p>
+<hr>
+<p>转载自：<a href="http://www.linuxprobe.com/chapter-04.html" target="_blank" rel="external">http://www.linuxprobe.com/chapter-04.html</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/sakura-hly.github.io/tags/Linux/" rel="tag"># Linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/sakura-hly.github.io/2017/09/14/Linux基础课程03/" rel="next" title="基础课程03">
+                <i class="fa fa-chevron-left"></i> 基础课程03
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/sakura-hly.github.io/2017/09/15/Linux基础课程05/" rel="prev" title="基础课程05">
+                基础课程05 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  //with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="/sakura-hly.github.io/images/dp.jpg"
+              alt="caijy" />
+          
+            <p class="site-author-name" itemprop="name">caijy</p>
+            <p class="site-description motion-element" itemprop="description">一个Linux菜鸟的博客</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/sakura-hly.github.io/archives/">
+            
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">Artikel</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">Kategorien</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">Tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=448226072&auto=1&height=66"></iframe>
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Vim文本编辑器"><span class="nav-number">1.</span> <span class="nav-text">Vim文本编辑器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#编写简单文档"><span class="nav-number">1.1.</span> <span class="nav-text">编写简单文档</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置主机名称"><span class="nav-number">1.2.</span> <span class="nav-text">配置主机名称</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置网卡信息"><span class="nav-number">1.3.</span> <span class="nav-text">配置网卡信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置Yum仓库"><span class="nav-number">1.4.</span> <span class="nav-text">配置Yum仓库</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编写Shell脚本"><span class="nav-number">2.</span> <span class="nav-text">编写Shell脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#编写简单的脚本"><span class="nav-number">2.1.</span> <span class="nav-text">编写简单的脚本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#接收用户的参数"><span class="nav-number">2.2.</span> <span class="nav-text">接收用户的参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#判断用户的参数"><span class="nav-number">2.3.</span> <span class="nav-text">判断用户的参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#流程控制语句"><span class="nav-number">3.</span> <span class="nav-text">流程控制语句</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#if条件测试语句"><span class="nav-number">3.1.</span> <span class="nav-text">if条件测试语句</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#for条件循环语句"><span class="nav-number">3.2.</span> <span class="nav-text">for条件循环语句</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#while条件循环语句"><span class="nav-number">3.3.</span> <span class="nav-text">while条件循环语句</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#case条件测试语句"><span class="nav-number">3.4.</span> <span class="nav-text">case条件测试语句</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#计划任务服务程序"><span class="nav-number">4.</span> <span class="nav-text">计划任务服务程序</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">caijy</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/sakura-hly.github.io/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/sakura-hly.github.io/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/sakura-hly.github.io/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/sakura-hly.github.io/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/sakura-hly.github.io/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/sakura-hly.github.io/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/sakura-hly.github.io/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("jsI2BP061jWWrjY7NlFVHOOQ-gzGzoHsz", "WQFdrAUtgTXisdJ8TFShl3a7");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+  
+</body>
+</html>

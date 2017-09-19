@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/sakura-hly.github.io/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/sakura-hly.github.io/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/sakura-hly.github.io/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Linux," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/sakura-hly.github.io/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="Linux系统中颇具特色的文件存储结构常常搞的新手头晕，这里将从Linux系统中的文件存储结构引入，讲述FHS文件系统标准协定、Udev硬件命名规则以及硬盘分区的规划方法。为了使得同学们更好的理解文件系统的作用，我们将着重练习对硬盘设备分区、格式化以及挂载等常用硬盘管理操作，帮助大家更熟练的掌握文件系统使用的方法。基于扎实的理论与实践练习课程后，咱们会进一步完整的部署SWAP交换分区、配置quot">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基础课程06">
+<meta property="og:url" content="http://yoursite.com/2017/09/15/Linux基础课程06/index.html">
+<meta property="og:site_name" content="破晓">
+<meta property="og:description" content="Linux系统中颇具特色的文件存储结构常常搞的新手头晕，这里将从Linux系统中的文件存储结构引入，讲述FHS文件系统标准协定、Udev硬件命名规则以及硬盘分区的规划方法。为了使得同学们更好的理解文件系统的作用，我们将着重练习对硬盘设备分区、格式化以及挂载等常用硬盘管理操作，帮助大家更熟练的掌握文件系统使用的方法。基于扎实的理论与实践练习课程后，咱们会进一步完整的部署SWAP交换分区、配置quot">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/img/Linux存储架构.png">
+<meta property="og:image" content="http://yoursite.com/img/硬盘命名规则.png">
+<meta property="og:image" content="http://yoursite.com/img/硬盘的扇区.png">
+<meta property="og:image" content="http://yoursite.com/img/逻辑分区.png">
+<meta property="og:image" content="http://yoursite.com/img/虚拟文件系统VFS.png">
+<meta property="og:updated_time" content="2017-09-16T11:10:51.874Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基础课程06">
+<meta name="twitter:description" content="Linux系统中颇具特色的文件存储结构常常搞的新手头晕，这里将从Linux系统中的文件存储结构引入，讲述FHS文件系统标准协定、Udev硬件命名规则以及硬盘分区的规划方法。为了使得同学们更好的理解文件系统的作用，我们将着重练习对硬盘设备分区、格式化以及挂载等常用硬盘管理操作，帮助大家更熟练的掌握文件系统使用的方法。基于扎实的理论与实践练习课程后，咱们会进一步完整的部署SWAP交换分区、配置quot">
+<meta name="twitter:image" content="http://yoursite.com/img/Linux存储架构.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/sakura-hly.github.io/',
+    scheme: 'Muse',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/09/15/Linux基础课程06/"/>
+
+
+
+
+
+  <title>基础课程06 | 破晓</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7f1817ded637839eb4e759c996071a39";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/sakura-hly.github.io/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">破晓</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">弱小和无知不是生存的障碍，傲慢才是。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/sakura-hly.github.io/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/sakura-hly.github.io/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archiv
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Suche
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/sakura-hly.github.io/2017/09/15/Linux基础课程06/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="caijy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/sakura-hly.github.io/images/dp.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="破晓">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">基础课程06</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-15T18:55:19+08:00">
+                2017-09-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/sakura-hly.github.io/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/sakura-hly.github.io/2017/09/15/Linux基础课程06/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count fb-comments-count" data-href="http://yoursite.com/2017/09/15/Linux基础课程06/" itemprop="commentCount">0</span> comments
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/sakura-hly.github.io/2017/09/15/Linux基础课程06/" class="leancloud_visitors" data-flag-title="基础课程06">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Linux系统中颇具特色的文件存储结构常常搞的新手头晕，这里将从Linux系统中的文件存储结构引入，讲述FHS文件系统标准协定、Udev硬件命名规则以及硬盘分区的规划方法。<br>为了使得同学们更好的理解文件系统的作用，我们将着重练习对硬盘设备分区、格式化以及挂载等常用硬盘管理操作，帮助大家更熟练的掌握文件系统使用的方法。<br>基于扎实的理论与实践练习课程后，咱们会进一步完整的部署SWAP交换分区、配置quota磁盘配额服务以及掌握ln命令带来的软硬链接，总之学习完大家不论是对Linux系统还是对Windows系统中的硬盘存储及文件系统都会有了深刻的理解。<br><a id="more"></a></p>
+<hr>
+<h3 id="一切从“-”开始"><a href="#一切从“-”开始" class="headerlink" title="一切从“/”开始"></a>一切从“/”开始</h3><p>Linux系统中的目录、字符设备、块设备、套接字、打印机等等都被抽象成了文件,即——<strong>Linux系统中一切都是文件</strong>。既然平时跟咱们打交道的都是文件，那么又应该如何的找到它们呢？在Windows操作系统中想要找到一个文件，肯定就要依次进入“D盘”后再进入某某目录中找到所需要的文件，但在Linux系统中可并不存在C/D/E/F盘符呦，一切的文件都是从“根(/)”目录开始的，按照FHS文件系统层次结构标准协定采用树形结构来存放文件并定义了每个区域的用途。另外在Linux系统中的文件及目录名称是严格区分大小写的，例如root、rOOt、Root、rooT等等均代表是不同的独立目录，并且名称中不得包含斜杠(/)。<br><img src="/img/Linux存储架构.png" alt=""><br>刚刚提到的FHS文件系统层次结构标准协定（Filesystem Hierarchy Standard）是工程师们在Linux系统中存储文件的时候需要遵守的规则，FHS是根据以往无数Linux系统用户和开发者的经验而总结出来的，指导咱们应该把文件保存到什么位置，以及告诉运维人员应该在何处找到所需的文件。但目前FHS对于运维工程师来讲也算是一种道德操守，有些运维人员就是懒得遵守，或者根本没有听说过这个东东，依然会把文件到处乱放。最常见的目录所对应的用处包括有：</p>
+<table>
+<thead>
+<tr>
+<th>目录名称</th>
+<th>应放置文件的内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/boot</td>
+<td>开机所需文件——内核,开机菜单及所需配置文件等</td>
+</tr>
+<tr>
+<td>/dev</td>
+<td>任何设备与接口都以文件形式存放在此目录</td>
+</tr>
+<tr>
+<td>/etc</td>
+<td>配置文件</td>
+</tr>
+<tr>
+<td>/home</td>
+<td>用户主目录</td>
+</tr>
+<tr>
+<td>/bin</td>
+<td>单用户维护模式下还能被操作的命令</td>
+</tr>
+<tr>
+<td>/lib</td>
+<td>开机时用到的函数库及/bin与/sbin下面命令要调用的函数</td>
+</tr>
+<tr>
+<td>/sbin</td>
+<td>开机过程中需要的</td>
+</tr>
+<tr>
+<td>/media</td>
+<td>一般挂载和删除的设备</td>
+</tr>
+<tr>
+<td>/opt</td>
+<td>放置第三方的软件</td>
+</tr>
+<tr>
+<td>/root</td>
+<td>系统管理员的主文件夹</td>
+</tr>
+<tr>
+<td>/srv</td>
+<td>一些网络服务的数据目录</td>
+</tr>
+<tr>
+<td>/tmp</td>
+<td>任何人均可使用的“共享”临时目录</td>
+</tr>
+<tr>
+<td>/proc</td>
+<td>虚拟文件系统，例如系统内核，进程，外部设备及网络状态等</td>
+</tr>
+<tr>
+<td>/usr/local</td>
+<td>用户自行安装的软件</td>
+</tr>
+<tr>
+<td>/usr/sbin</td>
+<td>非系统开机时用到的软件/命令/脚本</td>
+</tr>
+<tr>
+<td>/usr/share</td>
+<td>帮助与说明文件，也可放置共享文件</td>
+</tr>
+<tr>
+<td>/var</td>
+<td>主要存放经常变化的文件，如：日志</td>
+</tr>
+<tr>
+<td>/lost+found</td>
+<td>当文件系统发生错误时，将一些丢失的文件片段存放在这里</td>
+</tr>
+</tbody>
+</table>
+<p>另外还有一个重要的概念——“路径”，路径指的是如何定位到某个文件，分为 <em>绝对路径</em> 和 <em>相对路径</em>，在Linux系统中的绝对路径指的是从根目录（/）开始写起的文件或目录名称，而相对路径则指的是相对于当前路径的写法。</p>
+<hr>
+<h3 id="物理设备的命名规则"><a href="#物理设备的命名规则" class="headerlink" title="物理设备的命名规则"></a>物理设备的命名规则</h3><p><strong>Linux系统中一切都是文件，那么硬件设备肯定也不例外</strong>，既然是文件就必须有名称啦，系统内核的udev设备管理器会自动把硬件名称规范起来，目的是让运维人员可以通过设备文件的名字猜出设备大致的属性以及分区信息等，对于陌生的设备这点特别的方便，另外udev服务会一直以守护进程的形式运行并侦听来自内核发出的信号来管理/dev目录下的设备文件，常见的硬件命名规则如下：</p>
+<table>
+<thead>
+<tr>
+<th>硬件设备</th>
+<th>文件名称</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IDE设备</td>
+<td>/dev/hd[a-d]</td>
+</tr>
+<tr>
+<td>SCSI/SATA/U盘</td>
+<td>/dev/sd[a-p]</td>
+</tr>
+<tr>
+<td>软驱</td>
+<td>/dev/fd[0-1]</td>
+</tr>
+<tr>
+<td>打印机</td>
+<td>/dev/lp[0-15]</td>
+</tr>
+<tr>
+<td>光驱</td>
+<td>/dev/cdrom</td>
+</tr>
+<tr>
+<td>鼠标</td>
+<td>/dev/mouse</td>
+</tr>
+<tr>
+<td>磁带机</td>
+<td>/dev/st0或/dev/ht0(IDE设备)</td>
+</tr>
+</tbody>
+</table>
+<p>因为现在的IDE设备已经很少见啦，所有一般的硬盘设备都是以 <strong>“/dev/sd”</strong> 开头的，而一台主机上可以有多块硬盘，因此系统便会用 <strong>a-p</strong> 来代表16块不同的硬盘（默认从a开始分配）且分区编号也很有讲究。</p>
+<ul>
+<li>主分区或扩展分区的编号从1开始至4结束。</li>
+<li>逻辑分区从编号5开始</li>
+</ul>
+<p>很多技术书籍中提到比如/dev/sda就是代表系统主板上第一个插槽上的存储设备，同学们在实践操作的时候会发现果然如此，也就对这条理论知识更加深信不疑，但其实并不是这样的，/dev目录中sda设备之所以是a，并不是由插槽决定的，而是由系统内核的识别顺序决定的，而恰巧很多主板的插槽顺序就是系统内核的识别顺序因此才会被命名为/dev/sda，以后在使用iscsi网络存储设备时候就会发现，明明主板上第二个插槽是空着的，但却能识别到/dev/sdb这个设备就是这个道理。<br>多Linux老师告诉学生分区的编号代表分区的个数，例如sda3就代表这个设备上的第三个分区，一般学生做实验的时候确实也会得出同样的效果，但这并不正确，因为分区的数字编码不一定是强制顺延下来的，而有可能是手工指定的，因此sda3只能表示是编号为3的分区文件，而不能因此判断sda设备上已经存在了3个分区。<br>接下来一起分析/dev/sda5这个设备文件包含有那些信息吧~<br><img src="/img/硬盘命名规则.png" alt=""><br>首先 <strong>/dev/</strong> 目录中保存的是硬件设备文件，其次 <strong>sd</strong> 开头代表是存储设备，然后 <strong>a</strong> 代表是系统中同类接口中第一个被识别到设备，最后的 <strong>5</strong> 代表这个设备一定是个逻辑分区。简单总结来说“/dev/sda5”代表的就是—— <strong>“这是系统中第一块被识别到的硬件设备中分区编号为5的逻辑分区的文件”</strong>，很多同学可能基础并不好，不太理解前面所说的主分区、扩展分区和逻辑分区的概念，接下来简单科普下硬盘的知识，看懂就好。<br>计算机中有了硬盘设备才使得游戏通关过后可以保存记录而不是再每次再重头开始，硬盘设备则是由大量的 <strong>扇区</strong> 组成的，其中第一个扇区最重要，它里面保存着 <strong>主引导记录</strong> 与 <strong>分区表信息</strong>。单个扇区容量为 <strong>512bytes</strong> 组成，主引导记录需要占用446bytes，分区表的为64bytes，结束符占用2bytes，而其中每记录一个分区信息需要16bytes，这最多四个能有幸被写到第一个扇区中的分区信息就叫做主分区，扇区的信息写入如图：<br><img src="/img/硬盘的扇区.png" alt=""><br>那么问题来了——好像最多只能创建出4个分区？于是为了解决分区个数不够的问题，可以将其中的16bytes(原本要写入主分区信息)的空间拿出来指向到另外一个分区上面，也就是说扩展分区其实并不是一个“分区”，而更像是一个“指针”，指向了另外的一个分区的指针。那么运维人员一般会选择用3个主分区加1个扩展分区的方法，然后在扩展分区中创建出数个逻辑分区，这样就可以用分区来满足多分区的需求了，<br><img src="/img/逻辑分区.png" alt=""></p>
+<hr>
+<h3 id="文件系统与数据资料"><a href="#文件系统与数据资料" class="headerlink" title="文件系统与数据资料"></a>文件系统与数据资料</h3><p>用户在硬件存储设备上正常 <em>建立文件，写入，读取，修改，转存文件与控制文件</em> 等等操作，都是依靠文件系统完成的，文件系统的作用是把硬盘合理的规划，保证用户正常的使用需求，在Linux系统中支持的文件系统就有数十种，而最常见的文件系统有：</p>
+<p><strong>Ext3</strong> 是一款日志文件系统，能够在异常宕机中避免文件系统资料丢失的情况，自动修复数据的不一致与错误，然而对于容量较大的硬盘来说需要耗费在修复的时间也非常多，并且也不能保证100%资料不丢失，它会把整个磁盘的写入动作细节都预先记录下来，以便在异常宕机后能够回溯追踪到被中断的部分。</p>
+<p><strong>Ext4</strong> 可以称为是Ext3的后继版本，作为RHEL6系统中的默认文件管理系统，它支持更大的文件系统到1EB（1EB=1,073,741,824GB且能够有无限多的子目录），另外Ext4文件系统能够批量分配block块并作“Extends”极大的提高了读写效率。</p>
+<p><strong>XFS</strong> 作为最新RHEL7中默认的文件管理系统，它的日志型文件管理系统的优势在意外宕机后尤其明显， 可以快速恢复可能被破坏的文件，另外经过优化后日志功能对硬盘性能影响非常小，同时最大支持18EB的存储容量满足了几乎所有需求。</p>
+<p>在红帽RHEL7系统中比较大的变化之一就是在文件系统方面使用XFS替换了Ext4，从红帽官方发布的说明来看确实是一次不小的进步，但是我在实测中发现并不完全属实，因为单讲对于测试一款文件系统的“读取”这一评测项目，到底要测试读取的文件个数有多少个？每个文件的大小是多少？读取时占用CPU、内存等系统资源情况，以及操作系统、不同的硬件配置等等，在效能方面XFS虽然比Ext4有所提升，但绝不是压倒性的，因此XFS文件系统最卓越的亮点应该当属可支持18EB的存储容量吧~</p>
+<p>当咱们拿到了一块新的硬盘存储设备之后首先要分区，然后格式化文件系统最后才能挂载正常的使用，就像当拿到了一张大白纸，首先为了使用方便要裁剪，然后为了书写工整要先画格。分区的操作取决于您的需求和硬盘大小，也是可以不做的，而格式化文件系统则是必做的。</p>
+<p>日常中在硬盘要保存的数据实在太多了，于是就有个叫“super block”的硬盘地图，并不是把数据直接写在这个大地图里面，而是在上面记录着整个文件系统的信息，因为如果把所有信息都写入这里面的话，就一定会导致它的体积变大，查询与写入的速度会变呃很慢，于是每个文件的权限与属性都会记录在“inode”中（每个文件都会占用一个inode表格，大小为128bytes），记录着：</p>
+<ol>
+<li>该文件的访问权限(read,write,execute)</li>
+<li>该文件的所属主和组(owner,group)</li>
+<li>该文件的大小（size）</li>
+<li>该文件的创建和状态改变时间（ctime）</li>
+<li>该文件最后一次访问时间（atime）</li>
+<li>该文件的修改时间（mtime）</li>
+<li>文件的特殊权限（SUID，SGID，SBIT）</li>
+<li><strong>该文件的真实数据地址(point)</strong></li>
+</ol>
+<p>而文件的实际数据内容则保存在block块中（大小可以是1K、2K或4K），一个inode大小仅为128bytes（Ext3），记录一个block消耗4bytes，一般当把inode写满后就会取出一个block用于号码记录而不再是保存实际的文件系统。下面的说明中以4K为例。</p>
+<ul>
+<li>文件体积很小（1K），那么依然会占用一个block，潜在的浪费3K。</li>
+<li>文件体积很大（5K），那么会占用两个（5K-4K剩下的1K也要占用一个block）。</li>
+</ul>
+<p>实际上随着计算机系统的发展产生出了众多的文件系统，为了使用户在读取或写入文件时不用关心底层的硬盘结构，于是在Linux内核中的软件层为用户程序提供了一个VFS文件系统接口（Virtul File System），这样就转而统一对这个虚拟文件系统进行操作啦。如图，即 <strong>实际文件系统在VFS下隐藏了自己的特性与细节，使得咱们在日常使用时觉得“文件系统都是一样的”</strong>，比如使用cp命令就在任何文件系统中复制文件了。<br><img src="/img/虚拟文件系统VFS.png" alt=""></p>
+<hr>
+<h3 id="挂载硬件设备"><a href="#挂载硬件设备" class="headerlink" title="挂载硬件设备"></a>挂载硬件设备</h3><p>用习惯了Windows系统让咱们觉得一切都理所应当，平时把U盘插入到电脑后也根本没有考虑过到底系统做了那些事情，又是为什么能够访问到这个U盘内资料的。前面所讲当拿到了一块全新的硬盘存储设备之后首先要分区，然后格式化最后才能挂载正常使用。分区和格式化大家以前常常听到，但“挂载”又是个什么东东呢？有一个简单，贴切的解释——挂载操作指的是当用户需要硬盘设备或分区数据时，需要先将其与一个已存在的目录文件“<strong>做关联</strong>”，而这个动作就交“<strong>挂载</strong>”。</p>
+<p><strong>mount命令用于挂载文件系统，格式为：“mount 文件系统 挂载目录”。</strong></p>
+<p>挂载是使用硬件设备前的最后一步操作，只需要用mount命令把硬件设备与一个目录做关联，然后就能在这个目录中看到硬件设备中的数据。对于比较新的Linux系统来讲一般是不需要用-t参数来指定文件系统类型的，这点Linux系统会自行判断，而mount -a命令参数是非常厉害的，执行后会自动检查/etc/fstab文件中是否有无疏漏被挂载的设备文件，然后进行自动挂载：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-a</td>
+<td>挂载所有在/etc/fstab中定义的文件系统</td>
+</tr>
+<tr>
+<td>-t</td>
+<td>指定文件的类型</td>
+</tr>
+</tbody>
+</table>
+<p>例如需要把设备”/dev/sdb2”挂载到”/backup”目录，文件格式是ext4。mount命令只需要填写设备与挂载目录参数就行，一般系统会自动去判断要挂载文件的类型~因此只需要这样来做：</p>
+<ul>
+<li><strong>执行命令：mount /dev/sdb2 /backup</strong></li>
+</ul>
+<p>虽然按照上面的方法执行mount命令后就能立即使用文件系统了，但重启后挂载就会失效，也就是说需要每次开机后都手动的挂载一下，这肯定不是咱们想要的方案，因此如果想把硬件设备和目录永久的进行自动关联，就必须把挂在信息按照指定的格式写入 <strong>/etc/fstab</strong> 文件中这个文件中包含着诸多挂载所需的信息项目，一旦配置好之后就能永久的为您服务啦。</p>
+<ul>
+<li><p><strong>填写格式如下：“设备文件 挂载目录 格式类型 权限选项 自检 优先级”</strong></p>
+</li>
+<li><p><strong>设备文件：一般为设备的路径+设备名称，也可以写UUID。</strong></p>
+</li>
+<li><strong>挂载目录：指定要挂载到的目录，需挂载前先创建好。</strong></li>
+<li><strong>格式类型：即指定文件系统的格式，比如有ext3/ext4/xfs/swap/iso9660（此为光盘设备）等等。</strong></li>
+<li><strong>权限选项：默认为defaults（rw，suid，dev，exec，auto，nouser，async）</strong></li>
+<li><strong>自检：若为1则开机后进行磁盘自检，0为不自检。</strong></li>
+<li><strong>优先级：若“自检为1”，则可对多块硬盘进行优先级设置。</strong></li>
+</ul>
+<p>那么要想让文件系统为”ext4”的硬件设备”/dev/sdb2”开机后自动挂载到”/backup”目录上，默认权限且无需开机自检，就需要在/etc/fstab文件中写入下面的信息，重启后检查也会成功~<br><code>[root@caijy ~]# vim /etc/fstab</code><br><code>#</code><br><code># /etc/fstab</code><br><code># Created by anaconda on Wed May 4 19:26:23 2017</code><br><code>#</code><br><code># Accessible filesystems, by reference, are maintained under</code> <code>&#39;/dev/disk&#39;</code><br><code># See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info</code><br><code>#</code><br><code>/dev/mapper/rhel-root / xfs defaults 1 1</code><br><code>UUID=812b1f7c-8b5b-43da-8c06-b9999e0fe48b /boot xfs defaults 1 2</code><br><code>/dev/mapper/rhel-swap swap swap defaults 0 0</code><br><code>/dev/cdrom /media/cdrom iso9660 defaults 0 0</code><br><code>/dev/sdb2 /backup ext4 defaults 0 0</code></p>
+<p><strong>umount命令用于撤销已经挂载的设备文件，格式为：“unmount [挂载点/设备文件]”。</strong><br>挂载文件系统是为了使用硬件资源，卸载文件系统就意味不再使用硬件的设备资源，而挂载的操作就是硬件设备与目录的关联动作，因此卸载操作只需要说明想要取消关联的设备文件或挂载目录其中的一项即可，而且一般也不需要加其他额外的参数，例如来尝试手动的卸载掉“/dev/sdb2”这个设备文件吧：<br><code>[root@caijy ~]# umount /dev/sdb2</code></p>
+<hr>
+<h3 id="添加硬盘设备"><a href="#添加硬盘设备" class="headerlink" title="添加硬盘设备"></a>添加硬盘设备</h3><p>根据刚刚对管理硬件设备所学的理论知识，先来理清一下思路吧~首先需要在虚拟机中模拟再添加入一块新的硬盘存储设备，然后逐步的进行分区、格式化、挂载操作，最后通过检查系统挂载状态和真实的使用来最终验证硬件是否已正确部署好了吧。</p>
+<p>使用虚拟机软件的好处又一次体现出来了，因为咱们不需要为了做这个实验而特意去买一块真实的硬盘，而是通过虚拟机软件进行硬件模拟就可以，操作步骤首先是把虚拟机系统关机后点击“编辑虚拟设置”选项，选择添加按钮新增一块新的硬件设备,依次点击下一步即可（步骤省略，若不会请自行百度）。</p>
+<p>在虚拟机中成功模拟了硬盘设备后就应该能够看到抽象成的设备文件了，按照前面说的udev服务命名规则，第二个被识别的SCSI设备应该会被保存成/dev/sdb，这个就是硬盘设备文件啦。但在开始使用前还应该进行分区操作，从中取出一个500M的分区设备以供后面的操作使用。<br><strong>fdisk命令用于管理磁盘分区，格式为：“fdisk [磁盘文件]”</strong><br>管理Linux系统中的硬盘设备最常用的方法就当属是用fdisk命令了，这条命令提供了添加，删除，转换分区等等功能于一身的“一站式分区服务”，不过这条命令的参数是交互式的，而不是像咱们以前直接写到命令后面的参数一样，因此在管理硬盘设备的时候特别方便，可以根据需求动态的调整。</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>m</td>
+<td>查看全部可用的参数</td>
+</tr>
+<tr>
+<td>n</td>
+<td>添加新的分区</td>
+</tr>
+<tr>
+<td>d</td>
+<td>删除某个分区信息</td>
+</tr>
+<tr>
+<td>I</td>
+<td>列出所有可用的分区类型</td>
+</tr>
+<tr>
+<td>t</td>
+<td>改变某个分区的类型</td>
+</tr>
+<tr>
+<td>P</td>
+<td>查看分区表信息</td>
+</tr>
+<tr>
+<td>w</td>
+<td>保存并退出</td>
+</tr>
+<tr>
+<td>q</td>
+<td>不保存直接退出</td>
+</tr>
+</tbody>
+</table>
+<p>第1步：首先使用fdisk命令尝试管理/dev/sdb硬盘设备，看到提示信息后输入参数p来查看硬盘设备内已有的分区信息，这其中包括了硬盘的容量大小，扇区个数等等信息：<br><code>[root@linuxprobe ~]# fdisk /dev/sdb</code><br><code>Welcome to fdisk (util-linux 2.23.2).</code><br><code>Changes will remain in memory only, until you decide to write them.</code><br><code>Be careful before using the write command.</code><br><code>Device does not contain a recognized partition table</code><br><code>Building a new DOS disklabel with disk identifier 0x47d24a34.</code><br><code>Command (m for help): p</code><br><code>Disk /dev/sdb: 21.5 GB, 21474836480 bytes, 41943040 sectors</code><br><code>Units = sectors of 1 * 512 = 512 bytes</code><br><code>Sector size (logical/physical): 512 bytes / 512 bytes</code><br><code>I/O size (minimum/optimal): 512 bytes / 512 bytes</code><br><code>Disk label type: dos</code><br><code>Disk identifier: 0x47d24a34</code><br><code>Device Boot Start End Blocks Id System</code></p>
+<p>第2步：输入参数n来尝试新建分区信息，系统会要求选择继续输入参数p来创建主分区，或者输入参数e来创建扩展分区，因此输入参数p来创建一个主分区：<br><code>Command (m for help): n</code><br><code>Partition type:</code><br><code>p primary (0 primary, 0 extended, 4 free)</code><br><code>e extended</code><br><code>Select (default p): p</code><br>第3步：确认创建一个主分区后，系统要求您先输入分区的编号，既然已经知道主分区的编号范围是1-4，因此默认输入1就可以了，接下来系统会提示定义下起始的扇区，这一项默认不需要改动，系统会自动计算出最靠前空闲的扇区位置，咱们敲击一下回车就可以，最后系统会要求定义分区的结束扇区位置，这其实就是想要去定义下整个分区的大小是多少，但其实不用去算扇区的个数，只需要输入+2G即可创建出一个容量为2G的硬盘分区。<br><code>Partition number (1-4, default 1): 1</code><br><code>First sector (2048-41943039, default 2048):此处敲击回车</code><br><code>Using default value 2048</code><br><code>Last sector, +sectors or +size{K,M,G} (2048-41943039, default 41943039): +2G</code><br><code>Partition 1 of type Linux and of size 2 GiB is set</code><br>第4步：再次使用参数p来查看下硬盘设备中的分区信息，果然就能看到一个名称为/dev/sdb1，起始扇区为2048，结束扇区是4196351的分区啦，这时候千万不要直接关闭窗口，而应该敲击参数w后回车，这样分区信息才是真正的写入成功啦。<br><code>Command (m for help): p</code><br><code>Disk /dev/sdb: 21.5 GB, 21474836480 bytes, 41943040 sectors</code><br><code>Units = sectors of 1 * 512 = 512 bytes</code><br><code>Sector size (logical/physical): 512 bytes / 512 bytes</code><br><code>I/O size (minimum/optimal): 512 bytes / 512 bytes</code><br><code>Disk label type: dos</code><br><code>Disk identifier: 0x47d24a34</code><br><code>Device Boot Start End Blocks Id System</code><br><code>/dev/sdb1 2048 4196351 2097152 83 Linux</code><br><code>Command (m for help): w</code><br><code>The partition table has been altered!</code><br><code>Calling ioctl() to re-read partition table.</code><br><code>Syncing disks.</code><br>第5步：当做完上面所说的所有步骤后，Linux系统会自动把这个硬盘分区抽象成/dev/sdb1这个设备文件，可以用file命令来看到这个文件的属性，但是有些时候系统并没有自动的把分区信息同步给Linux内核，而且这种情况似乎还比较常见，但不能算作是严重的bug，因为如果设备信息没有被抽象为文件，也可以输入partprobe命令来手动的同步信息到内核，而且一般推荐敲击两次会效果更佳，但一旦遇到连这个命令都不能解决的时候，那么就重启计算机吧，这个杀手锏百试百灵，一定会有用的。<br><code>[root@caijy ]# file /dev/sdb1</code><br><code>/dev/sdb1: cannot open (No such file or directory)</code><br><code>[root@caijy ]# partprobe</code><br><code>[root@caijy ]# partprobe</code><br><code>[root@caijy ]# file /dev/sdb1</code><br><code>/dev/sdb1: block special</code><br>Linux系统对于没有被格式化的存储设备是不知道怎么样写入数据的，因此当咱们对存储设备分区后需要再进行一次格式化操作，很类似于平时给白纸划上横线，这样再写字的时候就会十分规整有条理啦，在Linux系统中用于格式化的是mkfs命令，这条命令很有意思，因为在Shell终端中输入mkfs后再敲击两下Tab键补齐命令就会有这样的效果：<br><code>[root@caijy ~]# mkfs</code><br><code>mkfs mkfs.cramfs mkfs.ext3 mkfs.fat mkfs.msdos mkfs.xfs</code><br><code>mkfs.btrfs mkfs.ext2 mkfs.ext4 mkfs.minix mkfs.vfat</code><br>对！这个mkfs命令作为一款格式化的工具非常贴心，它把常用的文件系统名称用后缀的方式保存成了文件，使用方法非常的简单：”mkfs.文件类型名称”，例如要格式分区为xfs文件系统，则命令应为”mkfs.xfs /dev/sdb1”。<br><code>[root@linuxprobe ~]# mkfs.xfs /dev/sdb1</code><br><code>meta-data=/dev/sdb1 isize=256 agcount=4, agsize=131072 blks</code><br><code>= sectsz=512 attr=2, projid32bit=1</code><br><code>= crc=0</code><br><code>data = bsize=4096 blocks=524288, imaxpct=25</code><br><code>= sunit=0 swidth=0 blks</code><br><code>naming =version 2 bsize=4096 ascii-ci=0 ftype=0</code><br><code>log =internal log bsize=4096 blocks=2560, version=2</code><br><code>= sectsz=512 sunit=0 blks, lazy-count=1</code><br><code>realtime =none extsz=4096 blocks=0, rtextents=0</code><br>终于把存储设备给分区、格式化好了，接下来就是要来挂载并使用啦。这些步骤也非常的简单，首先是创建一个用于挂载设备的挂载点目录，然后用mount命令将存储设备与挂载点进行关联，最后还可以用df -h命令来查看下挂载状态和硬盘使用量信息。<br><code>[root@caijy ~]# mkdir /newFS</code><br><code>[root@caijy ~]# mount /dev/sdb1 /newFS/</code><br><code>[root@caijy ~]# df -h</code><br><code>Filesystem Size Used Avail Use% Mounted on</code><br><code>/dev/mapper/rhel-root 18G 3.4G 15G 20% /</code><br><code>devtmpfs 905M 0 905M 0% /dev</code><br><code>tmpfs 914M 148K 914M 1% /dev/shm</code><br><code>tmpfs 914M 8.9M 905M 1% /run</code><br><code>tmpfs 914M 0 914M 0% /sys/fs/cgroup</code><br><code>/dev/sr0 3.5G 3.5G 0 100% /media/cdrom</code><br><code>/dev/sda1 497M 118M 379M 24% /boot</code><br><code>/dev/sdb1 2.0G 33M 2.0G 2% /newFS</code></p>
+<p><strong>du命令用于查看文件的数据占用量，格式为：“ du [选项] [文件]”。</strong><br>既然存储设备已经顺利的挂载完毕，就可以来尝试通过挂载点目录往存储设备中写入文件了，顺便再给同学们介绍一下用于查看文件数据占用量的du命令，简单来说就是看一个或多个文件占用了多大的硬盘空间，<br><code>[root@caijy ~]# cp -rf /etc/* /newFS/</code><br><code>[root@caijy ~]# ls /newFS/</code><br><code>abrt hosts pulse</code><br><code>adjtime hosts.allow purple</code><br><code>aliases hosts.deny qemu-ga</code><br><code>aliases.db hp qemu-kvm</code><br><code>alsa idmapd.conf radvd.conf</code><br><code>alternatives init.d rc0.d</code><br><code>anacrontab inittab rc1.d</code><br><code>………………省略部分输入信息………………</code><br><code>[root@linuxprobe ~]# du -sh /newFS/</code><br><code>35M /newFS/</code><br>细心的同学一定想到刚刚讲过使用mount命令挂载的设备文件会在下一次重启的时候失效，因此如果您还想让这个设备文件的挂载永久的有效下去，需要把挂载的信息项目写入到配置文件才可以：<br><code>[root@caijy ~]# vim /etc/fstab</code><br><code>#</code><br><code># /etc/fstab</code><br><code># Created by anaconda on Wed May 4 19:26:23 2017</code><br><code>#</code><br><code># Accessible filesystems, by reference, are maintained under &#39;/dev/disk&#39;</code><br><code># See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info</code><br><code>#</code><br><code>/dev/mapper/rhel-root / xfs defaults 1 1</code><br><code>UUID=812b1f7c-8b5b-43da-8c06-b9999e0fe48b /boot xfs defaults 1 2</code><br><code>/dev/mapper/rhel-swap swap swap defaults 0 0</code><br><code>/dev/cdrom /media/cdrom iso9660 defaults 0 0</code><br><code>/dev/sdb1 /newFS xfs defaults 0 0</code></p>
+<hr>
+<h3 id="添加交换分区"><a href="#添加交换分区" class="headerlink" title="添加交换分区"></a>添加交换分区</h3><p>SWAP交换分区是一种类似于Windows系统虚拟内存的功能，通过把一部分硬盘空间虚拟成内存来使用，从而解决内存容量不足的情况。但由于SWAP毕竟是用硬盘资源虚拟的，速度上比真实物理内存要慢很多，所以一般只有当真实物理内存耗尽时才会调用SWAP交换分区，把内存中暂时不常用的数据临时存放到硬盘中，腾出内存空间让更活跃的程序服务来使用。</p>
+<p>第1步：SWAP交换分区的创建过程非常类似于上一个小节所讲到的分区设备挂载使用的方法，首先第一步就是再进行对/dev/sdb存储设备分区操作，取出一个大小为5GB的主存储分区然后保存退出即可：<br><code>[root@caijy ~]# fdisk /dev/sdb</code><br><code>Welcome to fdisk (util-linux 2.23.2).</code><br><code>Changes will remain in memory only, until you decide to write them.</code><br><code>Be careful before using the write command.</code><br><code>Device does not contain a recognized partition table</code><br><code>Building a new DOS disklabel with disk identifier 0xb3d27ce1.</code><br><code>Command (m for help): n</code><br><code>Partition type:</code><br><code>p primary (1 primary, 0 extended, 3 free)</code><br><code>e extendedSelect (default p): p</code><br><code>Partition number (2-4, default 2):</code><br><code>First sector (4196352-41943039, default 4196352): 此处敲击回车</code><br><code>Using default value 4196352</code><br><code>Last sector, +sectors or +size{K,M,G} (4196352-41943039, default</code> <code>41943039): +5G</code><br><code>Partition 2 of type Linux and of size 5 GiB is set</code><br><code>Command (m for help): p</code><br><code>Disk /dev/sdb: 21.5 GB, 21474836480 bytes, 41943040 sectors</code><br><code>Units = sectors of 1 * 512 = 512 bytes</code><br><code>Sector size (logical/physical): 512 bytes / 512 bytes</code><br><code>I/O size (minimum/optimal): 512 bytes / 512 bytes</code><br><code>Disk label type: dos</code><br><code>Disk identifier: 0xb0ced57f</code><br><code>Device Boot Start End Blocks Id System</code><br><code>/dev/sdb1 2048 4196351 2097152 83 Linux</code><br><code>/dev/sdb2 4196352 14682111 5242880 83 Linux</code><br><code>Command (m for help): w</code><br><code>The partition table has been altered!</code><br><code>Calling ioctl() to re-read partition table.</code><br><code>WARNING: Re-reading the partition table failed with error 16: Device or resource busy.</code><br><code>The kernel still uses the old table. The new table will be used at</code><br><code>the next reboot or after you run partprobe(8) or kpartx(8)</code><br><code>Syncing disks.</code><br>第2步：把新建的存储分区使用SWAP交换分区专用的格式化mkswap命令进行格式化操作：<br><code>[root@caijy ~]# mkswap /dev/sdb2</code><br><code>Setting up swapspace version 1, size = 5242876 KiB</code><br><code>no label, UUID=2972f9cb-17f0-4113-84c6-c64b97c40c75</code><br>第3步：接下来使用swapon命令把准备好的SWAP交换分区设备正式的挂载到系统中，并可以使用free -m 命令来看到交换分区大小的变化（由2047M提升至了7167M）：<br><code>[root@caijy ~]# free -m</code><br><code>total used free shared buffers cached</code><br><code>Mem: 1483 782 701 9 0 254</code><br><code>-/+ buffers/cache: 526 957</code><br><code>Swap: 2047 0 2047</code><br><code>[root@linuxprobe ~]# swapon /dev/sdb2</code><br><code>[root@linuxprobe ~]# free -m</code><br><code>total used free shared buffers cached</code><br><code>Mem: 1483 785 697 9 0 254</code><br><code>-/+ buffers/cache: 530 953</code><br><code>Swap: 7167 0 7167</code><br>第4步：对了~为了能够让新的SWAP交换分区设备在重启后依然生效，需要按照下面的格式写入到配置文件中，记得保存哦~<br><code>[root@caijy ~]# vim /etc/fstab</code><br><code>#</code><br><code># /etc/fstab</code><br><code># Created by anaconda on Wed May 4 19:26:23 2017</code><br><code>#</code><br><code># Accessible filesystems, by reference, are maintained under &#39;/dev/disk&#39;</code><br><code># See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info</code><br><code>#</code><br><code>/dev/mapper/rhel-root / xfs defaults 1 1</code><br><code>UUID=812b1f7c-8b5b-43da-8c06-b9999e0fe48b /boot xfs defaults 1 2</code><br><code>/dev/mapper/rhel-swap swap swap defaults 0 0</code><br><code>/dev/cdrom /media/cdrom iso9660 defaults 0 0</code><br><code>/dev/sdb1 /newFS xfs defaults 0 0</code><br><code>/dev/sdb2 swap swap defaults 0 0</code></p>
+<hr>
+<h3 id="磁盘容量配额"><a href="#磁盘容量配额" class="headerlink" title="磁盘容量配额"></a>磁盘容量配额</h3><p>Linux系统的设计初衷理念就让许多人一起使用，成为多用户、多任务的操作系统，但是硬件的资源是固定有限的，如果出现个小破坏份子不断的创建文件或下载电影，那么硬盘空间总有一天会被占满的吧.这时就需要 <em>磁盘配额服务</em> 帮助管理员限制某用户或某个用户组对特定文件夹可以使用的最大硬盘空间，一旦超出预算就不再允许他们继续使用。<br>quato服务做磁盘配额可以限制用户的硬盘可用量或最大创建文件数量，并且还有软、硬限制的功能：</p>
+<ul>
+<li>软限制：当达到软限制时会提示用户，但允许用户在规定限额内继续使用</li>
+<li>硬限制：当达到软限制时会提示用户，且强制终止用户的操作。</li>
+</ul>
+<p>在红帽RHEL7系统中已经默认安装了quota磁盘配额服务程序包，但是硬盘设备默认是没有支持的，需要手动的编辑一下配置文件让对应的/boot目录能够支持了quota磁盘配额技术，重启后用mount命令看到/boot目录已经支持了quota磁盘配额技术啦：<br><code>[root@localhost ~]# vim /etc/fstab</code><br><code>#</code><br><code># /etc/fstab</code><br><code># Created by anaconda on Sat Sep 16 17:56:05 2017</code><br><code>#</code><br><code># Accessible filesystems, by reference, are maintained under &#39;/dev/disk&#39;</code><br><code># See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info</code><br><code>#</code><br><code>/dev/mapper/rhel-root   /                       xfs     defaults        1 1</code><br><code>UUID=d09730e2-1dca-4504-9c00-dfaca1288bd8 /boot                   xfs     defaults,uquota        1 2</code><br><code>/dev/mapper/rhel-swap   swap                    swap    defaults        0 0</code><br>重启后：<br><code>[caijy@localhost Desktop]$ mount | grep boot</code><br><code>/dev/sda1 on /boot type xfs (rw,relatime,seclabel,attr2,inode64,usrquota)</code><br>接下来创建一个用于检查磁盘配额效果的用户，并对/boot目录增加其他人的写权限，保证用户能够正常的写入数据：<br><code>[root@localhost ~]# useradd tom</code><br><code>[root@localhost ~]# chmod -Rf o+w /boot</code></p>
+<p><strong>xfs_quota命令用于管理XFS文件系统的quota硬盘配额，格式为：“quota [参数] 配额 文件系统”。</strong><br>这是一个专门针对于xfs文件管理系统管理quota磁盘配额服务而设计的命令，其中 <strong>-c</strong> 参数用于以参数的形式设置要执行的命令，<strong>-x</strong> 参数是专家模式，让运维人员能够对quota服务做更多复杂的配置。那么就来用xfs-quota命令设置tom用户对/boot目录的磁盘限额，具体的限额控制包括有硬盘使用软限制为3M，硬盘使用硬限制为6M，创建文件数量软限制为3个，创建文件硬限制为6个。<br><code>[root@localhost ~]# xfs_quota -x -c &#39;limit bsoft=3m bhard=6m isoft=3 ihard=6 tom&#39; /boot</code><br><code>[root@localhost ~]# xfs_quota -x -c report /boot</code><br><code>User quota on /boot (/dev/sda1)</code><br><code>Blocks</code><br><code>User ID          Used       Soft       Hard    Warn/Grace</code><br><code>---------- --------------------------------------------------</code><br><code>root            95340          0          0     00 [--------]</code><br><code>tom                 0       3072       6144     00 [--------]</code><br>当配置好quota磁盘配额服务对tom用户在/boot目录上的各种限制后，就可以尝试切换到这个普通用户的身份上，然后分别尝试创建一个体积为5M和8M的文件，很明显第二次就会受到了系统限制：<br><code>[tom@localhost ~]$ dd if=/dev/zero of=/boot/tom bs=5M count=1</code><br><code>1+0 records in</code><br><code>1+0 records out</code><br><code>5242880 bytes (5.2 MB) copied, 0.00638878 s, 821 MB/s</code><br><code>[tom@localhost ~]$ dd if=/dev/zero of=/boot/tom bs=8M count=1</code><br><code>dd: error writing ‘/boot/tom’: Disk quota exceeded</code><br><code>1+0 records in</code><br><code>0+0 records out</code><br><code>6291456 bytes (6.3 MB) copied, 0.00983008 s, 640 MB/s</code></p>
+<p><strong>edquota命令用于编辑用户的quota配额限制，格式为：“edquota [参数] [用户]”。</strong><br>在为用户设置了quota磁盘配额限制后可以用edquota来随着需求的变化而进一步修改限额的数值，其中 <strong>-u</strong> 参数代表要针对那个用户进行的设置，<strong>-g</strong> 参数则代表要针对那个用户组进行的设置，edquota命令会调用vi或vim编辑器来让用户修改要限制的项目，比如把tom用户的硬盘使用量限额从5M提升到8M来试一试吧：<br><code>[root@localhost ~]# edquota -u tom</code><br><code>Disk quotas for user tom (uid 1001):</code><br><code>Filesystem blocks soft hard inodes soft hard</code><br><code>/dev/sda1 6144 3072 8192 1 3 6</code><br><code>[tom@localhost ~]$ dd if=/dev/zero of=/boot/tom bs=8M count=1</code><br><code>1+0 records in</code><br><code>1+0 records out</code><br><code>8388608 bytes (8.4 MB) copied, 0.00972946 s, 862 MB/s</code><br><code>[tom@localhost ~]$ dd if=/dev/zero of=/boot/tom bs=10M count=1</code><br><code>dd: error writing ‘/boot/tom’: Disk quota exceeded</code><br><code>1+0 records in</code><br><code>0+0 records out</code><br><code>8388608 bytes (8.4 MB) copied, 0.0371469 s, 226 MB/s</code></p>
+<hr>
+<h3 id="软硬方式链接"><a href="#软硬方式链接" class="headerlink" title="软硬方式链接"></a>软硬方式链接</h3><p>现在可以学习Linux系统中的“快捷方式”，在Windows系统中的快捷方式就是指向原始文件的一个链接文件，让用户能够从不同的位置来访问到原始的文件，而原文件一旦被删除或剪切到其他地方也会导致链接文件失效，但是这个看似简单的东东在Linux系统中可不太一样。</p>
+<p><strong>硬链接（hard link）</strong> 可以被理解为一个“指向原文件inode的指针”，系统不为它分配独立的inode和文件，所有实际上来说 <strong>硬链接文件和原始文件其实是同一个文件，只是名字不同。</strong> 于是每添加一个硬链接，该文件的inode连接数就会增加1，直到该文件的inode连接数归0才是彻底删除。也就是说因为硬链接实际就是指向原文件inode的指针，即便原始文件被删除依然可以通过链接文件访问，但是由于技术的局限性而不能跨文件系统也不能链接目录文件。</p>
+<p><strong>软链接也称为符号链接（symbolic link）</strong> 即“仅仅包含它所要链接文件的路径名”，因此能做目录链接也可以跨越文件系统，但原始文件被删除后链接文件也将失效，性质上和Windows™系统中的“快捷方式”是一样的。</p>
+<p><strong>ln命令用于创建链接文件，格式为：“ln [选项] 目标”。</strong><br>为了更好的理解软、硬链接文件的不同性质，先来尝试创建一个类似于Windows系统中的快捷方式软链接吧，这样当原始文件被删除后，新建出来的链接文件一定也就不能再继续读取了。<br><code>[root@localhost ~]# echo &quot;Welcome to linux&quot; &gt; readme.txt</code><br><code>[root@localhost ~]# ln -s readme.txt readit.txt</code><br><code>[root@localhost ~]# cat readme.txt</code><br><code>Welcome to linux</code><br><code>[root@localhost ~]# cat readit.txt</code><br><code>Welcome to linux</code><br><code>[root@localhost ~]# ls -l readme.txt</code><br><code>-rw-r--r--. 1 root root 17 Sep 16 18:59 readme.txt</code><br><code>[root@localhost ~]# rm readme.txt</code><br><code>rm: remove regular file ‘readme.txt’? y</code><br><code>[root@localhost ~]# cat readit.txt</code><br><code>cat: readit.txt: No such file or directory</code><br>接下来创建一个Linux系统中的硬链接来再对原文件硬盘存储位置做一个指针，而这样就不再依赖于原始文件的名称等等信息，也不会在因原文件被删除后导致新的文件读取失败，同时可以看到创建硬链接后的原文件的硬盘链接数量被增加到了2。<br><code>[root@localhost ~]# echo &quot;Welcome to linux&quot; &gt; readme.txt</code><br><code>[root@localhost ~]# ln readme.txt readit.txt</code><br><code>[root@localhost ~]# cat readme.txt</code><br><code>Welcome to linux</code><br><code>[root@localhost ~]# cat readit.txt</code><br><code>Welcome to linux</code><br><code>[root@localhost ~]# ls -l readme.txt</code><br><code>-rw-r--r--. 2 root root 17 Sep 16 19:02 readme.txt</code><br><code>[root@localhost ~]# rm readme.txt</code><br><code>rm: remove regular file ‘readme.txt’? y</code><br><code>[root@localhost ~]# cat readit.txt</code><br><code>Welcome to linux</code></p>
+<hr>
+<p>转载自：<a href="http://www.linuxprobe.com/chapter-06.html" target="_blank" rel="external">http://www.linuxprobe.com/chapter-06.html</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/sakura-hly.github.io/tags/Linux/" rel="tag"># Linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/sakura-hly.github.io/2017/09/15/Linux基础课程05/" rel="next" title="基础课程05">
+                <i class="fa fa-chevron-left"></i> 基础课程05
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/sakura-hly.github.io/2017/09/17/Linux基础课程07/" rel="prev" title="基础课程07">
+                基础课程07 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  //with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="/sakura-hly.github.io/images/dp.jpg"
+              alt="caijy" />
+          
+            <p class="site-author-name" itemprop="name">caijy</p>
+            <p class="site-description motion-element" itemprop="description">一个Linux菜鸟的博客</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/sakura-hly.github.io/archives/">
+            
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">Artikel</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">Kategorien</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">Tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=448226072&auto=1&height=66"></iframe>
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一切从“-”开始"><span class="nav-number">1.</span> <span class="nav-text">一切从“/”开始</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#物理设备的命名规则"><span class="nav-number">2.</span> <span class="nav-text">物理设备的命名规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件系统与数据资料"><span class="nav-number">3.</span> <span class="nav-text">文件系统与数据资料</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#挂载硬件设备"><span class="nav-number">4.</span> <span class="nav-text">挂载硬件设备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加硬盘设备"><span class="nav-number">5.</span> <span class="nav-text">添加硬盘设备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加交换分区"><span class="nav-number">6.</span> <span class="nav-text">添加交换分区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#磁盘容量配额"><span class="nav-number">7.</span> <span class="nav-text">磁盘容量配额</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#软硬方式链接"><span class="nav-number">8.</span> <span class="nav-text">软硬方式链接</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">caijy</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/sakura-hly.github.io/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/sakura-hly.github.io/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/sakura-hly.github.io/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/sakura-hly.github.io/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/sakura-hly.github.io/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/sakura-hly.github.io/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/sakura-hly.github.io/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("jsI2BP061jWWrjY7NlFVHOOQ-gzGzoHsz", "WQFdrAUtgTXisdJ8TFShl3a7");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+  
+</body>
+</html>

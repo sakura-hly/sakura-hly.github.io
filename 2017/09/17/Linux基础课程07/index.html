@@ -1,0 +1,1436 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/sakura-hly.github.io/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/sakura-hly.github.io/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/sakura-hly.github.io/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Linux," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/sakura-hly.github.io/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="前面学习了硬盘设备分区、格式化、挂载等知识技能后，为了能够进一步满足生产环境中对存储设备IO读写速度和数据冗余备份机制的更高需求，这里会深入学习各个常用RAID磁盘陈列组技术方案的特性，并实际部署RAID10，RAID5+备份盘等方案来更直观看到RAID磁盘阵列组的强大效果。 同时为了满足用户对存储资源动态调整的需求，还会深入学习LVM逻辑卷管理器的部署，扩容，缩小，快照，及卸载删除的步骤。">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基础课程07">
+<meta property="og:url" content="http://yoursite.com/2017/09/17/Linux基础课程07/index.html">
+<meta property="og:site_name" content="破晓">
+<meta property="og:description" content="前面学习了硬盘设备分区、格式化、挂载等知识技能后，为了能够进一步满足生产环境中对存储设备IO读写速度和数据冗余备份机制的更高需求，这里会深入学习各个常用RAID磁盘陈列组技术方案的特性，并实际部署RAID10，RAID5+备份盘等方案来更直观看到RAID磁盘阵列组的强大效果。 同时为了满足用户对存储资源动态调整的需求，还会深入学习LVM逻辑卷管理器的部署，扩容，缩小，快照，及卸载删除的步骤。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/img/RAID0.png">
+<meta property="og:image" content="http://yoursite.com/img/raid1.jpg">
+<meta property="og:image" content="http://yoursite.com/img/raid5.gif">
+<meta property="og:image" content="http://yoursite.com/img/raid10.jpg">
+<meta property="og:image" content="http://yoursite.com/img/逻辑卷.png">
+<meta property="og:image" content="http://yoursite.com/img/添加两块硬盘到虚拟机.png">
+<meta property="og:updated_time" content="2017-09-17T13:30:19.306Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基础课程07">
+<meta name="twitter:description" content="前面学习了硬盘设备分区、格式化、挂载等知识技能后，为了能够进一步满足生产环境中对存储设备IO读写速度和数据冗余备份机制的更高需求，这里会深入学习各个常用RAID磁盘陈列组技术方案的特性，并实际部署RAID10，RAID5+备份盘等方案来更直观看到RAID磁盘阵列组的强大效果。 同时为了满足用户对存储资源动态调整的需求，还会深入学习LVM逻辑卷管理器的部署，扩容，缩小，快照，及卸载删除的步骤。">
+<meta name="twitter:image" content="http://yoursite.com/img/RAID0.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/sakura-hly.github.io/',
+    scheme: 'Muse',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/09/17/Linux基础课程07/"/>
+
+
+
+
+
+  <title>基础课程07 | 破晓</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7f1817ded637839eb4e759c996071a39";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/sakura-hly.github.io/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">破晓</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">弱小和无知不是生存的障碍，傲慢才是。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/sakura-hly.github.io/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/sakura-hly.github.io/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archiv
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Suche
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/sakura-hly.github.io/2017/09/17/Linux基础课程07/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="caijy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/sakura-hly.github.io/images/dp.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="破晓">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">基础课程07</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-17T15:45:32+08:00">
+                2017-09-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/sakura-hly.github.io/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/sakura-hly.github.io/2017/09/17/Linux基础课程07/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count fb-comments-count" data-href="http://yoursite.com/2017/09/17/Linux基础课程07/" itemprop="commentCount">0</span> comments
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/sakura-hly.github.io/2017/09/17/Linux基础课程07/" class="leancloud_visitors" data-flag-title="基础课程07">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>前面学习了硬盘设备分区、格式化、挂载等知识技能后，为了能够进一步满足生产环境中对存储设备IO读写速度和数据冗余备份机制的更高需求，这里会深入学习各个常用RAID磁盘陈列组技术方案的特性，并实际部署RAID10，RAID5+备份盘等方案来更直观看到RAID磁盘阵列组的强大效果。</p>
+<p>同时为了满足用户对存储资源动态调整的需求，还会深入学习LVM逻辑卷管理器的部署，扩容，缩小，快照，及卸载删除的步骤。<br><a id="more"></a></p>
+<h3 id="RAID磁盘冗余阵列"><a href="#RAID磁盘冗余阵列" class="headerlink" title="RAID磁盘冗余阵列"></a>RAID磁盘冗余阵列</h3><p>现在计算机硬件中CPU处理器平均每年可提升30%-50%的计算性能，不仅如此，还在能耗方面有着不错的持续改善，但硬盘设备的性能提升仅仅为每年7%-10%，显然已经逐步成为了当代计算机整体性能的瓶颈问题，并且因为持续、频繁、大量的IO读写操作使得硬盘相比其他设备还存在很大损坏几率，导致重要的数据丢失。因此在1988年，由加利福尼亚大学伯克利分校发表的文章首次提到并定义了 <strong>RAID独立磁盘冗余阵列(Redundant Array of Independent Disks)</strong> ，RAID技术就是把很多块硬盘设备组合成一个容量更大，更安全的硬盘组，可以把数据切割成多个区段后分别存放再不同的物理硬盘设备上，然后利用分散读写需求来提升硬盘组整体的性能，同时把重要数据同步保存到多份不同不同的物理硬盘设备上，起到非常好的数据冗余备份效果。</p>
+<p>当咱们坐下来静静思考下刚刚所说的优点也会发现一个重要事实——提高成本了。就像原本只有一个电话本，但是为了保障数据安全所以把联系人号码信息写成了两份，自然就要为多买的一个电话本而承担更多的成本支出，RAID硬盘组技术的设计初衷是减少对硬盘设备的支出花费，但与数据价值相比较，现在企业更在乎的是RAID技术不仅能提升硬盘的吞吐量，还为硬盘提供了冗余备份机制，也就是说不仅增加了存储设备的IO读写速度，还很大程度上降低了硬盘设备损坏后丢失数据的可能性，所以这项技术已经成为了大部分IDC运营商或大中型企业的必备能力了~</p>
+<p>接下来会逐个学习下RAID0、RAID1、RAID5与RAID10的四种最常见的方案。首先是RAID0硬盘组，这项技术是把多块物理硬盘设备通过硬件或软件的方式串联在一起，成为一个大的卷组，将数据依次分别写入到各个物理硬盘中，这样最理想的状态会使得读写性能提升数倍，但若任意一块硬盘故障则会让整个系统的数据都受到破坏。 <strong>通俗来说RAID0硬盘组技术至少需要两块物理硬盘设备，能够有效的提高硬盘的性能和吞吐量，但没有数据的冗余和错误修复能力。</strong><br><img src="/img/RAID0.png" alt=""><br>RAID0硬盘组技术虽然很大程度上提高了存储设备的IO读写速度，但仔细想想就不难发现数据是被分开存放的，也就是说假设任何其中的一块硬盘出现了问题都会破坏数据的完整性。因此再生产环境中如果需求不是增加存储设备的读写速度，而是追求数据安全性的时候就比较推荐使用RAID1硬盘组技术了。如下图，Raid1硬盘组技术是把两块以上的存储设备进行绑定，目的是让数据被多块硬盘同时写入，类似于把数据再制作出多份备份的镜像，当有一块硬盘损坏后一般可立即通过热交换方式来恢复数据的正常使用，RAID1硬盘组技术虽然十分注重数据的安全性，但因为是把数据同时写入两块以上的磁盘设备中，这无疑会增加一定系统计算能力的负载。<br><img src="/img/raid1.jpg" alt=""><br>那有没有RAID组合方案既考虑到存储设备的IO读写速度和数据安全性还能兼顾到成本问题呢？实际上单从数据安全和成本问题上来讲，就不可能在保持原有存储可用率同时还不增加新设备的情况下大幅提升数据的安全性，待会儿提到的RAID5硬盘组技术虽然理论上兼顾三者的，但实际上更像是对各个方面的“互相妥协”，如图所示，RAID5硬盘组技术是把其它存储设备中的数据奇偶校验信息互相保存到硬盘设备中。RAID5硬盘组阵列技术有两项技术特色，第一，数据的奇偶位校验信息并不是单独保存到某一块硬盘设备中，而是分别互相存储到其它每一块硬盘设备上，这样的好处就是当其中任何一设备损坏后不至于出现致命缺陷。第二，图中parity（绿底白字）部分实例的就是保存数据的奇偶校验信息，换句话说RAID5硬盘组技术并不是备份真正的硬盘实际数据信息，而是当设备出现问题后通过奇偶校验信息来尝试重建损坏的数据，这样的技术特性“妥协”的兼顾了存储设备性能，数据安全性和存储成本问题。<br><img src="/img/raid5.gif" alt=""><br>由于RAID5硬盘组技术是因为成本问题对存储读写速度和安全性能而有了一定的妥协，但绝大部分情况下企业相比硬盘的价格，一定更加在乎数据的价值，生产环境中主要则是使用的RAID10硬盘组技术，顾名思义，这样技术就是对RAID1+RAID0硬盘组技术的一个“组合体”。如图所示，RAID10硬盘组至少需要4块硬盘来组建，先分别两两制作成RAID1磁盘组，保证数据的安全性，然后再对两个RAID1硬盘组实施RAID0技术，进一步的提高存储设备的读写速度，这样理论上只要坏的不是同一组中的所有硬盘，那么最多可以损坏50%的硬盘设备而不丢失数据，因此RAID10硬盘组技术继承了RAID0更高的读写速度和RAID1更安全的数据保障，在不考虑成本的情况下RAID10在读写速度和数据保障性方面都超过了RAID5，是较为广泛使用的存储技术。<br><img src="/img/raid10.jpg" alt=""></p>
+<h4 id="部署磁盘阵列组"><a href="#部署磁盘阵列组" class="headerlink" title="部署磁盘阵列组"></a>部署磁盘阵列组</h4><p>首先需要为虚拟机中添加4块硬盘设备来制作一个RAID10磁盘阵列组，这几块硬盘设备是模拟出来的，不需要特意去买几块真实的物理硬盘插到电脑上，但请注意在虚拟机中添加硬盘的操作一定要记得关闭系统之后再做，否则有时因同学们的电脑架构不同会导致虚拟机系统识别不到硬盘设备。</p>
+<p><strong>mdadm命令用于管理系统软件RAID硬盘阵列，格式为：”mdadm [模式] <raid设备名称> [选项] [成员设备名称]”。</raid设备名称></strong><br>在现在生产环境中的服务器一般都会配备有RAID阵列卡，价格也是越来越廉价，但没有必要让同学们为了做一个实验而单独去买一台服务器，mdadm命令能够在Linux系统中创建和管理软件RAID磁盘阵列组，对于其中的理论知识和操作过程是与生产环境保持一致的~mdadm命令的常用参数包括有：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-a</td>
+<td>检测设备名称</td>
+</tr>
+<tr>
+<td>-n</td>
+<td>指定设备数量</td>
+</tr>
+<tr>
+<td>-l</td>
+<td>指定RAID级别</td>
+</tr>
+<tr>
+<td>-C</td>
+<td>创建</td>
+</tr>
+<tr>
+<td>-v</td>
+<td>显示过程</td>
+</tr>
+<tr>
+<td>-f</td>
+<td>模拟设备损坏</td>
+</tr>
+<tr>
+<td>-r</td>
+<td>移除设备</td>
+</tr>
+<tr>
+<td>-Q</td>
+<td>查看摘要信息</td>
+</tr>
+<tr>
+<td>-D</td>
+<td>查看详细信息</td>
+</tr>
+<tr>
+<td>-S</td>
+<td>停止阵列</td>
+</tr>
+</tbody>
+</table>
+<p><strong>第1步：使用mdadm命令创建RAID10,名称为”/dev/md0”。</strong><br>前面了解过udev是Linux系统内核中用来给硬件命名的服务，命名规则也非常的简单，可以猜测到第二个SCSI存储设备的名称会是为/dev/sdb，然后以此类推。使用硬盘设备做RAID磁盘阵列组很像几个同学组成一个班级，但班级的名称总不能叫做/dev/sdbsdcsddsde吧，这样虽然可以一眼看出是由那些元素组成的，但明显非常的不利于记忆和阅读吧，更何况如果是用10、50、100个硬盘组成的设备呢？因此需要用 <strong>-C参数</strong> 代表创建一个RAID阵列卡，-v参数来显示创建的过程，这样以后/dev/md0就是创建出RAID磁盘阵列组的名称啦，<strong>-a yes参数</strong> 代表自动创建设备文件，<strong>-n 4参数</strong> 代表使用4块硬盘来制作这个RAID硬盘阵列组，而 <strong>-l 10参数</strong> 则代表RAID10方案，最后面再加上4块硬盘设备的名称就搞定啦：<br><code>[root@localhost ~]# mdadm -Cv /dev/md0 -a yes -n 4 -l 10 /dev/sdb /dev/sdc /dev/sdd /dev/sde</code><br><code>mdadm: layout defaults to n2</code><br><code>mdadm: layout defaults to n2</code><br><code>mdadm: chunk size defaults to 512K</code><br><code>mdadm: size set to 20954624K</code><br><code>mdadm: Defaulting to version 1.2 metadata</code><br><code>mdadm: array /dev/md0 started.</code><br><strong>把制作好的RAID磁盘阵列组格式化为ext4格式：</strong><br><code>[root@localhost ~]# mkfs.ext4 /dev/md0</code><br><code>mke2fs 1.42.9 (28-Dec-2013)</code><br><code>Filesystem label=</code><br><code>OS type: Linux</code><br><code>Block size=4096 (log=2)</code><br><code>Fragment size=4096 (log=2)</code><br><code>Stride=128 blocks, Stripe width=256 blocks</code><br><code>2621440 inodes, 10477312 blocks</code><br><code>523865 blocks (5.00%) reserved for the super user</code><br><code>First data block=0</code><br><code>Maximum filesystem blocks=2157969408</code><br><code>320 block groups</code><br><code>32768 blocks per group, 32768 fragments per group</code><br><code>8192 inodes per group</code><br><code>Superblock backups stored on blocks:</code><br><code>32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208,</code><br><code>4096000, 7962624</code><br><code>Allocating group tables: done</code><br><code>Writing inode tables: done</code><br><code>Creating journal (32768 blocks): done</code><br><code>Writing superblocks and filesystem accounting information: done</code><br><strong>第三步：创建挂载点然后把存储设备进行挂载操作，挂载成功后：</strong><br><code>[root@localhost ~]# mkdir /RAID</code><br><code>[root@localhost ~]# mount /dev/md0 /RAID</code><br><code>[root@localhost ~]# df -h</code><br><code>Filesystem             Size  Used Avail Use% Mounted on</code><br><code>/dev/mapper/rhel-root   18G  2.9G   15G  17% /</code><br><code>devtmpfs               905M     0  905M   0% /dev</code><br><code>tmpfs                  914M   92K  914M   1% /dev/shm</code><br><code>tmpfs                  914M  8.8M  905M   1% /run</code><br><code>tmpfs                  914M     0  914M   0% /sys/fs/cgroup</code><br><code>/dev/sda1              497M  127M  371M  26% /boot</code><br><code>/dev/md0                40G   49M   38G   1% /RAID</code><br><strong>第四步：查看/dev/md0磁盘阵列设备组详细信息，并把挂载信息写入到配置文件中永久生效。</strong><br><code>[root@localhost ~]# mdadm -D /dev/md0</code><br><code>/dev/md0:</code><br><code>Version : 1.2</code><br><code>Creation Time : Sun Sep 17 17:05:05 2017</code><br><code>Raid Level : raid10</code><br><code>Array Size : 41909248 (39.97 GiB 42.92 GB)</code><br><code>Used Dev Size : 20954624 (19.98 GiB 21.46 GB)</code><br><code>Raid Devices : 4</code><br><code>Total Devices : 4</code><br><code>Persistence : Superblock is persistent</code><br><code>Update Time : Sun Sep 17 17:09:46 2017</code><br><code>State : clean</code><br><code>Active Devices : 4</code><br><code>Working Devices : 4</code><br><code>Failed Devices : 0</code><br><code>Spare Devices : 0</code><br><code>Layout : near=2</code><br><code>Chunk Size : 512K</code><br><code>Name : localhost.localdomain:0  (local to host localhost.localdomain)</code><br><code>UUID : ed936caa:5758c536:76fac0c7:d08110d4</code><br><code>Events : 19</code><br><code>Number   Major   Minor   RaidDevice State</code><br><code>0       8       16        0      active sync   /dev/sdb</code><br><code>1       8       32        1      active sync   /dev/sdc</code><br><code>2       8       48        2      active sync   /dev/sdd</code><br><code>3       8       64        3      active sync   /dev/sde</code><br><code>[root@localhost ~]# echo &quot;/dev/md0 /RAID ext4 defaults 0 0&quot; &gt;&gt; /etc/fstab</code></p>
+<h4 id="损坏磁盘阵列及修复"><a href="#损坏磁盘阵列及修复" class="headerlink" title="损坏磁盘阵列及修复"></a>损坏磁盘阵列及修复</h4><p>在生产环境中部署RAID10磁盘阵列组目的就是为了提高存储设备的IO读写速度及数据的安全性，但因为这次是在本机电脑上模拟出来的硬盘设备所以对于读写速度的改善可能并不直观。接下来学习RAID磁盘阵列组损坏后的处理方法，这样以后步入了运维岗位后不会因为突发事件而手忙脚乱。首先确认有一块物理硬盘设备出现损坏不能再继续正常使用后，应该使用mdadm命令来予以移除之后查看下RAID磁盘阵列组的状态已经被改变：<br><code>[root@localhost ~]# mdadm /dev/md0 -f /dev/sdb</code><br><code>mdadm: set /dev/sdb faulty in /dev/md0</code><br><code>[root@localhost ~]# mdadm -D /dev/md0</code><br><code>/dev/md0:</code><br><code>Version : 1.2</code><br><code>Creation Time : Sun Sep 17 17:05:05 2017</code><br><code>Raid Level : raid10</code><br><code>Array Size : 41909248 (39.97 GiB 42.92 GB)</code><br><code>Used Dev Size : 20954624 (19.98 GiB 21.46 GB)</code><br><code>Raid Devices : 4</code><br><code>Total Devices : 4</code><br><code>Persistence : Superblock is persistent</code></p>
+<p><code>Update Time : Sun Sep 17 17:20:33 2017</code><br><code>State : clean, degraded</code><br><code>Active Devices : 3</code><br><code>Working Devices : 3</code><br><code>Failed Devices : 1</code><br><code>Spare Devices : 0</code></p>
+<p><code>Layout : near=2</code><br><code>Chunk Size : 512K</code></p>
+<p><code>Name : localhost.localdomain:0  (local to host localhost.localdomain)</code><br><code>UUID : ed936caa:5758c536:76fac0c7:d08110d4</code><br><code>Events : 21</code></p>
+<p><code>Number   Major   Minor   RaidDevice State</code><br><code>0       0        0        0      removed</code><br><code>1       8       32        1      active sync   /dev/sdc</code><br><code>2       8       48        2      active sync   /dev/sdd</code><br><code>3       8       64        3      active sync   /dev/sde</code></p>
+<p><code>0       8       16        -      faulty   /dev/sdb</code><br>因为RAID10级别的磁盘阵列组允许一组RAID1硬盘组中存在一个故障盘而不影响使用，所以同学们此时可以尝试下在/RAID目录中正常的创建或删除文件都是不受影响的。当购买了新的硬盘存储设备后再使用mdadm命令来予以恢复即可，但因为虚拟机模拟硬盘的原因需要重启后才把新的硬盘添加到RAID磁盘阵列组中。<br><code>[root@localhost ~]# umount /RAID</code><br><code>[root@localhost ~]# mdadm /dev/md0 -a /dev/sdb</code><br><code>mdadm: added /dev/sdb</code><br><code>[root@localhost ~]# mdadm -D /dev/md0</code><br><code>/dev/md0:</code><br><code>Version : 1.2</code><br><code>Creation Time : Sun Sep 17 17:05:05 2017</code><br><code>Raid Level : raid10</code><br><code>Array Size : 41909248 (39.97 GiB 42.92 GB)</code><br><code>Used Dev Size : 20954624 (19.98 GiB 21.46 GB)</code><br><code>Raid Devices : 4</code><br><code>Total Devices : 4</code><br><code>Persistence : Superblock is persistent</code></p>
+<p><code>Update Time : Sun Sep 17 17:27:42 2017</code><br><code>State : clean, degraded, recovering</code><br><code>Active Devices : 3</code><br><code>Working Devices : 4</code><br><code>Failed Devices : 0</code><br><code>Spare Devices : 1</code></p>
+<p><code>Layout : near=2</code><br><code>Chunk Size : 512K</code></p>
+<p><code>Rebuild Status : 13% complete</code></p>
+<p><code>Name : localhost.localdomain:0  (local to host localhost.localdomain)</code><br><code>UUID : ed936caa:5758c536:76fac0c7:d08110d4</code><br><code>Events : 37</code></p>
+<p><code>Number   Major   Minor   RaidDevice State</code><br><code>4       8       16        0      spare rebuilding   /dev/sdb</code><br><code>1       8       32        1      active sync   /dev/sdc</code><br><code>2       8       48        2      active sync   /dev/sdd</code><br><code>3       8       64        3      active sync   /dev/sde</code></p>
+<h4 id="磁盘阵列组-备份盘"><a href="#磁盘阵列组-备份盘" class="headerlink" title="磁盘阵列组+备份盘"></a>磁盘阵列组+备份盘</h4><p>大家有没有想到还有一种极端情况，RAID10最多允许损坏50%的硬盘设备，但如果同一组中的设备同时全部损坏也会导致数据丢失，换句话说，如果当RAID10磁盘阵列组中某一块硬盘出现了故障，而咱们正在前往修复它的路上，恰巧此时同RAID1组中的另一块硬盘设备也出现故障，那么数据就被彻底损坏了。那这样情况该怎么办呢？其实就可以使用RAID备份盘技术来预防这类事故，顾名思义就是准备一块足够大的硬盘，这块硬盘设备平时是闲置状态不用工作，一旦RAID磁盘阵列组中有硬盘出现故障后则会马上自动顶替上去，这样很棒吧！</p>
+<p>为了避免多个实验之间产生冲突，咱们需要保证每个实验之间的相对独立性，因此请大家自行还原下虚拟机到最初始状态吧。另外因为刚刚已经给同学们演示了RAID10磁盘阵列组的部署方法，所以现在换一个RAID5来看看效果吧，RAID5磁盘阵列组技术至少需要3块盘来做，加上1块备份盘，总共是需要向虚拟机中模拟4块硬盘设备。</p>
+<p>咱们现在来创建一个RAID5磁盘阵列组+备份盘吧，<strong>-n 3参数</strong> 代表创建这个RAID5所需的硬盘个数，<strong>-l 5参数</strong> 代表RAID磁盘阵列的级别，而 <strong>-x 1参数</strong> 则代表有1块备份盘，当查看/dev/md0磁盘阵列组的时候就能看到有一块备份盘在等待中了。<br><code>[root@localhost ~]# mdadm -Cv /dev/md0 -n 3 -l 5 -x 1 /dev/sdb /dev/sdc /dev/sdd /dev/sde</code><br><code>mdadm: layout defaults to left-symmetric</code><br><code>mdadm: layout defaults to left-symmetric</code><br><code>mdadm: chunk size defaults to 512K</code><br><code>mdadm: size set to 20954624K</code><br><code>mdadm: Defaulting to version 1.2 metadata</code><br><code>mdadm: array /dev/md0 started.</code><br><code>[root@localhost ~]# mdadm -D /dev/md0</code><br><code>/dev/md0:</code><br><code>Version : 1.2</code><br><code>Creation Time : Sun Sep 17 19:46:30 2017</code><br><code>Raid Level : raid5</code><br><code>Array Size : 41909248 (39.97 GiB 42.92 GB)</code><br><code>Used Dev Size : 20954624 (19.98 GiB 21.46 GB)</code><br><code>Raid Devices : 3</code><br><code>Total Devices : 4</code><br><code>Persistence : Superblock is persistent</code></p>
+<p><code>Update Time : Sun Sep 17 19:46:50 2017</code><br><code>State : clean, degraded, recovering</code><br><code>Active Devices : 2</code><br><code>Working Devices : 4</code><br><code>Failed Devices : 0</code><br><code>Spare Devices : 2</code></p>
+<p><code>Layout : left-symmetric</code><br><code>Chunk Size : 512K</code></p>
+<p><code>Rebuild Status : 19% complete</code></p>
+<p><code>Name : localhost.localdomain:0  (local to host localhost.localdomain)</code><br><code>UUID : bd83d916:c14b4f9e:0dae6d1f:1460e51e</code><br><code>Events : 4</code></p>
+<p><code>Number   Major   Minor   RaidDevice State</code><br><code>0       8       16        0      active sync   /dev/sdb</code><br><code>1       8       32        1      active sync   /dev/sdc</code><br><code>4       8       48        2      spare rebuilding   /dev/sdd</code></p>
+<p><code>3       8       64        -      spare   /dev/sde</code><br>把这块制作的RAID5磁盘阵列组格式化为ext4文件格式后挂载到目录上吧，这样就可以使用啦~<br><code>[root@localhost ~]# mkfs.ext4 /dev/md0</code><br><code>mke2fs 1.42.9 (28-Dec-2013)</code><br><code>Filesystem label=</code><br><code>OS type: Linux</code><br><code>Block size=4096 (log=2)</code><br><code>Fragment size=4096 (log=2)</code><br><code>Stride=128 blocks, Stripe width=256 blocks</code><br><code>2621440 inodes, 10477312 blocks</code><br><code>523865 blocks (5.00%) reserved for the super user</code><br><code>First data block=0</code><br><code>Maximum filesystem blocks=2157969408</code><br><code>320 block groups</code><br><code>32768 blocks per group, 32768 fragments per group</code><br><code>8192 inodes per group</code><br><code>Superblock backups stored on blocks:
+    32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208,
+    4096000, 7962624</code></p>
+<p><code>Allocating group tables: done</code><br><code>Writing inode tables: done</code><br><code>Creating journal (32768 blocks): done</code><br><code>Writing superblocks and filesystem accounting information: done</code></p>
+<p><code>[root@localhost ~]# echo &quot;/dev/md0 /RAID ext4 defaults 0 0&quot; &gt;&gt; /etc/fstab</code><br><code>[root@localhost ~]# mkdir /RAID</code><br><code>[root@localhost ~]# mount -a</code><br>最后就是见证奇迹的时刻啦，咱们再次把硬盘设备/dev/sdb移出磁盘阵列组，这样快速看下/dev/md0磁盘阵列组的状态就会发现备份盘已经被自动顶替上去，这是非常实用的，在RAID磁盘阵列组数据安全保证的基础上进一步提高数据可靠性，所以如果您的公司不差钱的话还是再买上一块备份盘以防万一吧。<br><code>[root@localhost ~]# mdadm /dev/md0 -f /dev/sdb</code><br><code>mdadm: set /dev/sdb faulty in /dev/md0</code><br><code>[root@localhost ~]# mdadm -D /dev/md0</code><br><code>/dev/md0:</code><br><code>Version : 1.2</code><br><code>Creation Time : Sun Sep 17 19:46:30 2017</code><br><code>Raid Level : raid5</code><br><code>Array Size : 41909248 (39.97 GiB 42.92 GB)</code><br><code>Used Dev Size : 20954624 (19.98 GiB 21.46 GB)</code><br><code>Raid Devices : 3</code><br><code>Total Devices : 4</code><br><code>Persistence : Superblock is persistent</code></p>
+<p><code>Update Time : Sun Sep 17 19:53:18 2017</code><br><code>State : clean, degraded, recovering</code><br><code>Active Devices : 2</code><br><code>Working Devices : 3</code><br><code>Failed Devices : 1</code><br><code>Spare Devices : 1</code></p>
+<p><code>Layout : left-symmetric</code><br><code>Chunk Size : 512K</code></p>
+<p><code>Rebuild Status : 2% complete</code></p>
+<p><code>Name : localhost.localdomain:0  (local to host localhost.localdomain)</code><br><code>UUID : bd83d916:c14b4f9e:0dae6d1f:1460e51e</code><br><code>Events : 36</code></p>
+<p><code>Number   Major   Minor   RaidDevice State</code><br><code>3       8       64        0      spare rebuilding   /dev/sde</code><br><code>1       8       32        1      active sync   /dev/sdc</code><br><code>4       8       48        2      active sync   /dev/sdd</code></p>
+<p><code>0       8       16        -      faulty   /dev/sdb</code></p>
+<hr>
+<h3 id="LVM逻辑卷管理器"><a href="#LVM逻辑卷管理器" class="headerlink" title="LVM逻辑卷管理器"></a>LVM逻辑卷管理器</h3><p><strong>LVM逻辑卷管理器（Logical Volumn Manager）</strong> 是一项非常普及的硬盘设备资源管理器。在前面学习的硬盘设备管理技术虽然能够有效的提高存储设备的读写速度并能够很好的提高数据的安全性，但似乎一旦把硬盘分区或RAID磁盘阵列组部署后再想修改空间大小就不容易啦。换句话说，当用户想要随着实际需求的变化不断对硬盘分区进行增大或减小等调整时经常会受到硬盘“灵活性”的限制，有时真的很不方便，而LVM逻辑卷管理器技术就是为了满足用户对硬盘资源动态调整的期望。</p>
+<p>LVM逻辑卷管理器是一项理论性较强的技术，它是Linux系统中对硬盘分区进行管理的一种机制，开创这项技术的初衷是为了解决传统硬盘分区创建后不易更改其大小的弱点，对于传统硬盘分区进行强制扩容和缩小技术理论上虽然是可行的，但却有可能造成数据的丢失，LVM逻辑卷管理器技术能够把多块硬盘进行卷组合并，让用户不必关心设备底层的架构和布局，拿来即用。LVM逻辑卷管理器实在磁盘区间和文件系统之间添加的逻辑层，它提供了一个抽象的卷组，可以使得多块硬盘可以卷组合并，让用户不必关心物理硬盘设备的底层结构，从而实现对分区的灵活动态调整。</p>
+<p>LVM逻辑卷管理器的技术结构如图，举个例子吧，比如家里想吃馒头但面粉不够了，妈妈从隔壁老王家、老李家、老张家分别借来一些面粉，蒸出馒头后大家一起来吃，首先需要把这些面粉（ <strong>物理卷PV</strong> ，Physical Volume）合并成一个大面团（ <strong>卷组VG</strong> ，Volume Group），然后把这一大团面再分割成一个个小馒头（ <strong>逻辑卷LV</strong> ，Logical Volume），每个小馒头的重量必须是每勺面粉（ <strong>基本单元PE</strong> ，Physical Extent）的倍数。物理卷是出于逻辑卷管理器中最底层的资源，可以理解成物理硬盘、硬盘分区或者RAID磁盘阵列组都可以，而卷组是建立在物理卷之上的，一个卷组中可以包含多个物理卷，当然在卷组创建之后也可以继续向其中添加新的物理卷，而逻辑卷是建立在卷组之上的，把卷组中空闲的资源建立出新的逻辑卷，并且逻辑卷建立之后可以动态的扩展或缩小空间，这也就是LVM逻辑卷管理器的核心理念。<br><img src="/img/逻辑卷.png" alt=""></p>
+<h4 id="部署逻辑卷"><a href="#部署逻辑卷" class="headerlink" title="部署逻辑卷"></a>部署逻辑卷</h4><p>很多时候最初咱们都不能够精准的评估和分配每个硬盘分区以后的使用情况，有可能会随着业务量的增加导致数据库目录的体积也增加，也有可能需要分析用户行为而做记录导致日志目录的体积不断变大，或者有些较小概率还要对原先错误分配过大的分区进行精简，那么这些知识都属于这一节的学习范畴。LVM逻辑卷管理器是对Linux系统中对存储资源进行管理的一种机制，部署LVM逻辑卷管理器需要依次对对物理卷、卷组和逻辑卷的逐个配置，常见的命令分别包括有：</p>
+<table>
+<thead>
+<tr>
+<th>功能/命令</th>
+<th>物理卷管理</th>
+<th>卷组管理</th>
+<th>逻辑卷管理</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>扫描</td>
+<td>pvscan</td>
+<td>vgscan</td>
+<td>lvscan</td>
+</tr>
+<tr>
+<td>建立</td>
+<td>pvcreate</td>
+<td>vgcreate</td>
+<td>lvcreate</td>
+</tr>
+<tr>
+<td>显示</td>
+<td>pvdisplay</td>
+<td>vgdispaly</td>
+<td>lvdisplay</td>
+</tr>
+<tr>
+<td>删除</td>
+<td>pvremove</td>
+<td>vgremove</td>
+<td>lvremove</td>
+</tr>
+<tr>
+<td>扩展</td>
+<td></td>
+<td>vgextend</td>
+<td>lvextend</td>
+</tr>
+<tr>
+<td>缩小</td>
+<td></td>
+<td>vgreduce</td>
+<td>lvreduce</td>
+</tr>
+</tbody>
+</table>
+<p>为避免实验之间互相冲突，请您自行还原虚拟机到最初始状态，并在虚拟机中添加两块新硬盘设备后开机，如图所示：<br><img src="/img/添加两块硬盘到虚拟机.png" alt=""><br>在虚拟机中添加两块新硬盘设备的目的是为了更好的向同学们演示LVM逻辑卷管理器对于让用户无需关心底层物理硬盘设备的特性，咱们将会对这两块新的硬盘先进行创建物理卷操作，可以简单理解成让硬盘设备支持LVM技术，然后对两块硬盘进行卷组合并，卷组的名称可以由您来自定义，接下来是把合并后的卷组根据需求再切割出一个约为150M的逻辑卷设备，最后把这个逻辑卷设备格式化成ext4格式文件系统后挂载使用，<br><strong>第一步，让新添加的两块硬盘支持LVM逻辑卷管理技术技术。</strong><br><code>[root@localhost ~]# pvcreate /dev/sdb /dev/sdc</code><br><code>Physical volume &quot;/dev/sdb&quot; successfully created</code><br><code>Physical volume &quot;/dev/sdc&quot; successfully created</code><br><strong>第二步，把两块硬盘设备都加入到storage卷组中，然后查看卷组的状态。</strong><br><code>[root@localhost ~]# vgcreate storage /dev/sdb /dev/sdc</code><br><code>Volume group &quot;storage&quot; successfully created</code><br><code>[root@localhost ~]# vgdisplay</code><br><code>--- Volume group ---</code><br><code>VG Name               storage</code><br><code>System ID</code><br><code>Format                lvm2</code><br><code>Metadata Areas        2</code><br><code>Metadata Sequence No  1</code><br><code>VG Access             read/write</code><br><code>VG Status             resizable</code><br><code>MAX LV                0</code><br><code>Cur LV                0</code><br><code>Open LV               0</code><br><code>Max PV                0</code><br><code>Cur PV                2</code><br><code>Act PV                2</code><br><code>VG Size               39.99 GiB</code><br><code>PE Size               4.00 MiB</code><br><code>Total PE              10238</code><br><code>Alloc PE / Size       0 / 0</code><br><code>Free  PE / Size       10238 / 39.99 GiB</code><br><code>VG UUID               EI7OeB-HJZG-JXJ7-40qF-vaBP-8NUf-szmJs7</code><br><code>......</code><br><strong>第三步，切割出一个约为150M的逻辑卷。</strong><br>需要注意下切割单位的问题，在LVM逻辑卷管理器对LV逻辑卷的切割上面有两种计量单位，第一种是常见以-L参数来以容量单位为对象，例如使用-L 150M来生成一个大小为150M的逻辑卷，还可以使用-l参数来指定要使用PE基本单元的个数，默认每个PE的大小为4M，因此允许使用-l 37来生成一个大小为37*4M=148M的逻辑卷：<br><code>[root@localhost ~]# lvcreate -n vo -l 37 storage</code><br><code>Logical volume &quot;vo&quot; created</code><br><code>[root@localhost ~]# lvdisplay</code><br><code>--- Logical volume ---</code><br><code>LV Path                /dev/storage/vo</code><br><code>LV Name                vo</code><br><code>VG Name                storage</code><br><code>LV UUID                iJfuTt-ICmE-N321-4hDl-f6LG-eOcy-EC81zi</code><br><code>LV Write Access        read/write</code><br><code>LV Creation host, time localhost.localdomain, 2017-09-17 20:42:15 +0800</code><br><code>LV Status              available</code><br><code># open                 0</code><br><code>LV Size                148.00 MiB</code><br><code>Current LE             37</code><br><code>Segments               1</code><br><code>Allocation             inherit</code><br><code>Read ahead sectors     auto</code><br><code>- currently set to     8192</code><br><code>Block device           253:2</code><br><code>......</code></p>
+<p><strong>第四步，把生成好的逻辑卷格式化后挂载使用。</strong><br>Linux系统会把LVM逻辑卷管理器中的逻辑卷设备存放在/dev设备目录中（实际上是做了一个符号链接，但读者们无需关心）， <strong>同时会以卷组的名称来建立一个目录，其中保存有逻辑卷的设备映射文件</strong>，（即/dev/卷组名称/逻辑卷名称）。<br><code>[root@localhost ~]# mkfs.ext4 /dev/storage/vo</code><br><code>mke2fs 1.42.9 (28-Dec-2013)</code><br><code>Filesystem label=</code><br><code>OS type: Linux</code><br><code>Block size=1024 (log=0)</code><br><code>Fragment size=1024 (log=0)</code><br><code>Stride=0 blocks, Stripe width=0 blocks</code><br><code>38000 inodes, 151552 blocks</code><br><code>7577 blocks (5.00%) reserved for the super user</code><br><code>First data block=1</code><br><code>Maximum filesystem blocks=33816576</code><br><code>19 block groups</code><br><code>8192 blocks per group, 8192 fragments per group</code><br><code>2000 inodes per group</code><br><code>Superblock backups stored on blocks:</code><br><code>8193, 24577, 40961, 57345, 73729</code></p>
+<p><code>Allocating group tables: done</code><br><code>Writing inode tables: done</code><br><code>Creating journal (4096 blocks): done</code><br><code>Writing superblocks and filesystem accounting information: done</code></p>
+<p><code>[root@localhost ~]# mkdir /linux</code><br><code>[root@localhost ~]# mount /dev/storage/vo /linux</code></p>
+<p><strong>第五步，查看挂载状态，并写入配置文件中永久生效。</strong><br><code>[root@localhost ~]# df -h</code><br><code>Filesystem              Size  Used Avail Use% Mounted on</code><br><code>/dev/mapper/rhel-root    18G  2.9G   15G  17% /</code><br><code>devtmpfs                905M     0  905M   0% /dev</code><br><code>tmpfs                   914M   92K  914M   1% /dev/shm</code><br><code>tmpfs                   914M  8.8M  905M   1% /run</code><br><code>tmpfs                   914M     0  914M   0% /sys/fs/cgroup</code><br><code>/dev/sda1               497M  119M  379M  24% /boot</code><br><code>/dev/sr0                3.5G  3.5G     0 100% /run/media/caijy/RHEL-7.0 Server.x86_64</code><br><code>/dev/mapper/storage-vo  140M  1.6M  128M   2% /linux</code><br><code>[root@localhost ~]# echo &quot;/dev/storage/vo /linux ext4 defaults 0 0&quot; &gt;&gt; /etc/fstab</code></p>
+<h4 id="扩容逻辑卷"><a href="#扩容逻辑卷" class="headerlink" title="扩容逻辑卷"></a>扩容逻辑卷</h4><p>虽然卷组是由两块硬盘设备共同组成的，但用户使用存储资源时感知不到底层硬盘的结构，也不用关心底层是由多少块硬盘组成的，只要卷组中的资源足够就可以一直为逻辑卷扩容，扩展前请一定要记得卸载设备和挂载点的关联。<br><code>[root@localhost ~]# umount /linux</code></p>
+<p><strong>第一步，把上个实验中的逻辑卷vo扩展至290M。</strong><br><code>[root@localhost ~]# lvextend -L290M /dev/storage/vo</code><br><code>Rounding size to boundary between physical extents: 292.00 MiB</code><br><code>Extending logical volume vo to 292.00 MiB</code><br><code>Logical volume vo successfully resized</code></p>
+<p><strong>第二步，检查磁盘完整性，重置磁盘容量。</strong><br><code>[root@localhost ~]# e2fsck -f /dev/storage/vo</code><br><code>e2fsck 1.42.9 (28-Dec-2013)</code><br><code>Pass 1: Checking inodes, blocks, and sizes</code><br><code>Pass 2: Checking directory structure</code><br><code>Pass 3: Checking directory connectivity</code><br><code>Pass 4: Checking reference counts</code><br><code>Pass 5: Checking group summary information</code><br><code>/dev/storage/vo: 11/38000 files (0.0% non-contiguous), 10453/151552 blocks</code><br><code>[root@localhost ~]# resize2fs /dev/storage/vo</code><br><code>resize2fs 1.42.9 (28-Dec-2013)</code><br><code>Resizing the filesystem on /dev/storage/vo to 299008 (1k) blocks.</code><br><code>The filesystem on /dev/storage/vo is now 299008 blocks long.</code></p>
+<p><strong>第三步，重新挂载硬盘设备并查看挂载状态。</strong><br><code>[root@localhost ~]# mount -a</code><br><code>[root@localhost ~]# df -h</code><br><code>Filesystem              Size  Used Avail Use% Mounted on</code><br><code>/dev/mapper/rhel-root    18G  2.9G   15G  17% /</code><br><code>devtmpfs                905M     0  905M   0% /dev</code><br><code>tmpfs                   914M   92K  914M   1% /dev/shm</code><br><code>tmpfs                   914M  8.8M  905M   1% /run</code><br><code>tmpfs                   914M     0  914M   0% /sys/fs/cgroup</code><br><code>/dev/sda1               497M  119M  379M  24% /boot</code><br><code>/dev/sr0                3.5G  3.5G     0 100% /run/media/caijy/RHEL-7.0 Server.x86_64</code><br><code>/dev/mapper/storage-vo  279M  2.1M  259M   1% /linux</code></p>
+<h4 id="缩小逻辑卷"><a href="#缩小逻辑卷" class="headerlink" title="缩小逻辑卷"></a>缩小逻辑卷</h4><p>相比于扩容逻辑卷来讲，对逻辑卷的缩小操作存在着更高丢失数据的风险，所以在生产环境中同学们一定要留心记得提前备份好数据，另外Linux系统规定对LVM逻辑卷的缩小操作需要先检查文件系统的完整性，当然这也是在保证咱们的数据安全，操作前记得先把文件系统卸载掉：<br><code>[root@localhost ~]# umount /linux</code></p>
+<p><strong>第一步，检查文件系统的完整性。</strong><br><code>[root@localhost ~]# e2fsck -f /dev/storage/vo</code><br><code>e2fsck 1.42.9 (28-Dec-2013)</code><br><code>Pass 1: Checking inodes, blocks, and sizes</code><br><code>Pass 2: Checking directory structure</code><br><code>Pass 3: Checking directory connectivity</code><br><code>Pass 4: Checking reference counts</code><br><code>Pass 5: Checking group summary information</code><br><code>/dev/storage/vo: 11/74000 files (0.0% non-contiguous), 15507/299008 blocks</code></p>
+<p><strong>第二步，把LV逻辑卷的容量减小至120M。</strong><br><code>[root@localhost ~]# resize2fs /dev/storage/vo 120M</code><br><code>resize2fs 1.42.9 (28-Dec-2013)</code><br><code>Resizing the filesystem on /dev/storage/vo to 122880 (1k) blocks.</code><br><code>The filesystem on /dev/storage/vo is now 122880 blocks long.</code></p>
+<p><strong>第三步，把文件系统重新挂载并查看挂载状态。</strong><br><code>[root@localhost ~]# mount -a</code><br><code>[root@localhost ~]# df -h</code><br><code>Filesystem              Size  Used Avail Use% Mounted on</code><br><code>/dev/mapper/rhel-root    18G  2.9G   15G  17% /</code><br><code>devtmpfs                905M     0  905M   0% /dev</code><br><code>tmpfs                   914M   92K  914M   1% /dev/shm</code><br><code>tmpfs                   914M  8.8M  905M   1% /run</code><br><code>tmpfs                   914M     0  914M   0% /sys/fs/cgroup</code><br><code>/dev/sda1               497M  119M  379M  24% /boot</code><br><code>/dev/sr0                3.5G  3.5G     0 100% /run/media/caijy/RHEL-7.0 Server.x86_64</code><br><code>/dev/mapper/storage-vo  113M  1.6M  103M   2% /linux</code></p>
+<h4 id="逻辑卷快照"><a href="#逻辑卷快照" class="headerlink" title="逻辑卷快照"></a>逻辑卷快照</h4><p>LVM逻辑卷管理器还具备有“快照卷”的功能，这项功能很类似于虚拟机软件的还原时间点功能。例如可以对某一个LV逻辑卷设备做一次快照，如果今后发现数据被改错了，咱们可以把之前做好的快照卷进行覆盖还原，<strong>LVM逻辑卷管理器的快照功能有两项特点：第一是快照卷的大小应该尽量等同于LV逻辑卷的容量，第二是快照功能仅一次有效，一旦被还原后则会被立即删除，</strong> 首先应当查看下卷组的信息：<br><code>[root@localhost ~]# vgdisplay</code><br><code>--- Volume group ---</code><br><code>VG Name               storage</code><br><code>System ID</code><br><code>Format                lvm2</code><br><code>Metadata Areas        2</code><br><code>Metadata Sequence No  3</code><br><code>VG Access             read/write</code><br><code>VG Status             resizable</code><br><code>MAX LV                0</code><br><code>Cur LV                1</code><br><code>Open LV               1</code><br><code>Max PV                0</code><br><code>Cur PV                2</code><br><code>Act PV                2</code><br><code>VG Size               39.99 GiB</code><br><code>PE Size               4.00 MiB</code><br><code>Total PE              10238</code><br><code>Alloc PE / Size       73 / 292.00 MiB</code><br><code>Free  PE / Size       10165 / 39.71 GiB</code><br><code>VG UUID               EI7OeB-HJZG-JXJ7-40qF-vaBP-8NUf-szmJs7</code><br><code>......</code><br>接下来往逻辑卷设备所挂载的目录中用重定向写入一个文件吧：<br><code>[root@localhost ~]# echo &quot;Welcome to linux&quot; &gt; /linux/readme.txt</code><br><code>[root@localhost ~]# ls -l /linux</code><br><code>total 14</code><br><code>drwx------. 2 root root 12288 Sep 17 20:47 lost+found</code><br><code>-rw-r--r--. 1 root root    17 Sep 17 21:07 readme.txt</code></p>
+<p><strong>第一步，使用-s参数生成一个快照卷，使用-L参数来指定切割的大小，另外要记得在后面写上这个快照是针对那个LV逻辑卷设备做的。</strong><br><code>[root@localhost ~]# lvcreate -L 120M -s -n SNAP /dev/storage/vo</code><br><code>Logical volume &quot;SNAP&quot; created</code><br><code>[root@localhost ~]# lvdisplay</code><br><code>......</code><br><code>--- Logical volume ---</code><br><code>LV Path                /dev/storage/SNAP</code><br><code>LV Name                SNAP</code><br><code>VG Name                storage</code><br><code>LV UUID                OxieTi-p4yd-llT6-UG22-V1us-mau4-efv4Ri</code><br><code>LV Write Access        read/write</code><br><code>LV Creation host, time localhost.localdomain, 2017-09-17 21:09:02 +0800</code><br><code>LV snapshot status     active destination for vo</code><br><code>LV Status              available</code><br><code># open                 0</code><br><code>LV Size                292.00 MiB</code><br><code>Current LE             73</code><br><code>COW-table size         120.00 MiB</code><br><code>COW-table LE           30</code><br><code>Allocated to snapshot  0.01%</code><br><code>Snapshot chunk size    4.00 KiB</code><br><code>Segments               1</code><br><code>Allocation             inherit</code><br><code>Read ahead sectors     auto</code><br><code>- currently set to     8192</code><br><code>Block device           253:3</code><br><code>......</code></p>
+<p><strong>第二步，将LV设备卷缩挂载的目录中创建一个100M的垃圾文件，这样再来看快照卷的状态就会发现使用率上升了：</strong><br><code>[root@localhost ~]# dd if=/dev/zero of=/linux/files count=1 bs=100M</code><br><code>1+0 records in</code><br><code>1+0 records out</code><br><code>104857600 bytes (105 MB) copied, 1.65885 s, 63.2 MB/s</code><br><code>[root@localhost ~]# lvdisplay</code><br><code>......</code><br><code>--- Logical volume ---</code><br><code>LV Path                /dev/storage/SNAP</code><br><code>LV Name                SNAP</code><br><code>VG Name                storage</code><br><code>LV UUID                OxieTi-p4yd-llT6-UG22-V1us-mau4-efv4Ri</code><br><code>LV Write Access        read/write</code><br><code>LV Creation host, time localhost.localdomain, 2017-09-17 21:09:02 +0800</code><br><code>LV snapshot status     active destination for vo</code><br><code>LV Status              available</code><br><code># open                 0</code><br><code>LV Size                292.00 MiB</code><br><code>Current LE             73</code><br><code>COW-table size         120.00 MiB</code><br><code>COW-table LE           30</code><br><code>Allocated to snapshot  83.71%   --!!!</code><br><code>Snapshot chunk size    4.00 KiB</code><br><code>Segments               1</code><br><code>Allocation             inherit</code><br><code>Read ahead sectors     auto</code><br><code>- currently set to     8192</code><br><code>Block device           253:3</code><br><code>......</code></p>
+<p><strong>第三步，为了检验SNAP快照卷的效果，需要对逻辑卷进行快照合并还原操作，在这之前记得先卸载掉逻辑卷设备与目录的挂载~</strong><br><code>[root@localhost ~]# umount /linux</code><br><code>[root@localhost ~]# lvconvert --merge /dev/storage/SNAP</code><br><code>Merging of volume SNAP started.</code><br><code>vo: Merged: 16.3%</code><br><code>vo: Merged: 100.0%</code><br><code>Merge of snapshot into logical volume vo has finished.</code><br><code>Logical volume &quot;SNAP&quot; successfully removed</code></p>
+<p><strong>第四步，快照卷会被自动删除掉，并且刚刚在逻辑卷被快照后创建的100M垃圾文件也被清除了。</strong><br><code>[root@localhost ~]# mount -a</code><br><code>[root@localhost ~]# ls /linux</code><br><code>lost+found  readme.txt</code></p>
+<h4 id="删除逻辑卷"><a href="#删除逻辑卷" class="headerlink" title="删除逻辑卷"></a>删除逻辑卷</h4><p>当生产环境中想要重新部署或者不需要再继续使用LVM逻辑卷管理器了，除了提前备份好重要数据信息，还必须 <strong>依次删除LV逻辑卷、VG卷组后再移除PV物理卷设备，这样的顺序不可颠倒</strong>。</p>
+<p><strong>第一步，取消逻辑卷与目录的挂载关联，删除配置文件中永久生效的设备参数。</strong><br><code>[root@localhost ~]# umount /linux</code><br><code>[root@localhost ~]# vim /etc/fstab</code><br><code>#</code><br><code># /etc/fstab</code><br><code># Created by anaconda on Sun Sep 17 19:11:14 2017</code><br><code>#</code><br><code># Accessible filesystems, by reference, are maintained under &#39;/dev/disk&#39;</code><br><code># See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info</code><br><code>#</code><br><code>/dev/mapper/rhel-root   /                       xfs     defaults        1 1
+UUID=d357b1a3-003d-46b4-8c15-6beedeab36ca /boot                   xfs     defaults        1 2</code><br><code>/dev/mapper/rhel-swap   swap                    swap    defaults        0 0</code></p>
+<p><strong>第二步，把LV逻辑卷设备删除，需要手工输入y来确认操作：</strong><br><code>[root@localhost ~]# lvremove /dev/storage/vo</code><br><code>Do you really want to remove active logical volume vo? [y/n]: y</code><br><code>Logical volume &quot;vo&quot; successfully removed</code></p>
+<p><strong>第三步，把VG卷组删除，此处只需要写卷组名称即可，而无需设备完整绝对路径：</strong><br><code>[root@localhost ~]# vgremove storage</code><br><code>Volume group &quot;storage&quot; successfully removed</code></p>
+<p><strong>第四步，把PV物理卷设备移除。</strong><br><code>[root@localhost ~]# pvremove /dev/sdb /dev/sdc</code><br><code>Labels on physical volume &quot;/dev/sdb&quot; successfully wiped</code><br><code>Labels on physical volume &quot;/dev/sdc&quot; successfully wiped</code><br>执行以上操作后大家可以再分别执行下lvdisplay、vgdisplay、pvdisplay命令来查看逻辑卷管理器信息，操作正确则会不能再看到逻辑卷设备信息了。</p>
+<hr>
+<p>转载自：<a href="http://www.linuxprobe.com/chapter-07.html" target="_blank" rel="external">http://www.linuxprobe.com/chapter-07.html</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/sakura-hly.github.io/tags/Linux/" rel="tag"># Linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/sakura-hly.github.io/2017/09/15/Linux基础课程06/" rel="next" title="基础课程06">
+                <i class="fa fa-chevron-left"></i> 基础课程06
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/sakura-hly.github.io/2017/09/18/Linux基础课程08/" rel="prev" title="基础课程08">
+                基础课程08 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  //with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="/sakura-hly.github.io/images/dp.jpg"
+              alt="caijy" />
+          
+            <p class="site-author-name" itemprop="name">caijy</p>
+            <p class="site-description motion-element" itemprop="description">一个Linux菜鸟的博客</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/sakura-hly.github.io/archives/">
+            
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">Artikel</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">Kategorien</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">Tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=448226072&auto=1&height=66"></iframe>
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#RAID磁盘冗余阵列"><span class="nav-number">1.</span> <span class="nav-text">RAID磁盘冗余阵列</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#部署磁盘阵列组"><span class="nav-number">1.1.</span> <span class="nav-text">部署磁盘阵列组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#损坏磁盘阵列及修复"><span class="nav-number">1.2.</span> <span class="nav-text">损坏磁盘阵列及修复</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#磁盘阵列组-备份盘"><span class="nav-number">1.3.</span> <span class="nav-text">磁盘阵列组+备份盘</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LVM逻辑卷管理器"><span class="nav-number">2.</span> <span class="nav-text">LVM逻辑卷管理器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#部署逻辑卷"><span class="nav-number">2.1.</span> <span class="nav-text">部署逻辑卷</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#扩容逻辑卷"><span class="nav-number">2.2.</span> <span class="nav-text">扩容逻辑卷</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#缩小逻辑卷"><span class="nav-number">2.3.</span> <span class="nav-text">缩小逻辑卷</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#逻辑卷快照"><span class="nav-number">2.4.</span> <span class="nav-text">逻辑卷快照</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除逻辑卷"><span class="nav-number">2.5.</span> <span class="nav-text">删除逻辑卷</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">caijy</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/sakura-hly.github.io/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/sakura-hly.github.io/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/sakura-hly.github.io/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/sakura-hly.github.io/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/sakura-hly.github.io/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/sakura-hly.github.io/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/sakura-hly.github.io/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("jsI2BP061jWWrjY7NlFVHOOQ-gzGzoHsz", "WQFdrAUtgTXisdJ8TFShl3a7");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+  
+</body>
+</html>
