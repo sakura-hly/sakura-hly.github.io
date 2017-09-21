@@ -112,7 +112,7 @@
 <meta property="og:image" content="http://www.niceru.com/wp-content/uploads/2013/09/7-600x296.png">
 <meta property="og:image" content="http://yoursite.com/img/删除键值60.png">
 <meta property="og:image" content="http://www.niceru.com/wp-content/uploads/2013/09/8.png">
-<meta property="og:updated_time" content="2017-09-21T11:51:05.120Z">
+<meta property="og:updated_time" content="2017-09-21T11:54:05.864Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Innodb索引和B+树">
 <meta name="twitter:description" content="InnoDB 存储引擎在绝大多数情况下使用 B+ 树建立索引，这是关系型数据库中查找最为常用和有效的索引。">
@@ -222,7 +222,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Home
           </a>
         </li>
       
@@ -232,7 +232,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archiv
+            Archives
           </a>
         </li>
       
@@ -245,7 +245,7 @@
             
               <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
-            Suche
+            Search
           </a>
         </li>
       
@@ -330,7 +330,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-21T16:40:42+08:00">
                 2017-09-21
@@ -351,7 +351,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">in</span>
+                <span class="post-meta-item-text">In</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -511,10 +511,10 @@
 <p>联合索引还是一个B+树，不同的是联合索引键值的数量不是1，而是大于等于2.下面我们讨论一个两个整形列组成的联合索引，假定两个键值的名称分别为a和b，如下图8所示，每个节点上有两个键值，(1,1),(1,2),(2,1),(2,4),(3,1),(3,2), 数据按(a,b)顺序进行排列<br><img src="http://www.niceru.com/wp-content/uploads/2013/09/8.png" alt=""><br>图8  多个键值的B+树</p>
 <p>因此，对于查询select <em> from t where a=xxx and b=xxx,显然可以使用(a,b)这个联合索引。对于单个a列查询 select </em> from t where a=xxx也是可以使用(a,b)这个索引。但是对于b列的查询select * from t where b=xxx是用不到这颗B+树索引。可以看到叶节点上b的值为1、2、1、4、1、2.显然不是排序的，因此b列的查询使用不到(a,b)索引。</p>
 <p>联合索引的第二个好处是，可以对第二键值进行排序。例如很多情况下我们需要查询某个用户的购物情况，并按照时间排序，取出最近3次的购买记录，这时使用联合索引可以避免多一次的排序操作。因为索引本身在叶节点中已经排序了。看下面示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">mysql&gt; create table buy_log(userid int unsigned not null, buy_date date);</div><div class="line">Query OK, 0 rows affected (0.09 sec)</div><div class="line"></div><div class="line">mysql&gt; insert into buy_log values(1,&apos;2013-01-01&apos;);</div><div class="line">Query OK, 1 row affected (0.01 sec)</div><div class="line"></div><div class="line">mysql&gt; insert into buy_log values(2,&apos;2013-01-01&apos;);</div><div class="line">Query OK, 1 row affected (0.01 sec)</div><div class="line"></div><div class="line">mysql&gt; insert into buy_log values(3,&apos;2013-01-01&apos;);</div><div class="line">Query OK, 1 row affected (0.01 sec)</div><div class="line"></div><div class="line">mysql&gt; insert into buy_log values(1,&apos;2013-02-01&apos;);</div><div class="line">Query OK, 1 row affected (0.01 sec)</div><div class="line"></div><div class="line">mysql&gt; insert into buy_log values(3,&apos;2013-02-01&apos;);</div><div class="line">Query OK, 1 row affected (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt; insert into buy_log values(1,&apos;2013-03-01&apos;);</div><div class="line">Query OK, 1 row affected (0.01 sec)</div><div class="line"></div><div class="line">mysql&gt; insert into buy_log values(1,&apos;2013-04-01&apos;);</div><div class="line">Query OK, 1 row affected (0.01 sec)</div><div class="line"></div><div class="line">mysql&gt; alter table buy_log add key(userid);</div><div class="line">Query OK, 0 rows affected (0.07 sec)</div><div class="line">Records: 0  Duplicates: 0  Warnings: 0</div><div class="line"></div><div class="line">mysql&gt; alter table buy_log add key(userid,buy_date);</div><div class="line">Query OK, 0 rows affected (0.11 sec)</div><div class="line">Records: 0  Duplicates: 0  Warnings: 0</div></pre></td></tr></table></figure></p>
-<p>上面我们建立了测试表和数据，建立了2个索引来比较。两个索引都包含了userid字段。如果只对于userid查询，优化器的选择是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">mysql&gt; explain select * from buy_log where userid=2\G;</div><div class="line">*************************** 1. row ***************************</div><div class="line">           id: 1</div><div class="line">  select_type: SIMPLE</div><div class="line">        table: buy_log</div><div class="line">         type: ref</div><div class="line">possible_keys: userid,userid_2</div><div class="line">          key: userid</div><div class="line">      key_len: 4</div><div class="line">          ref: const</div><div class="line">         rows: 1</div><div class="line">        Extra: NULL</div><div class="line">1 row in set (0.00 sec)</div></pre></td></tr></table></figure></p>
+<p>上面我们建立了测试表和数据，建立了2个索引来比较。两个索引都包含了userid字段。如果只对于userid查询，优化器的选择是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">mysql&gt; explain select * from buy_log where userid=2;</div><div class="line">*************************** 1. row ***************************</div><div class="line">           id: 1</div><div class="line">  select_type: SIMPLE</div><div class="line">        table: buy_log</div><div class="line">         type: ref</div><div class="line">possible_keys: userid,userid_2</div><div class="line">          key: userid</div><div class="line">      key_len: 4</div><div class="line">          ref: const</div><div class="line">         rows: 1</div><div class="line">        Extra: NULL</div><div class="line">1 row in set (0.00 sec)</div></pre></td></tr></table></figure></p>
 <p>可以看到possible_keys里面两个索引都可以使用，分别是单个的userid索引和userid,buy_date的联合索引。但是优化器最终选择的是userid，因为该叶节点包含单个键值，因此一个页存放的记录应该更多。</p>
-<p>接下来看以下的查询，假定要取出userid=1最近的3次购买记录，分别使用单个索引和联合索引的区别：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">mysql&gt; explain select * from buy_log where userid=1 order by buy_date desc limit 3\G;</div><div class="line">*************************** 1. row ***************************</div><div class="line">           id: 1</div><div class="line">  select_type: SIMPLE</div><div class="line">        table: buy_log</div><div class="line">         type: ref</div><div class="line">possible_keys: userid,userid_2</div><div class="line">          key: userid_2</div><div class="line">      key_len: 4</div><div class="line">          ref: const</div><div class="line">         rows: 4</div><div class="line">        Extra: Using where; Using index</div><div class="line">1 row in set (0.00 sec)</div></pre></td></tr></table></figure></p>
-<p>同样对于上述SQL，两个索引都可使用，但是查询优化器使用了userid和buy_date组成的联合索引userid_2.因为这个联合索引中buy_date已经排序好了，可以减少一次排序操作。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">mysql&gt; explain select * from buy_log force index(userid) where userid=1 order by buy_date desc limit 3\G;</div><div class="line">*************************** 1. row ***************************</div><div class="line">           id: 1</div><div class="line">  select_type: SIMPLE</div><div class="line">        table: buy_log</div><div class="line">         type: ref</div><div class="line">possible_keys: userid</div><div class="line">          key: userid</div><div class="line">      key_len: 4</div><div class="line">          ref: const</div><div class="line">         rows: 4</div><div class="line">        Extra: Using where; Using filesort</div><div class="line">1 row in set (0.00 sec)</div></pre></td></tr></table></figure></p>
+<p>接下来看以下的查询，假定要取出userid=1最近的3次购买记录，分别使用单个索引和联合索引的区别：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">mysql&gt; explain select * from buy_log where userid=1 order by buy_date desc limit 3;</div><div class="line">*************************** 1. row ***************************</div><div class="line">           id: 1</div><div class="line">  select_type: SIMPLE</div><div class="line">        table: buy_log</div><div class="line">         type: ref</div><div class="line">possible_keys: userid,userid_2</div><div class="line">          key: userid_2</div><div class="line">      key_len: 4</div><div class="line">          ref: const</div><div class="line">         rows: 4</div><div class="line">        Extra: Using where; Using index</div><div class="line">1 row in set (0.00 sec)</div></pre></td></tr></table></figure></p>
+<p>同样对于上述SQL，两个索引都可使用，但是查询优化器使用了userid和buy_date组成的联合索引userid_2.因为这个联合索引中buy_date已经排序好了，可以减少一次排序操作。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">mysql&gt; explain select * from buy_log force index(userid) where userid=1 order by buy_date desc limit 3;</div><div class="line">*************************** 1. row ***************************</div><div class="line">           id: 1</div><div class="line">  select_type: SIMPLE</div><div class="line">        table: buy_log</div><div class="line">         type: ref</div><div class="line">possible_keys: userid</div><div class="line">          key: userid</div><div class="line">      key_len: 4</div><div class="line">          ref: const</div><div class="line">         rows: 4</div><div class="line">        Extra: Using where; Using filesort</div><div class="line">1 row in set (0.00 sec)</div></pre></td></tr></table></figure></p>
 <p>在Extra这里可以看到Using filesort，Using filesort指排序，但不一定是在文件中完成。</p>
 <hr>
 <p>转载自：<a href="http://www.niceru.com/topic/420.html" target="_blank" rel="external"> http://www.niceru.com/topic/420.html</a></p>
@@ -653,10 +653,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Inhaltsverzeichnis
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Übersicht
+            Overview
           </li>
         </ul>
       
@@ -680,7 +680,7 @@
               <a href="/sakura-hly.github.io/archives/">
             
                 <span class="site-state-item-count">16</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">posts</span>
               </a>
             </div>
           
@@ -691,7 +691,7 @@
             <div class="site-state-item site-state-categories">
               
                 <span class="site-state-item-count">3</span>
-                <span class="site-state-item-name">Kategorien</span>
+                <span class="site-state-item-name">categories</span>
               
             </div>
           
@@ -702,7 +702,7 @@
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">8</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-name">tags</span>
               
             </div>
           
@@ -769,7 +769,7 @@
 </div>
 
 
-  <div class="powered-by">Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Powered by <a class="theme-link" href="https://hexo.io">Hexo</a></div>
 
   <span class="post-meta-divider">|</span>
 
