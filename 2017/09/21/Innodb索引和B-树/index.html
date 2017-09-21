@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/sakura-hly.github.io/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/sakura-hly.github.io/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/sakura-hly.github.io/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="MySQL,Innodb,B+树," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/sakura-hly.github.io/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="InnoDB 存储引擎在绝大多数情况下使用 B+ 树建立索引，这是关系型数据库中查找最为常用和有效的索引。">
+<meta name="keywords" content="MySQL,Innodb,B+树">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Innodb索引和B+树">
+<meta property="og:url" content="http://yoursite.com/2017/09/21/Innodb索引和B-树/index.html">
+<meta property="og:site_name" content="破晓">
+<meta property="og:description" content="InnoDB 存储引擎在绝大多数情况下使用 B+ 树建立索引，这是关系型数据库中查找最为常用和有效的索引。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://www.niceru.com/wp-content/uploads/2013/09/1-600x161.png">
+<meta property="og:image" content="http://www.niceru.com/wp-content/uploads/2013/09/2-600x161.png">
+<meta property="og:image" content="http://www.niceru.com/wp-content/uploads/2013/09/3-600x236.png">
+<meta property="og:image" content="http://www.niceru.com/wp-content/uploads/2013/09/4-600x279.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/990532/201701/990532-20170117135001442-1547516540.png">
+<meta property="og:image" content="http://www.niceru.com/wp-content/uploads/2013/09/6-600x278.png">
+<meta property="og:image" content="http://www.niceru.com/wp-content/uploads/2013/09/7-600x296.png">
+<meta property="og:image" content="http://yoursite.com/img/删除键值60.png">
+<meta property="og:image" content="http://www.niceru.com/wp-content/uploads/2013/09/8.png">
+<meta property="og:updated_time" content="2017-09-21T11:47:02.860Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Innodb索引和B+树">
+<meta name="twitter:description" content="InnoDB 存储引擎在绝大多数情况下使用 B+ 树建立索引，这是关系型数据库中查找最为常用和有效的索引。">
+<meta name="twitter:image" content="http://www.niceru.com/wp-content/uploads/2013/09/1-600x161.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/sakura-hly.github.io/',
+    scheme: 'Muse',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/09/21/Innodb索引和B-树/"/>
+
+
+
+
+
+  <title>Innodb索引和B+树 | 破晓</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7f1817ded637839eb4e759c996071a39";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/sakura-hly.github.io/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">破晓</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">弱小和无知不是生存的障碍，傲慢才是。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/sakura-hly.github.io/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/sakura-hly.github.io/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archiv
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Suche
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/sakura-hly.github.io/2017/09/21/Innodb索引和B-树/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="caijy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/sakura-hly.github.io/images/dp.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="破晓">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Innodb索引和B+树</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-21T16:40:42+08:00">
+                2017-09-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/sakura-hly.github.io/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/sakura-hly.github.io/2017/09/21/Innodb索引和B-树/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count fb-comments-count" data-href="http://yoursite.com/2017/09/21/Innodb索引和B-树/" itemprop="commentCount">0</span> comments
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/sakura-hly.github.io/2017/09/21/Innodb索引和B-树/" class="leancloud_visitors" data-flag-title="Innodb索引和B+树">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>InnoDB 存储引擎在绝大多数情况下使用 B+ 树建立索引，这是关系型数据库中查找最为常用和有效的索引。<br><a id="more"></a></p>
+<h3 id="1-Innodb存储引擎索引概述"><a href="#1-Innodb存储引擎索引概述" class="headerlink" title="1.Innodb存储引擎索引概述"></a>1.Innodb存储引擎索引概述</h3><p>Innodb存储引擎支持两种常见的索引：B+树索引和哈希索引。<br>Innodb支持哈希索引是自适应的，Innodb会根据表的使用情况自动生成哈希索引。<br>B+树索引就是传统意义上的索引，是关系型数据库中最常用最有效的索引。B+树是从最早的平衡二叉树演变而来，但是B+树不是一个二叉树。B+中的B不代表二叉(Binary),而是代表平衡(Balance)。</p>
+<p>注意：B+树索引并不能找到一个键值对应的具体行，只能找到被查找数据行所在的页，然后数据库通过把页读入内存，再在内存中查找，最后得到结果。</p>
+<hr>
+<h3 id="2-理解B-树算法"><a href="#2-理解B-树算法" class="headerlink" title="2.理解B+树算法"></a>2.理解B+树算法</h3><p>B+树是为磁盘及其他存储辅助设备而设计一种平衡查找树（不是二叉树）。B+树中，所有记录的节点按大小顺序存放在同一层的叶节点中，各页节点用指针进行连接。</p>
+<p>下面演示一个B+数结构，高度为2，每页可放4条记录，扇出(fan out)为5。从下图1可以看出，所有记录都在页节点中，并且为顺序存放，我们从最左边的叶节点开始遍历，可以得到所有键值的顺序排序：5、10、15、20、25、30、50、55、60、65、75、80、85、90.<br><img src="http://www.niceru.com/wp-content/uploads/2013/09/1-600x161.png" alt=""><br>图1  高度为2的B+树</p>
+<p>（1） B+树的插入操作<br>B+树的插入必须保证插入后叶节点的记录依然排序，同时要考虑插入B+树的三种情况，每种情况都可能导致不同的插入算法。如下表所示：</p>
+<table>
+<thead>
+<tr>
+<th>Leaf Page Full</th>
+<th>Index Page Full</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No</td>
+<td>No</td>
+<td>直接将记录插入叶节点</td>
+</tr>
+<tr>
+<td>Yes</td>
+<td>No</td>
+<td>1.拆分LeafPage  2.将中间的节点放入IndexPage  3.小于中间节点的记录放左边  4.大于等于中间节点的记录放右边</td>
+</tr>
+<tr>
+<td>Yes</td>
+<td>Yes</td>
+<td>1.拆分LeafPage  2.小于中间节点的记录放左边  3.大于等于中间节点的记录放右边 4.拆分IndexPage  5.小于中间节点的记录放左边  6.大于中间节点的记录放右边  7.中间节点放入上一层IndexPage</td>
+</tr>
+</tbody>
+</table>
+<p>我们实例分析B+树的插入，在图1的B+树中，我们需要插入28这个值。因为Leaf Page和Index page都没有满，我们直接将记录插入叶节点就可以了。如下图所示：<br><img src="http://www.niceru.com/wp-content/uploads/2013/09/2-600x161.png" alt=""><br>图2  插入键值28</p>
+<p>下面我们再插入70这个值，这时Leaf Page已经满了，但是Index Page还没有满，符合上面的第二种情况。这时插入Leaf Page的情况为<br>50、55、60、65、70.我们根据中间的值60拆分叶节点，可得到下图3所示（双向链表指针依然存在，没有画出）：<br><img src="http://www.niceru.com/wp-content/uploads/2013/09/3-600x236.png" alt=""><br>图3 插入键值70</p>
+<p>最后我们再插入95，这个Leaf Page和Index Page都满了，符合上面第三种情况。需要做2次拆分，如下图4所示：<br><img src="http://www.niceru.com/wp-content/uploads/2013/09/4-600x279.png" alt=""><br>图4 插入键值95</p>
+<p>可以看到，不管怎么变化，B+树总会保持平衡。可是为了保持平衡，对于新插入的键值可能需要做大量的拆分页动作。B+树主要用于磁盘，拆分意味这磁盘的操作，应该在可能的情况下尽可能减少对页的拆分。因此，B+树提供了旋转功能。旋转发在LeafPage已经满了，但是左右兄弟节点没有满的情况下。这时B+树并不是急着做页的拆分，而是将记录移到所在页的兄弟节点上。通常情况下，左兄弟被首先检查用来做旋转操作，这时我们插入键值70，其实B+树并不会急于去拆分叶节点，而是做旋转，50，55，55旋转。<br><img src="http://images2015.cnblogs.com/blog/990532/201701/990532-20170117135001442-1547516540.png" alt=""><br>图5 B+树的旋转操作</p>
+<p>(2) B+树的删除操作<br>B+树使用填充因子来控制树的删除变化，填充因子可以设置的最小值为50%，B+树的删除操作同样保证删除后叶节点的记录依然排序。<br>根据填充因子的变化，B+树删除依然需要考虑三种情况，如下表所示：</p>
+<table>
+<thead>
+<tr>
+<th>Leaf Page Below Fill Factor</th>
+<th>Index Page Below Fill Factor</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No</td>
+<td>No</td>
+<td>直接将记录从叶节点删除，如果改节点还是Index Page中的节点，则用该节点的右节点代替</td>
+</tr>
+<tr>
+<td>Yes</td>
+<td>No</td>
+<td>合并叶节点及其兄弟节点，同时更新Index Page</td>
+</tr>
+<tr>
+<td>Yes</td>
+<td>Yes</td>
+<td>1.合并叶节点及其兄弟节点   2.更新Index Page   3.合并Index Page及其兄弟节点</td>
+</tr>
+</tbody>
+</table>
+<p>根据图4的B+树，我们进行删除操作，首先删除键值为70的这条记录，该记录符合上表第一种情况，删除后如下图6所示：<br><img src="http://www.niceru.com/wp-content/uploads/2013/09/6-600x278.png" alt=""><br>图6 删除键值70</p>
+<p>接着我们删除键值为25的记录，这也是第一种情况，但是该值还是Index Page中的值，因此在删除Leaf Page中25的值后，还应将25的右兄弟节点的28更新到Page Index中，最后可得到图。<br><img src="http://www.niceru.com/wp-content/uploads/2013/09/7-600x296.png" alt=""><br>图7 删除键值28</p>
+<p>最后我们来看删除键值为60的情况，删除Leaf Page中键值为60的记录后，填充因子小于50%，这时需要做合并操作，同样，在删除Index Page中相关记录后需要做Index Page的合并操作，最后得到图。<br><img src="/img/删除键值60.png" alt=""></p>
+<hr>
+<h3 id="三、B-树索引介绍"><a href="#三、B-树索引介绍" class="headerlink" title="三、B+树索引介绍"></a>三、B+树索引介绍</h3><p>B+树索引的本质是B+树在数据库中的实现。但是B+树有一个特点是高扇出性，因此在数据库中，B+树的高度一般在2到3层。也就是说查找某一键值的记录，最多只需要2到3次IO开销。按磁盘每秒100次IO来计算，查询时间只需0.0.2到0.03秒。</p>
+<p>数据库中B+索引分为聚集索引（clustered index）和非聚集索引（secondary index）。这两种索引的共同点是内部都是B+树，高度都是平衡的，叶节点存放着所有数据。不同点是叶节点是否存放着一整行数据。</p>
+<p><strong>(1) 聚集索引</strong><br>Innodb存储引擎表是索引组织表，即表中数据按主键顺序存放。而聚集索引就是按每张表的主键构造一棵B+树，并且叶节点存放整张表的行记录数据。每张表只能有一个聚集索引（一个主键）。<br>聚集索引的另一个好处是它对于主键的排序查找和范围的速度非常快，叶节点的数据就是我们要找的数据。</p>
+<p>主键排序查找：例如我们要找出最新的10位女生，由于B+树是双项链表，我们可以迅速找到最后一个页，并取出10条记录，我们用Explain进行分析：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">explain select * from girl order by id desc limit 10</div><div class="line">*************************** 1. row ***************************</div><div class="line">           id: 1</div><div class="line">  select_type: SIMPLE</div><div class="line">        table: girl</div><div class="line">         type: index</div><div class="line">possible_keys: NULL</div><div class="line">          key: PRIMARY</div><div class="line">      key_len: 4</div><div class="line">          ref: NULL</div><div class="line">         rows: 10</div><div class="line">        Extra:</div><div class="line">1 row in set (0.00 sec)</div></pre></td></tr></table></figure></p>
+<p>主键范围查找：如果要通过主键查找某一范围内的数据，通过叶节点的上层中间节点就能得到页的范围，之后直接读取数据页即可：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">explain select * from girl where id&gt;10000000 and id&lt;12000000</div><div class="line">*************************** 1. row ***************************</div><div class="line">           id: 1</div><div class="line">  select_type: SIMPLE</div><div class="line">        table: girl</div><div class="line">         type: range</div><div class="line">possible_keys: PRIMARY</div><div class="line">          key: PRIMARY</div><div class="line">      key_len: 8</div><div class="line">          ref: NULL</div><div class="line">         rows: 4301486</div><div class="line">        Extra: Using where</div><div class="line">1 row in set (0.00 sec)</div></pre></td></tr></table></figure></p>
+<p><strong>(2) 辅助索引</strong><br>辅助索引（也称非聚集索引）。叶级别不包含行的全部数据，叶级别除了包含行的键值外，每个索引行还包含了一个书签（bookmark），该书签告诉InnoDB存储引擎，哪里可以找到与索引对应的数据，<br>辅助索引的存在并不影响数据在聚集索引中的组织，因此一个表可以有多个辅助索引。<br>当通过辅助索引查找数据时，innodb会遍历辅助索引并通过叶级别的指针获得指向主键索引的主键。然后再通过主键索引找到一行完整的数据。</p>
+<p><strong>(3) B+树索引的管理</strong><br>索引的创建和删除可以用两种方式。一种是alter table,另一种是create/drop index</p>
+<p>alter table 创建和删除索引的语法为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">ALTER [ONLINE | OFFLINE] [IGNORE] TABLE tbl_name</div><div class="line">  | ADD &#123;INDEX|KEY&#125; [index_name]</div><div class="line">        [index_type] (index_col_name,…) [index_option] …</div><div class="line"></div><div class="line">ALTER [ONLINE | OFFLINE] [IGNORE] TABLE tbl_name</div><div class="line">  | DROP PRIMARY KEY</div><div class="line">  | DROP &#123;INDEX|KEY&#125; index_name</div></pre></td></tr></table></figure></p>
+<p>create/drop index的语法为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">CREATE [ONLINE|OFFLINE] [UNIQUE|FULLTEXT|SPATIAL] INDEX index_name</div><div class="line">    [index_type]</div><div class="line">    ON tbl_name (index_col_name,…)</div><div class="line"></div><div class="line">DROP [ONLINE|OFFLINE] INDEX index_name ON tbl_name</div></pre></td></tr></table></figure></p>
+<p>MySQL索引注意的问题：对于MySQL索引的添加与删除，mysql先是创建一张加好索引的临时表，然后把数据导入临时表，再删除原表，把临时表重命名为原表。</p>
+<p>Innodb存储引擎从Innodb Plugin版本开始，支持一种快速创建索引的方法（只限于辅助索引，主键索引仍需要临时建表）。首先对表加S锁，在创建的过程中不需要重建表，但是由于加上了S锁，在创建索引的过程中只能进行查询操作，不能更新数据。</p>
+<hr>
+<h3 id="B-树索引的使用"><a href="#B-树索引的使用" class="headerlink" title="B+树索引的使用"></a>B+树索引的使用</h3><p><strong>(1).什么时候使用B+索引</strong><br>当查询表中很少一部分数据时，B+索引才有意义。对于性别，地区类型字段，他们的取值范围很小，即 <em>低选择性</em> 。这时B+索引是没有必要的。相反，某个字段取值范围很广，如姓名，几乎没有重复，即 <em>高选择性</em> 。则使用B+索引是比较合适的。因此。当访问高选择性字段并取出很少一部分数据时，该字段加B+索引是非常有效的。但是当取出的数据行占表中大部分数据时，数据库就不会使用B+索引了。</p>
+<p>举例说明下，看下面这个团购订单表groupon_so的部分索引：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div></pre></td><td class="code"><pre><div class="line">show index from groupon_so;</div><div class="line">*************************** 1. row ***************************</div><div class="line">        Table: groupon_so</div><div class="line">   Non_unique: 0</div><div class="line">     Key_name: PRIMARY</div><div class="line"> Seq_in_index: 1</div><div class="line">  Column_name: id</div><div class="line">    Collation: A</div><div class="line">  Cardinality: 10088342</div><div class="line">     Sub_part: NULL</div><div class="line">       Packed: NULL</div><div class="line">         Null:</div><div class="line">   Index_type: BTREE</div><div class="line">      Comment:</div><div class="line">Index_comment:</div><div class="line">*************************** 2. row ***************************</div><div class="line">        Table: groupon_so</div><div class="line">   Non_unique: 1</div><div class="line">     Key_name: idx_groupon_so_order_id</div><div class="line"> Seq_in_index: 1</div><div class="line">  Column_name: order_id</div><div class="line">    Collation: A</div><div class="line">  Cardinality: 10088342</div><div class="line">     Sub_part: NULL</div><div class="line">       Packed: NULL</div><div class="line">         Null:</div><div class="line">   Index_type: BTREE</div><div class="line">      Comment:</div><div class="line">Index_comment:</div><div class="line">*************************** 3. row ***************************</div><div class="line">        Table: groupon_so</div><div class="line">   Non_unique: 1</div><div class="line">     Key_name: idx_groupon_so_order_code</div><div class="line"> Seq_in_index: 1</div><div class="line">  Column_name: order_code</div><div class="line">    Collation: A</div><div class="line">  Cardinality: 10088342</div><div class="line">     Sub_part: NULL</div><div class="line">       Packed: NULL</div><div class="line">         Null:</div><div class="line">   Index_type: BTREE</div><div class="line">      Comment:</div><div class="line">Index_comment:</div><div class="line">*************************** 4. row ***************************</div><div class="line">        Table: groupon_so</div><div class="line">   Non_unique: 1</div><div class="line">     Key_name: idx_groupon_so_end_user_id</div><div class="line"> Seq_in_index: 1</div><div class="line">  Column_name: end_user_id</div><div class="line">    Collation: A</div><div class="line">  Cardinality: 10088342</div><div class="line">     Sub_part: NULL</div><div class="line">       Packed: NULL</div><div class="line">         Null: YES</div><div class="line">   Index_type: BTREE</div><div class="line">      Comment:</div><div class="line">Index_comment:</div><div class="line">*************************** 5. row ***************************</div><div class="line">        Table: groupon_so</div><div class="line">   Non_unique: 1</div><div class="line">     Key_name: idx_groupon_so_groupon_id</div><div class="line"> Seq_in_index: 1</div><div class="line">  Column_name: groupon_id</div><div class="line">    Collation: A</div><div class="line">  Cardinality: 148357</div><div class="line">     Sub_part: NULL</div><div class="line">       Packed: NULL</div><div class="line">         Null:</div><div class="line">   Index_type: BTREE</div><div class="line">      Comment:</div><div class="line">Index_comment:</div></pre></td></tr></table></figure></p>
+<p>其中有一个索引 idx_groupon_so_order_id ，这个索引里面字段订单号的值都是不重复的，是高选择性的字段。<br>我们查找order_id为 99165590 的这条记录，执行计划如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">explain select * from groupon_so where order_id=99165590</div><div class="line">*************************** 1. row ***************************</div><div class="line">           id: 1</div><div class="line">  select_type: SIMPLE</div><div class="line">        table: groupon_so</div><div class="line">         type: ref</div><div class="line">possible_keys: idx_groupon_so_order_id</div><div class="line">          key: idx_groupon_so_order_id</div><div class="line">      key_len: 8</div><div class="line">          ref: const</div><div class="line">         rows: 1</div><div class="line">        Extra:</div><div class="line">1 row in set (0.00 sec)</div></pre></td></tr></table></figure></p>
+<p>可以看到使用了idx_groupon_so_order_id这个索引，符合高选择性，取少部分数据这个特性。<br>但是如果执行下面这条语句：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">explain select * from groupon_so where order_id&gt;99165590;</div><div class="line">*************************** 1. row ***************************</div><div class="line">           id: 1</div><div class="line">  select_type: SIMPLE</div><div class="line">        table: groupon_so</div><div class="line">         type: ALL</div><div class="line">possible_keys: idx_groupon_so_order_id</div><div class="line">          key: NULL</div><div class="line">      key_len: NULL</div><div class="line">          ref: NULL</div><div class="line">         rows: 10092839</div><div class="line">        Extra: Using where</div><div class="line">1 row in set (0.00 sec)</div></pre></td></tr></table></figure></p>
+<p>可以看到possible_keys依然是idx_groupon_so_order_code，但是索引优化使用的索引keys显示的是NULL，因为虽然这个字段是高选择性的，但是我们取出了表中的大部分数据，索引没有用到索引。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">select @a:=count(id) from groupon_so where order_id&gt;99165590;</div><div class="line">+—————+</div><div class="line">| @a:=count(id) |</div><div class="line">+—————+</div><div class="line">|       8684424 |</div><div class="line">+—————+</div><div class="line">1 row in set (2.48 sec)</div><div class="line"></div><div class="line">select @a:=count(id) from groupon_so;</div><div class="line">+—————+</div><div class="line">| @a:=count(id) |</div><div class="line">+—————+</div><div class="line">|       9858135 |</div><div class="line">+—————+</div><div class="line">1 row in set (1.86 sec)</div><div class="line"></div><div class="line">select 8684424/9858135;</div><div class="line">+—————–+</div><div class="line">| 8684424/9858135 |</div><div class="line">+—————–+</div><div class="line">|          0.8809 |</div><div class="line">+—————–+</div><div class="line">1 row in set (0.00 sec)</div></pre></td></tr></table></figure></p>
+<p>可以看到我们取出了表中88%的数据，索引没有用到索引。</p>
+<p><strong>(2)顺序读、随机读与预读取</strong><br>顺序读是指顺序的读取磁盘上的块，随机读是指访问的块是不连续的，需要磁盘的磁头不断移动。随机读的性能是远远低于顺序读的。<br>在数据库中，顺序读根据索引的叶节点就能顺序的读取所需的行数据，这个顺序读只是逻辑的顺序读，在磁盘上还可能是随机读。随机读是指访问辅助索引叶节点不能完全得到结果，需要根据辅助索引叶节点中的主键去寻找实际数据行。对于一些取表里很大部分的数据，正是因为读取是随机读，而随机读的性能会远低于顺序读，所以优化器才会选择全部扫描顺序读，而不使用索引。</p>
+<p>Innodb存储引擎有两种预读取方式，随机预读取和线性预读取。随机预读取是指当一个区（共64个连续页）中有13个页在缓冲区中并被频繁访问时，Innodb存储引擎会将这个区中剩余的页预读到缓冲区。线性预读取基于缓冲池中页的访问方式，而不是数量。如果一个区中有24个页被顺序访问了，则Innodb会读取下一个区中所有的页到缓冲区。但是Innodb预读取经过测试后性能比较差，经过TPCC测试发现禁用预读取比启用预读取提高了10%的性能。在新版本Innodb中，mysql禁用了随机预读取，仅保留了线性预读取，并且加入了innodb_read_ahead_threshold参数，当连续访问页超过该值时才启用预读取，默认值为56。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">show variables like &apos;innodb_read_ahead_threshold%&apos;;</div><div class="line">+—————————–+——-+</div><div class="line">| Variable_name               | Value |</div><div class="line">+—————————–+——-+</div><div class="line">| innodb_read_ahead_threshold | 56    |</div><div class="line">+—————————–+——-+</div><div class="line">1 row in set (0.00 sec)</div></pre></td></tr></table></figure></p>
+<p><strong>(3)辅助索引的优化</strong><br>通过前面可知，辅助索引的叶节点包含主键，但是辅助索引的叶节点并不包含完整的行数据信息，因此，Innodb存储引擎总是会从辅助索引的叶节点判断是否能得到数据，让我们看个例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">create table t (a int not null, b varchar(20), primary key(a),key(b));</div><div class="line">Query OK, 0 rows affected (0.18 sec)</div><div class="line">insert into t select 1, &apos; kangaroo&apos;;</div><div class="line">Query OK, 1 row affected (0.00 sec)</div><div class="line">Records: 1  Duplicates: 0  Warnings: 0</div><div class="line">insert into t select  2,&apos;dolphin&apos;;</div><div class="line">Query OK, 1 row affected (0.01 sec)</div><div class="line">Records: 1  Duplicates: 0  Warnings: 0</div><div class="line">insert into t select  3,&apos;dragon&apos;;</div><div class="line">Query OK, 1 row affected (0.01 sec)</div><div class="line">Records: 1  Duplicates: 0  Warnings: 0</div><div class="line">insert into t select  4,&apos;anteloge&apos;;</div><div class="line">Query OK, 1 row affected (0.01 sec)</div><div class="line">Records: 1  Duplicates: 0  Warnings: 0</div></pre></td></tr></table></figure></p>
+<p>如果执行select * from t很多人认为应该是如下结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">mysql&gt; select * from t order by a;</div><div class="line">*************************** 1. row ***************************</div><div class="line">a: 1</div><div class="line">b: kangaroo</div><div class="line">*************************** 2. row ***************************</div><div class="line">a: 2</div><div class="line">b: dolphin</div><div class="line">*************************** 3. row ***************************</div><div class="line">a: 3</div><div class="line">b: dragon</div><div class="line">*************************** 4. row ***************************</div><div class="line">a: 4</div><div class="line">b: anteloge</div><div class="line">4 rows in set (0.00 sec)</div></pre></td></tr></table></figure></p>
+<p>但是实际执行结果确是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">mysql&gt; select * from t;</div><div class="line">*************************** 1. row ***************************</div><div class="line">a: 4</div><div class="line">b: anteloge</div><div class="line">*************************** 2. row ***************************</div><div class="line">a: 2</div><div class="line">b: dolphin</div><div class="line">*************************** 3. row ***************************</div><div class="line">a: 3</div><div class="line">b: dragon</div><div class="line">*************************** 4. row ***************************</div><div class="line">a: 1</div><div class="line">b: kangaroo</div><div class="line">4 rows in set (0.00 sec)</div></pre></td></tr></table></figure></p>
+<p>因为辅助索引包含了主键a的值，因此访问b列上的辅助索引就可以得到a的值，这样就可以得到表中所有的数据。我们看这条语句的执行计划：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">mysql&gt; explain select * from t;</div><div class="line">*************************** 1. row ***************************</div><div class="line">           id: 1</div><div class="line">  select_type: SIMPLE</div><div class="line">        table: t</div><div class="line">         type: index</div><div class="line">possible_keys: NULL</div><div class="line">          key: b</div><div class="line">      key_len: 23</div><div class="line">          ref: NULL</div><div class="line">         rows: 4</div><div class="line">        Extra: Using index</div><div class="line">1 row in set (0.00 sec)</div></pre></td></tr></table></figure></p>
+<p>可以看到优化器最终走的索引b,如果想对a列进行排序，则需要进行order by操作：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">mysql&gt; explain select * from t order by a;</div><div class="line">*************************** 1. row ***************************</div><div class="line">           id: 1</div><div class="line">  select_type: SIMPLE</div><div class="line">        table: t</div><div class="line">         type: index</div><div class="line">possible_keys: NULL</div><div class="line">          key: PRIMARY</div><div class="line">      key_len: 4</div><div class="line">          ref: NULL</div><div class="line">         rows: 4</div><div class="line">        Extra: NULL</div><div class="line">1 row in set (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt; select * from t order by a;</div><div class="line">*************************** 1. row ***************************</div><div class="line">a: 1</div><div class="line">b: kangaroo</div><div class="line">*************************** 2. row ***************************</div><div class="line">a: 2</div><div class="line">b: dolphin</div><div class="line">*************************** 3. row ***************************</div><div class="line">a: 3</div><div class="line">b: dragon</div><div class="line">*************************** 4. row ***************************</div><div class="line">a: 4</div><div class="line">b: anteloge</div></pre></td></tr></table></figure></p>
+<p>或者使用主键强制得到结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">mysql&gt; select * from t force index(PRIMARY);</div><div class="line">*************************** 1. row ***************************</div><div class="line">a: 1</div><div class="line">b: kangaroo</div><div class="line">*************************** 2. row ***************************</div><div class="line">a: 2</div><div class="line">b: dolphin</div><div class="line">*************************** 3. row ***************************</div><div class="line">a: 3</div><div class="line">b: dragon</div><div class="line">*************************** 4. row ***************************</div><div class="line">a: 4</div><div class="line">b: anteloge</div><div class="line">4 rows in set (0.00 sec)</div></pre></td></tr></table></figure></p>
+<p><strong>(4)联合索引</strong><br>联合索引是指对表中多个列做索引，联合索引的创建方法和之前的一样，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mysql&gt; alter table t add key idx_a_b(a,b);</div><div class="line">Query OK, 0 rows affected (0.17 sec)</div><div class="line">Records: 0  Duplicates: 0  Warnings: 0</div></pre></td></tr></table></figure></p>
+<p>联合索引还是一个B+树，不同的是联合索引键值的数量不是1，而是大于等于2.下面我们讨论一个两个整形列组成的联合索引，假定两个键值的名称分别为a和b，如下图8所示，每个节点上有两个键值，(1,1),(1,2),(2,1),(2,4),(3,1),(3,2), 数据按(a,b)顺序进行排列<br><img src="http://www.niceru.com/wp-content/uploads/2013/09/8.png" alt=""><br>图8  多个键值的B+树</p>
+<p>因此，对于查询select <em> from t where a=xxx and b=xxx,显然可以使用(a,b)这个联合索引。对于单个a列查询 select </em> from t where a=xxx也是可以使用(a,b)这个索引。但是对于b列的查询select * from t where b=xxx是用不到这颗B+树索引。可以看到叶节点上b的值为1、2、1、4、1、2.显然不是排序的，因此b列的查询使用不到(a,b)索引。</p>
+<p>联合索引的第二个好处是，可以对第二键值进行排序。例如很多情况下我们需要查询某个用户的购物情况，并按照时间排序，取出最近3次的购买记录，这时使用联合索引可以避免多一次的排序操作。因为索引本身在叶节点中已经排序了。看下面示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">mysql&gt; create table buy_log(userid int unsigned not null, buy_date date);</div><div class="line">Query OK, 0 rows affected (0.09 sec)</div><div class="line"></div><div class="line">mysql&gt; insert into buy_log values(1,&apos;2013-01-01&apos;);</div><div class="line">Query OK, 1 row affected (0.01 sec)</div><div class="line"></div><div class="line">mysql&gt; insert into buy_log values(2,&apos;2013-01-01&apos;);</div><div class="line">Query OK, 1 row affected (0.01 sec)</div><div class="line"></div><div class="line">mysql&gt; insert into buy_log values(3,&apos;2013-01-01&apos;);</div><div class="line">Query OK, 1 row affected (0.01 sec)</div><div class="line"></div><div class="line">mysql&gt; insert into buy_log values(1,&apos;2013-02-01&apos;);</div><div class="line">Query OK, 1 row affected (0.01 sec)</div><div class="line"></div><div class="line">mysql&gt; insert into buy_log values(3,&apos;2013-02-01&apos;);</div><div class="line">Query OK, 1 row affected (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt; insert into buy_log values(1,&apos;2013-03-01&apos;);</div><div class="line">Query OK, 1 row affected (0.01 sec)</div><div class="line"></div><div class="line">mysql&gt; insert into buy_log values(1,&apos;2013-04-01&apos;);</div><div class="line">Query OK, 1 row affected (0.01 sec)</div><div class="line"></div><div class="line">mysql&gt; alter table buy_log add key(userid);</div><div class="line">Query OK, 0 rows affected (0.07 sec)</div><div class="line">Records: 0  Duplicates: 0  Warnings: 0</div><div class="line"></div><div class="line">mysql&gt; alter table buy_log add key(userid,buy_date);</div><div class="line">Query OK, 0 rows affected (0.11 sec)</div><div class="line">Records: 0  Duplicates: 0  Warnings: 0</div></pre></td></tr></table></figure></p>
+<p>上面我们建立了测试表和数据，建立了2个索引来比较。两个索引都包含了userid字段。如果只对于userid查询，优化器的选择是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">mysql&gt; explain select * from buy_log where userid=2\G;</div><div class="line">*************************** 1. row ***************************</div><div class="line">           id: 1</div><div class="line">  select_type: SIMPLE</div><div class="line">        table: buy_log</div><div class="line">         type: ref</div><div class="line">possible_keys: userid,userid_2</div><div class="line">          key: userid</div><div class="line">      key_len: 4</div><div class="line">          ref: const</div><div class="line">         rows: 1</div><div class="line">        Extra: NULL</div><div class="line">1 row in set (0.00 sec)</div></pre></td></tr></table></figure></p>
+<p>可以看到possible_keys里面两个索引都可以使用，分别是单个的userid索引和userid,buy_date的联合索引。但是优化器最终选择的是userid，因为该叶节点包含单个键值，因此一个页存放的记录应该更多。</p>
+<p>接下来看以下的查询，假定要取出userid=1最近的3次购买记录，分别使用单个索引和联合索引的区别：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">mysql&gt; explain select * from buy_log where userid=1 order by buy_date desc limit 3\G;</div><div class="line">*************************** 1. row ***************************</div><div class="line">           id: 1</div><div class="line">  select_type: SIMPLE</div><div class="line">        table: buy_log</div><div class="line">         type: ref</div><div class="line">possible_keys: userid,userid_2</div><div class="line">          key: userid_2</div><div class="line">      key_len: 4</div><div class="line">          ref: const</div><div class="line">         rows: 4</div><div class="line">        Extra: Using where; Using index</div><div class="line">1 row in set (0.00 sec)</div></pre></td></tr></table></figure></p>
+<p>同样对于上述SQL，两个索引都可使用，但是查询优化器使用了userid和buy_date组成的联合索引userid_2.因为这个联合索引中buy_date已经排序好了，可以减少一次排序操作。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">mysql&gt; explain select * from buy_log force index(userid) where userid=1 order by buy_date desc limit 3\G;</div><div class="line">*************************** 1. row ***************************</div><div class="line">           id: 1</div><div class="line">  select_type: SIMPLE</div><div class="line">        table: buy_log</div><div class="line">         type: ref</div><div class="line">possible_keys: userid</div><div class="line">          key: userid</div><div class="line">      key_len: 4</div><div class="line">          ref: const</div><div class="line">         rows: 4</div><div class="line">        Extra: Using where; Using filesort</div><div class="line">1 row in set (0.00 sec)</div></pre></td></tr></table></figure></p>
+<p>在Extra这里可以看到Using filesort，Using filesort指排序，但不一定是在文件中完成。</p>
+<hr>
+<p>转载自：<a href="http://www.niceru.com/topic/420.html" target="_blank" rel="external"> http://www.niceru.com/topic/420.html</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/sakura-hly.github.io/tags/MySQL/" rel="tag"># MySQL</a>
+          
+            <a href="/sakura-hly.github.io/tags/Innodb/" rel="tag"># Innodb</a>
+          
+            <a href="/sakura-hly.github.io/tags/B-树/" rel="tag"># B+树</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/sakura-hly.github.io/2017/09/20/Linux基础课程09/" rel="next" title="基础课程09">
+                <i class="fa fa-chevron-left"></i> 基础课程09
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  //with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="/sakura-hly.github.io/images/dp.jpg"
+              alt="caijy" />
+          
+            <p class="site-author-name" itemprop="name">caijy</p>
+            <p class="site-description motion-element" itemprop="description">一个Linux菜鸟的博客</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/sakura-hly.github.io/archives/">
+            
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">Artikel</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">Kategorien</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">Tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=448226072&auto=1&height=66"></iframe>
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Innodb存储引擎索引概述"><span class="nav-number">1.</span> <span class="nav-text">1.Innodb存储引擎索引概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-理解B-树算法"><span class="nav-number">2.</span> <span class="nav-text">2.理解B+树算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、B-树索引介绍"><span class="nav-number">3.</span> <span class="nav-text">三、B+树索引介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#B-树索引的使用"><span class="nav-number">4.</span> <span class="nav-text">B+树索引的使用</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">caijy</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/sakura-hly.github.io/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/sakura-hly.github.io/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/sakura-hly.github.io/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/sakura-hly.github.io/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/sakura-hly.github.io/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/sakura-hly.github.io/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/sakura-hly.github.io/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("jsI2BP061jWWrjY7NlFVHOOQ-gzGzoHsz", "WQFdrAUtgTXisdJ8TFShl3a7");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+  
+</body>
+</html>

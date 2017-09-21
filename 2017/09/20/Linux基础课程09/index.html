@@ -95,22 +95,27 @@
 
 
 
-<meta name="description" content="经济有限，笔者在虚拟机上安装的“红帽”，具体安装步骤在此不展开论述，不会的同学参考虚拟机/红帽安装及工具下载。">
+<meta name="description" content="这一节我们来学习用nmtui命令配置网卡参数，通过nmcli命令查看网卡网络信息并管理网卡会话服务，让您能够在不同工作场景中快速地切换网卡网络参数，以及学习手工绑定mode6模式双网卡来实现对网络的负载均衡及冗余技术。">
 <meta name="keywords" content="Linux">
 <meta property="og:type" content="article">
-<meta property="og:title" content="基础课程01">
-<meta property="og:url" content="http://yoursite.com/2017/09/12/Linux基础课程01/index.html">
+<meta property="og:title" content="基础课程09">
+<meta property="og:url" content="http://yoursite.com/2017/09/20/Linux基础课程09/index.html">
 <meta property="og:site_name" content="破晓">
-<meta property="og:description" content="经济有限，笔者在虚拟机上安装的“红帽”，具体安装步骤在此不展开论述，不会的同学参考虚拟机/红帽安装及工具下载。">
+<meta property="og:description" content="这一节我们来学习用nmtui命令配置网卡参数，通过nmcli命令查看网卡网络信息并管理网卡会话服务，让您能够在不同工作场景中快速地切换网卡网络参数，以及学习手工绑定mode6模式双网卡来实现对网络的负载均衡及冗余技术。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/img/01.png">
-<meta property="og:image" content="http://yoursite.com/img/02.png">
-<meta property="og:image" content="http://yoursite.com/img/03.png">
-<meta property="og:updated_time" content="2017-09-14T06:00:45.069Z">
+<meta property="og:image" content="http://yoursite.com/img/第2步：选择要编辑的网卡-721x491.png">
+<meta property="og:image" content="http://yoursite.com/img/第3步：编辑网卡信息-723x492.png">
+<meta property="og:image" content="http://yoursite.com/img/第4步：将网卡的IPv4配置项设置成手动-724x493.png">
+<meta property="og:image" content="http://yoursite.com/img/第5步：敲击Ipv4配置项右侧的Show-723x492.png">
+<meta property="og:image" content="http://yoursite.com/img/第6步：填入IP地址信息-726x494.png">
+<meta property="og:image" content="http://yoursite.com/img/第7步：敲击最下面的OK-721x491.png">
+<meta property="og:image" content="http://yoursite.com/img/第8步：确认信息填写正确后退出-724x493.png">
+<meta property="og:image" content="http://yoursite.com/img/设置虚拟机网卡的模式.png">
+<meta property="og:updated_time" content="2017-09-20T12:59:48.482Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="基础课程01">
-<meta name="twitter:description" content="经济有限，笔者在虚拟机上安装的“红帽”，具体安装步骤在此不展开论述，不会的同学参考虚拟机/红帽安装及工具下载。">
-<meta name="twitter:image" content="http://yoursite.com/img/01.png">
+<meta name="twitter:title" content="基础课程09">
+<meta name="twitter:description" content="这一节我们来学习用nmtui命令配置网卡参数，通过nmcli命令查看网卡网络信息并管理网卡会话服务，让您能够在不同工作场景中快速地切换网卡网络参数，以及学习手工绑定mode6模式双网卡来实现对网络的负载均衡及冗余技术。">
+<meta name="twitter:image" content="http://yoursite.com/img/第2步：选择要编辑的网卡-721x491.png">
 
 
 
@@ -140,13 +145,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/09/12/Linux基础课程01/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/20/Linux基础课程09/"/>
 
 
 
 
 
-  <title>基础课程01 | 破晓</title>
+  <title>基础课程09 | 破晓</title>
   
 
 
@@ -297,7 +302,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/sakura-hly.github.io/2017/09/12/Linux基础课程01/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/sakura-hly.github.io/2017/09/20/Linux基础课程09/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="caijy">
@@ -314,7 +319,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">基础课程01</h1>
+          <h1 class="post-title" itemprop="name headline">基础课程09</h1>
         
 
         <div class="post-meta">
@@ -326,8 +331,8 @@
               
                 <span class="post-meta-item-text">Veröffentlicht am</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-12T13:59:19+08:00">
-                2017-09-12
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-20T20:12:41+08:00">
+                2017-09-20
               </time>
             
 
@@ -367,8 +372,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/sakura-hly.github.io/2017/09/12/Linux基础课程01/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count fb-comments-count" data-href="http://yoursite.com/2017/09/12/Linux基础课程01/" itemprop="commentCount">0</span> comments
+                <a href="/sakura-hly.github.io/2017/09/20/Linux基础课程09/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count fb-comments-count" data-href="http://yoursite.com/2017/09/20/Linux基础课程09/" itemprop="commentCount">0</span> comments
                 </a>
               </span>
             
@@ -376,7 +381,7 @@
 
           
           
-             <span id="/sakura-hly.github.io/2017/09/12/Linux基础课程01/" class="leancloud_visitors" data-flag-title="基础课程01">
+             <span id="/sakura-hly.github.io/2017/09/20/Linux基础课程09/" class="leancloud_visitors" data-flag-title="基础课程09">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -407,219 +412,17 @@
       
 
       
-        <p>经济有限，笔者在虚拟机上安装的“红帽”，具体安装步骤在此不展开论述，不会的同学参考<a href="http://www.linuxprobe.com/chapter-01.html" target="_blank" rel="external">虚拟机/红帽安装及工具下载</a>。<br><a id="more"></a></p>
-<h3 id="重置root用户密码"><a href="#重置root用户密码" class="headerlink" title="重置root用户密码"></a>重置root用户密码</h3><p>记得笔者一次面试的时候被问到：如果忘记MySQL root用户的密码怎么办？我一想，这种问题就该直接谷歌，结果被鄙视一脸。后来查了一下，无非是几个命令。<br>在此记录这个比较重要的问题，此处以红帽系统为例（大家先确认自己的Linux系统是不是红帽）：</p>
-<ol>
-<li>重启Linux，在引导界面按“e”<br><img src="/img/01.png" alt="01"></li>
-<li>在linux16参数这行的后面追加“rd.break”参数并同时一起按下键盘“ctrl“和“x”按键来执行内核参数<br><img src="/img/02.png" alt="02"></li>
-<li>过一会儿便进入系统的紧急求援模式。依次输入一下命令（其中第三行命令的“123456”是你新的root用户密码）：<ul>
-<li>mount -o remount,rw /sysroot</li>
-<li>chroot /sysroot</li>
-<li>echo “123456” | passwd –stdin root</li>
-<li>touch /.autorelabel</li>
-<li>exit</li>
-<li>reboot<br>然后等待重启即可<br><img src="/img/03.png" alt="03"></li>
-</ul>
-</li>
-</ol>
+        <p>这一节我们来学习用nmtui命令配置网卡参数，通过nmcli命令查看网卡网络信息并管理网卡会话服务，让您能够在不同工作场景中快速地切换网卡网络参数，以及学习手工绑定mode6模式双网卡来实现对网络的负载均衡及冗余技术。<br><a id="more"></a><br>深入了解ssh协议与sshd服务程序的理论知识，掌握对Linux系统的远程管理方法以及Linux系统中服务程序的配置方法，实践操作基于密钥验证的sshd服务程序远程验证登录，并学习用screen服务程序实现远程管理Linux系统的不间断会话技术。</p>
 <hr>
-<h3 id="RPM红帽软件包"><a href="#RPM红帽软件包" class="headerlink" title="RPM红帽软件包"></a>RPM红帽软件包</h3><p>这里总结一下常用的软件包命令：</p>
-<ul>
-<li>安装软件的命令格式:rpm -ivh filename.rpm</li>
-<li>升级软件的命令格式:rpm -Uvh filename.rpm</li>
-<li>卸载软件的命令格式:rpm -e filename.rpm</li>
-<li>查询软件的描述信息的命令格式:rpm -qpi filename.rpm</li>
-<li>列出软件的文件信息的命令格式:rpm -qpl filename.rpm</li>
-<li>查询文件属于哪个RPM的命令格式:rpm -qf filename</li>
-</ul>
-<hr>
-<h3 id="Yum软件仓库"><a href="#Yum软件仓库" class="headerlink" title="Yum软件仓库"></a>Yum软件仓库</h3><p>Yum软件仓库是为了进一步降低软件安装难度和复杂度而设计的技术，Yum软件仓库可以根据用户的要求分析出所需软件包及其相关依赖关系，然后自动从服务器下载软件包并安装到系统，<br>下面的Yum命令过一下即可。<br><!-- 表格要空一行....--></p>
-<table>
-<thead>
-<tr>
-<th>命令</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>yum repolist all</td>
-<td>列出所有仓库</td>
-</tr>
-<tr>
-<td>yum list all</td>
-<td>列出仓库中所有软件包</td>
-</tr>
-<tr>
-<td>yum info 软件包名称</td>
-<td>查看软件包信息</td>
-</tr>
-<tr>
-<td>yum install 软件包名称</td>
-<td>安装软件包</td>
-</tr>
-<tr>
-<td>yum reinstall 软件包名称</td>
-<td>重新安装软件包</td>
-</tr>
-<tr>
-<td>yum update 软件包名称</td>
-<td>升级软件包</td>
-</tr>
-<tr>
-<td>yum remove 软件包名称</td>
-<td>移除软件包</td>
-</tr>
-<tr>
-<td>yum clean all</td>
-<td>清除所有仓库缓存</td>
-</tr>
-<tr>
-<td>yum check-update</td>
-<td>检查可更新的软件包</td>
-</tr>
-<tr>
-<td>yum grouplist</td>
-<td>查看系统中已经安装的软件包组</td>
-</tr>
-<tr>
-<td>yum groupinstall 软件包组</td>
-<td>安装指定的软件包组</td>
-</tr>
-<tr>
-<td>yum groupremove 软件包组</td>
-<td>移除指定的软件包组</td>
-</tr>
-<tr>
-<td>yum groupinfo 软件包组</td>
-<td>查询指定的软件包组信息</td>
-</tr>
-</tbody>
-</table>
-<hr>
-<h3 id="Systemd初始化进程"><a href="#Systemd初始化进程" class="headerlink" title="Systemd初始化进程"></a>Systemd初始化进程</h3><p>Linux操作系统开机过程首先从BIOS开始，进入“Boot Loader”，加载系统内核，，内核进行初始化，启动初始化进程。<br>初始化进程作为系统第一个进程，它需要完成Linux系统中相关的初始化工作，为用户提供合适的工作环境。<br>systemd初始化进程服务采用了并发启动机制，开机速度得到了不小的提升。<br>红帽RHEL7系统启动时要做大量的初始化工作，例如挂在文件系统和交换分区。启动各类进程服务等操作，这些都可以看作一个个的单元（Unit），即用”目标(target)”代替了“运行级别”这个概念，区别如下表所示：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">Sysvinit运行级别</th>
-<th style="text-align:center">System目标名称</th>
-<th style="text-align:right">作用</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">0</td>
-<td style="text-align:center">runlevel0.target, poweroff.target</td>
-<td style="text-align:right">关机</td>
-</tr>
-<tr>
-<td style="text-align:left">1</td>
-<td style="text-align:center">runlevel1.target, rescue.target</td>
-<td style="text-align:right">单用户模式</td>
-</tr>
-<tr>
-<td style="text-align:left">2</td>
-<td style="text-align:center">runlevel2.target, multi-user.target</td>
-<td style="text-align:right">等同于级别3</td>
-</tr>
-<tr>
-<td style="text-align:left">3</td>
-<td style="text-align:center">runlevel3.target, multi-user.target</td>
-<td style="text-align:right">多用户的文本界面</td>
-</tr>
-<tr>
-<td style="text-align:left">4</td>
-<td style="text-align:center">runlevel4.target, multi-user.target</td>
-<td style="text-align:right">等同于级别3</td>
-</tr>
-<tr>
-<td style="text-align:left">5</td>
-<td style="text-align:center">runlevel5.target, graphical.target</td>
-<td style="text-align:right">多用户的图形界面</td>
-</tr>
-<tr>
-<td style="text-align:left">6</td>
-<td style="text-align:center">runlevel6.target, reboot.target</td>
-<td style="text-align:right">重启</td>
-</tr>
-<tr>
-<td style="text-align:left">emergency</td>
-<td style="text-align:center">emergency.target</td>
-<td style="text-align:right">紧急Shell</td>
-</tr>
-</tbody>
-</table>
-<p>红帽RHEL6系统使用service、chkconfig等命令来管理系统服务，红帽RHEL7系统中管理服务使用的是systemctl命令：<br><strong>systemctl管理服务的启动、重启、停止、重载、查看状态的命令：</strong></p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">Sysvinit命令(红帽RHEL6系统)</th>
-<th style="text-align:center">Systemctl命令（红帽RHEL7系统）</th>
-<th style="text-align:right">作用</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">service foo start</td>
-<td style="text-align:center">systemctl start foo.service</td>
-<td style="text-align:right">启动服务</td>
-</tr>
-<tr>
-<td style="text-align:left">service foo restart</td>
-<td style="text-align:center">systemctl restart foo.service</td>
-<td style="text-align:right">重启服务</td>
-</tr>
-<tr>
-<td style="text-align:left">service foo stop</td>
-<td style="text-align:center">systemctl stop foo.service</td>
-<td style="text-align:right">停止服务</td>
-</tr>
-<tr>
-<td style="text-align:left">service foo reload</td>
-<td style="text-align:center">systemctl reload foo.service</td>
-<td style="text-align:right">重新加载配置文件（不终止服务）</td>
-</tr>
-<tr>
-<td style="text-align:left">service foo status</td>
-<td style="text-align:center">systemctl status foo.service</td>
-<td style="text-align:right">查看服务状态</td>
-</tr>
-</tbody>
-</table>
-<p><strong>systemctl设置服务的开机启动、不启动、查看各级别下服务启动状态的命令：</strong></p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">Sysvinit命令(红帽RHEL6系统)</th>
-<th style="text-align:center">Systemctl命令（红帽RHEL7系统）</th>
-<th style="text-align:right">作用</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">chkconfig foo on</td>
-<td style="text-align:center">systemctl enable foo.service</td>
-<td style="text-align:right">开机自动启动</td>
-</tr>
-<tr>
-<td style="text-align:left">chkconfig foo off</td>
-<td style="text-align:center">systemctl disable foo.service</td>
-<td style="text-align:right">开机不自动启动</td>
-</tr>
-<tr>
-<td style="text-align:left">chkconfig foo</td>
-<td style="text-align:center">systemctl is-enabled foo.service</td>
-<td style="text-align:right">查看特定服务是否为开机自启动</td>
-</tr>
-<tr>
-<td style="text-align:left">chkconfig –list</td>
-<td style="text-align:center">systemctl list-unit-files –type=service</td>
-<td style="text-align:right">查看各个级别下服务的启动与禁用情况</td>
-</tr>
-</tbody>
-</table>
-<hr>
-<p>转载自：<a href="http://www.linuxprobe.com/chapter-01.html" target="_blank" rel="external">http://www.linuxprobe.com/chapter-01.html</a></p>
+<h3 id="配置网卡服务"><a href="#配置网卡服务" class="headerlink" title="配置网卡服务"></a>配置网卡服务</h3><h4 id="配置网卡参数"><a href="#配置网卡参数" class="headerlink" title="配置网卡参数"></a>配置网卡参数</h4><p>在接下来学习配置服务之前，还必须先保证系统主机之间是否能够顺畅进行数据传输的，因为如果网络不通，那么即使各项服务部署得再好也不能让用户顺利的访问到，所以配置网络是正式学习部署服务前的最后一门重要知识。</p>
+<p>先来学习用nmtui命令来配置网卡吧：<br>1.执行nmtui命令来运行网络配置工具<br><code>[root@localhost ~]# nmtui</code><br>2.选中“编辑一个网卡连接(Edit a connection)”并敲击回车<br><img src="/img/第2步：选择要编辑的网卡-721x491.png" alt=""><br>3.选中要编辑的网卡名称，然后敲击“编辑(Edit)”选项<br><img src="/img/第3步：编辑网卡信息-723x492.png" alt=""><br>4.把网卡Ipv4配置方式改成“手动(Manual)”<br><img src="/img/第4步：将网卡的IPv4配置项设置成手动-724x493.png" alt=""><br>5.然后点击“显示(Show)”按钮来显示信息配置框<br><img src="/img/第5步：敲击Ipv4配置项右侧的Show-723x492.png" alt=""><br>6.填写入IP地址和网关信息<br><img src="/img/第6步：填入IP地址信息-726x494.png" alt=""><br>7.点击网卡配置框最下面的<ok>确认按钮来保存配置<br><img src="/img/第7步：敲击最下面的OK-721x491.png" alt=""><br>8.点击界面最下面的<quit>来退出网卡编辑工具<br><img src="/img/第8步：确认信息填写正确后退出-724x493.png" alt=""></quit></ok></p>
+<p>虽然配置Linux系统网卡的步骤到此就已经可以结束了，但有时在安装红帽RHEL7系统的时候默认没有激活网卡，如果真遇到了这种情况也不用担心，只需要使用vim编辑器来将网卡配置文件中的ONBOOT参数修改成yes就可以保证网卡会在系统重启后依然生效了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# vim /etc/sysconfig/network-scripts/ifcfg-eno16777728</div><div class="line">TYPE=Ethernet</div><div class="line">BOOTPROTO=none</div><div class="line">DEFROUTE=yes</div><div class="line">IPV4_FAILURE_FATAL=no</div><div class="line">IPV6INIT=yes</div><div class="line">IPV6_AUTOCONF=yes</div><div class="line">IPV6_DEFROUTE=yes</div><div class="line">IPV6_FAILURE_FATAL=no</div><div class="line">NAME=eno16777728</div><div class="line">UUID=b6dd5c6f-2b82-49c2-b218-bea21c5c9ae2</div><div class="line">ONBOOT=yes  --！！！</div><div class="line">HWADDR=00:0C:29:0E:6A:AC</div><div class="line">IPADDR0=192.168.139.128</div><div class="line">PREFIX0=24</div><div class="line">IPV6_PEERDNS=yes</div><div class="line">IPV6_PEERROUTES=yes</div></pre></td></tr></table></figure></p>
+<p>Linux系统的服务配置文件修改过后并不会对服务程序立即产生效果，要想让服务程序获取到最新的配置文件内容，咱们还需要手动的重启一下相应的服务~然后就能看到网络畅通了：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# systemctl restart network</div><div class="line">[root@localhost ~]# ping -c 4 192.168.139.128</div><div class="line">PING 192.168.139.128 (192.168.139.128) 56(84) bytes of data.</div><div class="line">64 bytes from 192.168.139.128: icmp_seq=1 ttl=64 time=0.081 ms</div><div class="line">64 bytes from 192.168.139.128: icmp_seq=2 ttl=64 time=0.046 ms</div><div class="line">64 bytes from 192.168.139.128: icmp_seq=3 ttl=64 time=0.047 ms</div><div class="line">64 bytes from 192.168.139.128: icmp_seq=4 ttl=64 time=0.029 ms</div><div class="line"></div><div class="line">--- 192.168.139.128 ping statistics ---</div><div class="line">4 packets transmitted, 4 received, 0% packet loss, time 2999ms</div><div class="line">rtt min/avg/max/mdev = 0.029/0.050/0.081/0.020 ms</div></pre></td></tr></table></figure></p>
+<h4 id="创建网络会话"><a href="#创建网络会话" class="headerlink" title="创建网络会话"></a>创建网络会话</h4><p>在红帽系统中一直默认使用这NetworkManager服务来提供网络服务，这是一种动态管理配置网络的守护进程服务，能够让网络设备连接保持工作状态，可以使用类似nmcli的命令来管理NetworkManager服务。nmcli命令是一款基于命令行终端的网卡配置管理工具，虽然功能强大但是参数复杂，它不仅能够轻松地查看网卡信息或网络状态，还可以管理网卡会话功能，更能够查看网络设备的具体详细信息：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# nmcli connection show</div><div class="line">NAME         UUID                                  TYPE            DEVICE      </div><div class="line">eno16777728  b6dd5c6f-2b82-49c2-b218-bea21c5c9ae2  802-3-ethernet  eno16777728</div><div class="line">[root@localhost ~]# nmcli con show eno16777728</div><div class="line">connection.id:                          eno16777728</div><div class="line">connection.uuid:                        b6dd5c6f-2b82-49c2-b218-bea21c5c9ae2</div><div class="line">connection.interface-name:              --</div><div class="line">connection.type:                        802-3-ethernet</div><div class="line">connection.autoconnect:                 yes</div><div class="line">connection.timestamp:                   1505911856</div><div class="line">connection.read-only:                   no</div><div class="line">connection.permissions:                 </div><div class="line">connection.zone:                        --</div><div class="line">connection.master:                      --</div><div class="line">connection.slave-type:                  --</div><div class="line">connection.secondaries:                 </div><div class="line">connection.gateway-ping-timeout:        0</div><div class="line">......</div></pre></td></tr></table></figure></p>
+<p>另外在红帽RHEL7系统中的网卡服务已经支持多会话技术了，这个功能非常类似FireWalld防火墙服务中的zone区域技术，让用户能够在多个配置文件中快速切换。比如白天需要拿着笔记本电脑去公司上班，下午去咖啡厅休息一下，然后晚上再把笔记本电脑拿回到家中，如果在公司上班工作的时候是需要手工指定网卡IP地址，而晚上回家后用无线路由器是DHCP自动分配网卡IP地址，对传统网卡服务这样改来改去一定会很麻烦，但是使用了网卡会话功能就不一样了，咱们只需要在不同的使用环境中激活相应的会话服务，就能对网卡参数进行整体性的自动切换了。</p>
+<p>可以使用nmcli命令将在公司上班时的网卡会话叫做company，而在家里的网卡会话叫做house，然后按照connection(会话),add(添加动作),con-name(会话名称),type(网卡类型),ifname(网卡名称)的格式来创建网卡会话就可以了，例如依次创建公司和家庭的网卡会话：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# nmcli connection add con-name company ifname eno16777728 autoconnect no type ethernet ip4 192.168.139.128/24 gw4 192.168.139.1</div><div class="line">Connection &apos;company&apos; (c0ec1b4a-6de3-47f1-9c2c-5c92ec69b7a2) successfully added.</div><div class="line">[root@localhost ~]# nmcli connection add con-name house type ethernet ifname eno16777728</div><div class="line">Connection &apos;house&apos; (5bb6fe21-8b5e-467d-b2d4-27ca6f8fd9b0) successfully added.</div></pre></td></tr></table></figure></p>
+<p>成功创建网卡会话后就可以使用nmcli命令来查看到所有的网卡会话列表了：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# nmcli connection show</div><div class="line">NAME         UUID                                  TYPE            DEVICE      </div><div class="line">house        5bb6fe21-8b5e-467d-b2d4-27ca6f8fd9b0  802-3-ethernet  --          </div><div class="line">company      c0ec1b4a-6de3-47f1-9c2c-5c92ec69b7a2  802-3-ethernet  --          </div><div class="line">eno16777728  b6dd5c6f-2b82-49c2-b218-bea21c5c9ae2  802-3-ethernet  eno16777728</div></pre></td></tr></table></figure></p>
+<p>nmcli命令配置过的网卡会话和参数会直接写入到配置文件中永久生效，这样晚上回到家中后顺手把house居家的网卡会话启用，就可以让网卡设备自动的从无线路由器中获取到IP地址啦，当然如果同学们是在使用虚拟机软件的话，请像如图9-9所示操作一下，把虚拟机系统网卡切换成桥接模式，然后记得重启网卡服务哦~：<br><img src="/img/设置虚拟机网卡的模式.png" alt=""></p>
 
       
     </div>
@@ -650,8 +453,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/sakura-hly.github.io/2017/09/12/首页/" rel="next" title="My Linux Blog">
-                <i class="fa fa-chevron-left"></i> My Linux Blog
+              <a href="/sakura-hly.github.io/2017/09/20/JDK1.8源码学习-4/" rel="next" title="JDK1.8源码学习-集合框架">
+                <i class="fa fa-chevron-left"></i> JDK1.8源码学习-集合框架
               </a>
             
           </div>
@@ -660,8 +463,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/sakura-hly.github.io/2017/09/12/Linux基础课程02/" rel="prev" title="基础课程02">
-                基础课程02 <i class="fa fa-chevron-right"></i>
+              <a href="/sakura-hly.github.io/2017/09/21/Innodb索引和B-树/" rel="prev" title="Innodb索引和B+树">
+                Innodb索引和B+树 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -838,7 +641,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#重置root用户密码"><span class="nav-number">1.</span> <span class="nav-text">重置root用户密码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RPM红帽软件包"><span class="nav-number">2.</span> <span class="nav-text">RPM红帽软件包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Yum软件仓库"><span class="nav-number">3.</span> <span class="nav-text">Yum软件仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Systemd初始化进程"><span class="nav-number">4.</span> <span class="nav-text">Systemd初始化进程</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置网卡服务"><span class="nav-number">1.</span> <span class="nav-text">配置网卡服务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#配置网卡参数"><span class="nav-number">1.1.</span> <span class="nav-text">配置网卡参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建网络会话"><span class="nav-number">1.2.</span> <span class="nav-text">创建网络会话</span></a></li></ol></li></ol></div>
             
 
           </div>
