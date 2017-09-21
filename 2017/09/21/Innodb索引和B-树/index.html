@@ -112,7 +112,7 @@
 <meta property="og:image" content="http://www.niceru.com/wp-content/uploads/2013/09/7-600x296.png">
 <meta property="og:image" content="http://yoursite.com/img/删除键值60.png">
 <meta property="og:image" content="http://www.niceru.com/wp-content/uploads/2013/09/8.png">
-<meta property="og:updated_time" content="2017-09-21T11:47:02.860Z">
+<meta property="og:updated_time" content="2017-09-21T11:49:42.921Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Innodb索引和B+树">
 <meta name="twitter:description" content="InnoDB 存储引擎在绝大多数情况下使用 B+ 树建立索引，这是关系型数据库中查找最为常用和有效的索引。">
@@ -481,7 +481,7 @@
 <p>接着我们删除键值为25的记录，这也是第一种情况，但是该值还是Index Page中的值，因此在删除Leaf Page中25的值后，还应将25的右兄弟节点的28更新到Page Index中，最后可得到图。<br><img src="http://www.niceru.com/wp-content/uploads/2013/09/7-600x296.png" alt=""><br>图7 删除键值28</p>
 <p>最后我们来看删除键值为60的情况，删除Leaf Page中键值为60的记录后，填充因子小于50%，这时需要做合并操作，同样，在删除Index Page中相关记录后需要做Index Page的合并操作，最后得到图。<br><img src="/img/删除键值60.png" alt=""></p>
 <hr>
-<h3 id="三、B-树索引介绍"><a href="#三、B-树索引介绍" class="headerlink" title="三、B+树索引介绍"></a>三、B+树索引介绍</h3><p>B+树索引的本质是B+树在数据库中的实现。但是B+树有一个特点是高扇出性，因此在数据库中，B+树的高度一般在2到3层。也就是说查找某一键值的记录，最多只需要2到3次IO开销。按磁盘每秒100次IO来计算，查询时间只需0.0.2到0.03秒。</p>
+<h3 id="B-树索引介绍"><a href="#B-树索引介绍" class="headerlink" title="B+树索引介绍"></a>B+树索引介绍</h3><p>B+树索引的本质是B+树在数据库中的实现。但是B+树有一个特点是高扇出性，因此在数据库中，B+树的高度一般在2到3层。也就是说查找某一键值的记录，最多只需要2到3次IO开销。按磁盘每秒100次IO来计算，查询时间只需0.0.2到0.03秒。</p>
 <p>数据库中B+索引分为聚集索引（clustered index）和非聚集索引（secondary index）。这两种索引的共同点是内部都是B+树，高度都是平衡的，叶节点存放着所有数据。不同点是叶节点是否存放着一整行数据。</p>
 <p><strong>(1) 聚集索引</strong><br>Innodb存储引擎表是索引组织表，即表中数据按主键顺序存放。而聚集索引就是按每张表的主键构造一棵B+树，并且叶节点存放整张表的行记录数据。每张表只能有一个聚集索引（一个主键）。<br>聚集索引的另一个好处是它对于主键的排序查找和范围的速度非常快，叶节点的数据就是我们要找的数据。</p>
 <p>主键排序查找：例如我们要找出最新的10位女生，由于B+树是双项链表，我们可以迅速找到最后一个页，并取出10条记录，我们用Explain进行分析：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">explain select * from girl order by id desc limit 10</div><div class="line">*************************** 1. row ***************************</div><div class="line">           id: 1</div><div class="line">  select_type: SIMPLE</div><div class="line">        table: girl</div><div class="line">         type: index</div><div class="line">possible_keys: NULL</div><div class="line">          key: PRIMARY</div><div class="line">      key_len: 4</div><div class="line">          ref: NULL</div><div class="line">         rows: 10</div><div class="line">        Extra:</div><div class="line">1 row in set (0.00 sec)</div></pre></td></tr></table></figure></p>
@@ -736,7 +736,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Innodb存储引擎索引概述"><span class="nav-number">1.</span> <span class="nav-text">1.Innodb存储引擎索引概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-理解B-树算法"><span class="nav-number">2.</span> <span class="nav-text">2.理解B+树算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、B-树索引介绍"><span class="nav-number">3.</span> <span class="nav-text">三、B+树索引介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#B-树索引的使用"><span class="nav-number">4.</span> <span class="nav-text">B+树索引的使用</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Innodb存储引擎索引概述"><span class="nav-number">1.</span> <span class="nav-text">1.Innodb存储引擎索引概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-理解B-树算法"><span class="nav-number">2.</span> <span class="nav-text">2.理解B+树算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#B-树索引介绍"><span class="nav-number">3.</span> <span class="nav-text">B+树索引介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#B-树索引的使用"><span class="nav-number">4.</span> <span class="nav-text">B+树索引的使用</span></a></li></ol></div>
             
 
           </div>
