@@ -79,7 +79,7 @@
 <link href="/sakura-hly.github.io/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="jdk1.8,String," />
+  <meta name="keywords" content="jdk1.8,集合," />
 
 
 
@@ -95,18 +95,18 @@
 
 
 
-<meta name="description" content="在编写JAVA代码的过程中有时要频繁地对字符串进行拼接，如果直接用”+”拼接的话会建立很多的String型对象，严重的话会对服务器资源和性能造成不小的影响；(其实在jdk1.5之后，String“+”拼接在底层已经用StringBuilder实现了)而使用StringBuilder和StringBuffer能解决以上问题。">
-<meta name="keywords" content="jdk1.8,String">
+<meta name="description" content="LinkedList底层用链表实现，在添加，删除元素的时候时间复杂度为O(1)。">
+<meta name="keywords" content="jdk1.8,集合">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JDK1-8源码学习-StringBUilder，StringBUffer">
-<meta property="og:url" content="http://yoursite.com/2017/09/19/JDK1.8源码学习-2/index.html">
+<meta property="og:title" content="JDK1.8源码学习-LinkedList">
+<meta property="og:url" content="http://yoursite.com/2017/10/11/JDK1-8源码学习-6/index.html">
 <meta property="og:site_name" content="破晓">
-<meta property="og:description" content="在编写JAVA代码的过程中有时要频繁地对字符串进行拼接，如果直接用”+”拼接的话会建立很多的String型对象，严重的话会对服务器资源和性能造成不小的影响；(其实在jdk1.5之后，String“+”拼接在底层已经用StringBuilder实现了)而使用StringBuilder和StringBuffer能解决以上问题。">
+<meta property="og:description" content="LinkedList底层用链表实现，在添加，删除元素的时候时间复杂度为O(1)。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-09-19T07:18:00.758Z">
+<meta property="og:updated_time" content="2017-10-11T14:50:20.417Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JDK1-8源码学习-StringBUilder，StringBUffer">
-<meta name="twitter:description" content="在编写JAVA代码的过程中有时要频繁地对字符串进行拼接，如果直接用”+”拼接的话会建立很多的String型对象，严重的话会对服务器资源和性能造成不小的影响；(其实在jdk1.5之后，String“+”拼接在底层已经用StringBuilder实现了)而使用StringBuilder和StringBuffer能解决以上问题。">
+<meta name="twitter:title" content="JDK1.8源码学习-LinkedList">
+<meta name="twitter:description" content="LinkedList底层用链表实现，在添加，删除元素的时候时间复杂度为O(1)。">
 
 
 
@@ -136,13 +136,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/09/19/JDK1.8源码学习-2/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/10/11/JDK1-8源码学习-6/"/>
 
 
 
 
 
-  <title>JDK1-8源码学习-StringBUilder，StringBUffer | 破晓</title>
+  <title>JDK1.8源码学习-LinkedList | 破晓</title>
   
 
 
@@ -293,7 +293,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/sakura-hly.github.io/2017/09/19/JDK1.8源码学习-2/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/sakura-hly.github.io/2017/10/11/JDK1-8源码学习-6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="caijy">
@@ -310,7 +310,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">JDK1-8源码学习-StringBUilder，StringBUffer</h1>
+          <h1 class="post-title" itemprop="name headline">JDK1.8源码学习-LinkedList</h1>
         
 
         <div class="post-meta">
@@ -322,8 +322,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-19T13:57:09+08:00">
-                2017-09-19
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-10-11T20:45:08+08:00">
+                2017-10-11
               </time>
             
 
@@ -363,8 +363,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/sakura-hly.github.io/2017/09/19/JDK1.8源码学习-2/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count fb-comments-count" data-href="http://yoursite.com/2017/09/19/JDK1.8源码学习-2/" itemprop="commentCount">0</span> comments
+                <a href="/sakura-hly.github.io/2017/10/11/JDK1-8源码学习-6/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count fb-comments-count" data-href="http://yoursite.com/2017/10/11/JDK1-8源码学习-6/" itemprop="commentCount">0</span> comments
                 </a>
               </span>
             
@@ -372,7 +372,7 @@
 
           
           
-             <span id="/sakura-hly.github.io/2017/09/19/JDK1.8源码学习-2/" class="leancloud_visitors" data-flag-title="JDK1-8源码学习-StringBUilder，StringBUffer">
+             <span id="/sakura-hly.github.io/2017/10/11/JDK1-8源码学习-6/" class="leancloud_visitors" data-flag-title="JDK1.8源码学习-LinkedList">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -403,18 +403,10 @@
       
 
       
-        <p>在编写JAVA代码的过程中有时要频繁地对字符串进行拼接，如果直接用”+”拼接的话会建立很多的String型对象，严重的话会对服务器资源和性能造成不小的影响；(其实在jdk1.5之后，String“+”拼接在底层已经用StringBuilder实现了)而使用StringBuilder和StringBuffer能解决以上问题。<br><a id="more"></a></p>
-<h3 id="AbsractStringBuilder"><a href="#AbsractStringBuilder" class="headerlink" title="AbsractStringBuilder"></a>AbsractStringBuilder</h3><p>这是jdk1.8中对StringBuilder的声明，可以看到也用final修饰了，那么为什么我们还说它是可变类呢，注意到它继承了AbstractStringBuilder，关键就是这个类。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public final class StringBuilder</div><div class="line">    extends AbstractStringBuilder</div><div class="line">    implements java.io.Serializable, CharSequence</div><div class="line">&#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>我们重点看到AbstractStringBuilder的append方法，有很多，选取其中一个：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">public AbstractStringBuilder append(String str) &#123;</div><div class="line">    if (str == null)</div><div class="line">        return appendNull();</div><div class="line">    int len = str.length();</div><div class="line">    //先扩大自身容量</div><div class="line">    ensureCapacityInternal(count + len);</div><div class="line">    //调用getChars()将str拼接/复制到自身后面</div><div class="line">    str.getChars(0, len, value, count);</div><div class="line">    count += len;</div><div class="line">    return this;</div><div class="line">&#125;</div><div class="line">public void getChars(int srcBegin, int srcEnd, char[] dst, int dstBegin)</div><div class="line">&#123;</div><div class="line">    if (srcBegin &lt; 0)</div><div class="line">        throw new StringIndexOutOfBoundsException(srcBegin);</div><div class="line">    if ((srcEnd &lt; 0) || (srcEnd &gt; count))</div><div class="line">        throw new StringIndexOutOfBoundsException(srcEnd);</div><div class="line">    if (srcBegin &gt; srcEnd)</div><div class="line">        throw new StringIndexOutOfBoundsException(&quot;srcBegin &gt; srcEnd&quot;);</div><div class="line">    System.arraycopy(value, srcBegin, dst, dstBegin, srcEnd - srcBegin);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>从以上代码可以看到StringBuilder的append实际上是调用System.arraycopy()方法的，而且这个方法是一个native方法，从指定源数组中复制一个数组，复制从指定的位置开始， 到目标数组的指定位置结束，这个方法效率也不错。</p>
-<p>还有一个delete方法,从StringBuilder中删除从start到end的字符：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">public AbstractStringBuilder delete(int start, int end) &#123;</div><div class="line">    if (start &lt; 0)</div><div class="line">        throw new StringIndexOutOfBoundsException(start);</div><div class="line">    if (end &gt; count)</div><div class="line">        end = count;</div><div class="line">    if (start &gt; end)</div><div class="line">        throw new StringIndexOutOfBoundsException();</div><div class="line">    int len = end - start;</div><div class="line">    if (len &gt; 0) &#123;</div><div class="line">        //实质是调用System.arraycopy对自身进行复制</div><div class="line">        System.arraycopy(value, start+len, value, start, count-end);</div><div class="line">        count -= len;</div><div class="line">    &#125;</div><div class="line">    return this;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>reverse方法，这是String没有的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">public AbstractStringBuilder reverse() &#123;</div><div class="line">    boolean hasSurrogates = false;</div><div class="line">    int n = count - 1;</div><div class="line">    for (int j = (n-1) &gt;&gt; 1; j &gt;= 0; j--) &#123;</div><div class="line">        int k = n - j;</div><div class="line">        char cj = value[j];</div><div class="line">        char ck = value[k];</div><div class="line">        value[j] = ck;</div><div class="line">        value[k] = cj;</div><div class="line">        //这里是判断每个字符是否在Character.MIN_SURROGATE(\ud800)和Character.MAX_SURROGATE(\udfff)之间</div><div class="line">        if (Character.isSurrogate(cj) ||</div><div class="line">            Character.isSurrogate(ck)) &#123;</div><div class="line">            hasSurrogates = true;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    if (hasSurrogates) &#123;</div><div class="line">        reverseAllValidSurrogatePairs();</div><div class="line">    &#125;</div><div class="line">    return this;</div><div class="line">&#125;</div><div class="line"></div><div class="line">private void reverseAllValidSurrogatePairs() &#123;//反转回有效代理对</div><div class="line">    for (int i = 0; i &lt; count - 1; i++) &#123;</div><div class="line">        char c2 = value[i];</div><div class="line">        if (Character.isLowSurrogate(c2)) &#123;</div><div class="line">            char c1 = value[i + 1];</div><div class="line">            if (Character.isHighSurrogate(c1)) &#123;</div><div class="line">                //将i和i+1位字符互换</div><div class="line">                //高代理+低代理组合表示一个字符</div><div class="line">                value[i++] = c1;</div><div class="line">                value[i] = c2;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>这里反转还加了这些判断，为什么这样做？首先来看一个概念，下面这段话摘自知乎：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Surrogate 這個概念，不是來自 Java 語言，而是來自 Unicode 編碼方式之一 UTF-16 。</div><div class="line">簡而言之，Java 語言內部的字符信息是使用 UTF-16 編碼。因為，char 這個類型是 16-bit 的。它可以有65536種取值，即65536個編號，每個編號可以代表1種字符。</div><div class="line">但是，Unicode 包含的字符已經遠遠超過65536個。那，編號大於65536的，還要用 16-bit 編碼，該怎麼辦？</div><div class="line">於是，Unicode 標準制定組想出的辦法就是，從這65536個編號裏，拿出2048個，規定它們是「Surrogates」，讓它們兩個為一組，來代表編號大於65536的那些字符。</div><div class="line">更具體地，編號為 U+D800 至 U+DBFF 的規定為「High Surrogates」，共1024個。編號為 U+DC00 至 U+DFFF 的規定為「Low Surrogates」，也是1024個。它們兩兩組合出現，就又可以多表示1048576種字符。</div></pre></td></tr></table></figure></p>
-<hr>
-<h3 id="StringBuilder"><a href="#StringBuilder" class="headerlink" title="StringBuilder"></a>StringBuilder</h3><p>StringBuilder的大多数方法都是调用父类AbstractStringBuilder的方法，只是自己增加了writeObject()和readObject()的用于序列化/反序列化的方法。</p>
-<hr>
-<h3 id="StringBuffer"><a href="#StringBuffer" class="headerlink" title="StringBuffer"></a>StringBuffer</h3><p>StringBuffer和StringBuilder的代码大致相同，只是在绝大多数方法前面都加了synchronized关键字，所以它是线程安全的，代价是性能低下。</p>
-<p>相比而言StringBuilder是非线程安全的，性能很好。</p>
+        <p>LinkedList底层用链表实现，在添加，删除元素的时候时间复杂度为O(1)。<br><a id="more"></a><br>其中有一个内部类叫Node，节点类<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">private static class Node&lt;E&gt; &#123;</div><div class="line">    E item;</div><div class="line">    Node&lt;E&gt; next;</div><div class="line">    Node&lt;E&gt; prev;</div><div class="line"></div><div class="line">    Node(Node&lt;E&gt; prev, E element, Node&lt;E&gt; next) &#123;</div><div class="line">        this.item = element;</div><div class="line">        this.next = next;</div><div class="line">        this.prev = prev;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>可以看出是一个双向链表。</p>
+<p><strong>添加元素add(E e)</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">public boolean add(E e) &#123;</div><div class="line">    linkLast(e);</div><div class="line">    return true;</div><div class="line">&#125;</div><div class="line">void linkLast(E e) &#123;</div><div class="line">    final Node&lt;E&gt; l = last;</div><div class="line">    final Node&lt;E&gt; newNode = new Node&lt;&gt;(l, e, null);</div><div class="line">    last = newNode; //将新节点插入到末尾</div><div class="line">    if (l == null) //如果链表没有元素</div><div class="line">        first = newNode;</div><div class="line">    else</div><div class="line">        l.next = newNode;</div><div class="line">    size++;</div><div class="line">    modCount++;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>接下来看一下它的迭代器：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div></pre></td><td class="code"><pre><div class="line">private class ListItr implements ListIterator&lt;E&gt; &#123;</div><div class="line">    private Node&lt;E&gt; lastReturned = null; //上次返回的节点</div><div class="line">    private Node&lt;E&gt; next; //下一个节点的引用</div><div class="line">    private int nextIndex; //下一个节点的index</div><div class="line">    private int expectedModCount = modCount; //记录修改次数，用于快速失败检测</div><div class="line"></div><div class="line">    ListItr(int index) &#123;</div><div class="line">        // assert isPositionIndex(index);</div><div class="line">        next = (index == size) ? null : node(index);</div><div class="line">        nextIndex = index;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public boolean hasNext() &#123;</div><div class="line">        return nextIndex &lt; size;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public E next() &#123; //获取下一个节点</div><div class="line">        checkForComodification(); //检测链表是否被修改</div><div class="line">        if (!hasNext()) //遍历结束</div><div class="line">            throw new NoSuchElementException();</div><div class="line"></div><div class="line">        lastReturned = next;</div><div class="line">        next = next.next;</div><div class="line">        nextIndex++;</div><div class="line">        return lastReturned.item;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public boolean hasPrevious() &#123;</div><div class="line">        return nextIndex &gt; 0;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public E previous() &#123; //获取前一个节点</div><div class="line">        checkForComodification();</div><div class="line">        if (!hasPrevious())</div><div class="line">            throw new NoSuchElementException();</div><div class="line"></div><div class="line">        lastReturned = next = (next == null) ? last : next.prev;</div><div class="line">        nextIndex--;</div><div class="line">        return lastReturned.item;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public int nextIndex() &#123;</div><div class="line">        return nextIndex;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public int previousIndex() &#123;</div><div class="line">        return nextIndex - 1;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void remove() &#123; //移除当前Iterator持有的节点</div><div class="line">        checkForComodification();</div><div class="line">        if (lastReturned == null)</div><div class="line">            throw new IllegalStateException();</div><div class="line"></div><div class="line">        Node&lt;E&gt; lastNext = lastReturned.next;</div><div class="line">        unlink(lastReturned); //从链表中删除该节点</div><div class="line">        if (next == lastReturned)</div><div class="line">            next = lastNext; //修改next指针</div><div class="line">        else</div><div class="line">            nextIndex--;</div><div class="line">        lastReturned = null;</div><div class="line">        expectedModCount++;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void set(E e) &#123; //修改当前节点的内容</div><div class="line">        if (lastReturned == null)</div><div class="line">            throw new IllegalStateException();</div><div class="line">        checkForComodification();</div><div class="line">        lastReturned.item = e;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void add(E e) &#123; //在当前持有节点后面插入新节点</div><div class="line">        checkForComodification();</div><div class="line">        lastReturned = null;</div><div class="line">        if (next == null)</div><div class="line">            linkLast(e);</div><div class="line">        else</div><div class="line">            linkBefore(e, next);</div><div class="line">        nextIndex++;</div><div class="line">        expectedModCount++;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void forEachRemaining(Consumer&lt;? super E&gt; action) &#123;</div><div class="line">        Objects.requireNonNull(action);</div><div class="line">        while (modCount == expectedModCount &amp;&amp; nextIndex &lt; size) &#123;</div><div class="line">            action.accept(next.item);</div><div class="line">            lastReturned = next;</div><div class="line">            next = next.next;</div><div class="line">            nextIndex++;</div><div class="line">        &#125;</div><div class="line">        checkForComodification();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    final void checkForComodification() &#123;</div><div class="line">        if (modCount != expectedModCount)</div><div class="line">            throw new ConcurrentModificationException();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -434,7 +426,7 @@
           
             <a href="/sakura-hly.github.io/tags/jdk1-8/" rel="tag"># jdk1.8</a>
           
-            <a href="/sakura-hly.github.io/tags/String/" rel="tag"># String</a>
+            <a href="/sakura-hly.github.io/tags/集合/" rel="tag"># 集合</a>
           
         </div>
       
@@ -447,8 +439,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/sakura-hly.github.io/2017/09/19/JDK1.8源码学习-1/" rel="next" title="JDK1.8源码学习-String">
-                <i class="fa fa-chevron-left"></i> JDK1.8源码学习-String
+              <a href="/sakura-hly.github.io/2017/10/11/JDK1-8源码学习-5/" rel="next" title="JDK1.8源码学习-ArrayList">
+                <i class="fa fa-chevron-left"></i> JDK1.8源码学习-ArrayList
               </a>
             
           </div>
@@ -456,10 +448,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/sakura-hly.github.io/2017/09/19/JDK1.8源码学习-3/" rel="prev" title="JDK1-8源码学习-Integer">
-                JDK1-8源码学习-Integer <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -552,17 +540,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           
             <img class="site-author-image" itemprop="image"
@@ -627,22 +606,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#AbsractStringBuilder"><span class="nav-number">1.</span> <span class="nav-text">AbsractStringBuilder</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#StringBuilder"><span class="nav-number">2.</span> <span class="nav-text">StringBuilder</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#StringBuffer"><span class="nav-number">3.</span> <span class="nav-text">StringBuffer</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
