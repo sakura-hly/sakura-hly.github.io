@@ -111,7 +111,9 @@
 <meta property="og:image" content="http://yoursite.com/img/第7步：敲击最下面的OK-721x491.png">
 <meta property="og:image" content="http://yoursite.com/img/第8步：确认信息填写正确后退出-724x493.png">
 <meta property="og:image" content="http://yoursite.com/img/设置虚拟机网卡的模式.png">
-<meta property="og:updated_time" content="2017-09-20T12:59:48.482Z">
+<meta property="og:image" content="http://yoursite.com/img/编辑虚拟机设置，添加网络适配器。.png">
+<meta property="og:image" content="http://yoursite.com/img/保证两块网卡的连接类型都是相同的.png">
+<meta property="og:updated_time" content="2017-09-21T13:17:12.843Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基础课程09">
 <meta name="twitter:description" content="这一节我们来学习用nmtui命令配置网卡参数，通过nmcli命令查看网卡网络信息并管理网卡会话服务，让您能够在不同工作场景中快速地切换网卡网络参数，以及学习手工绑定mode6模式双网卡来实现对网络的负载均衡及冗余技术。">
@@ -422,7 +424,18 @@
 <p>另外在红帽RHEL7系统中的网卡服务已经支持多会话技术了，这个功能非常类似FireWalld防火墙服务中的zone区域技术，让用户能够在多个配置文件中快速切换。比如白天需要拿着笔记本电脑去公司上班，下午去咖啡厅休息一下，然后晚上再把笔记本电脑拿回到家中，如果在公司上班工作的时候是需要手工指定网卡IP地址，而晚上回家后用无线路由器是DHCP自动分配网卡IP地址，对传统网卡服务这样改来改去一定会很麻烦，但是使用了网卡会话功能就不一样了，咱们只需要在不同的使用环境中激活相应的会话服务，就能对网卡参数进行整体性的自动切换了。</p>
 <p>可以使用nmcli命令将在公司上班时的网卡会话叫做company，而在家里的网卡会话叫做house，然后按照connection(会话),add(添加动作),con-name(会话名称),type(网卡类型),ifname(网卡名称)的格式来创建网卡会话就可以了，例如依次创建公司和家庭的网卡会话：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# nmcli connection add con-name company ifname eno16777728 autoconnect no type ethernet ip4 192.168.139.128/24 gw4 192.168.139.1</div><div class="line">Connection &apos;company&apos; (c0ec1b4a-6de3-47f1-9c2c-5c92ec69b7a2) successfully added.</div><div class="line">[root@localhost ~]# nmcli connection add con-name house type ethernet ifname eno16777728</div><div class="line">Connection &apos;house&apos; (5bb6fe21-8b5e-467d-b2d4-27ca6f8fd9b0) successfully added.</div></pre></td></tr></table></figure></p>
 <p>成功创建网卡会话后就可以使用nmcli命令来查看到所有的网卡会话列表了：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# nmcli connection show</div><div class="line">NAME         UUID                                  TYPE            DEVICE      </div><div class="line">house        5bb6fe21-8b5e-467d-b2d4-27ca6f8fd9b0  802-3-ethernet  --          </div><div class="line">company      c0ec1b4a-6de3-47f1-9c2c-5c92ec69b7a2  802-3-ethernet  --          </div><div class="line">eno16777728  b6dd5c6f-2b82-49c2-b218-bea21c5c9ae2  802-3-ethernet  eno16777728</div></pre></td></tr></table></figure></p>
-<p>nmcli命令配置过的网卡会话和参数会直接写入到配置文件中永久生效，这样晚上回到家中后顺手把house居家的网卡会话启用，就可以让网卡设备自动的从无线路由器中获取到IP地址啦，当然如果同学们是在使用虚拟机软件的话，请像如图9-9所示操作一下，把虚拟机系统网卡切换成桥接模式，然后记得重启网卡服务哦~：<br><img src="/img/设置虚拟机网卡的模式.png" alt=""></p>
+<p>nmcli命令配置过的网卡会话和参数会直接写入到配置文件中永久生效，这样晚上回到家中后顺手把house居家的网卡会话启用，就可以让网卡设备自动的从无线路由器中获取到IP地址啦，当然如果同学们是在使用虚拟机软件的话，请像如图9-9所示操作一下，把虚拟机系统网卡切换成桥接模式，然后记得重启网卡服务哦~：<br><img src="/img/设置虚拟机网卡的模式.png" alt=""><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# nmcli connection up house</div><div class="line">Connection successfully activated (D-Bus active path: /org/freedesktop/NetworkManager/ActiveConnection/2)</div></pre></td></tr></table></figure></p>
+<h4 id="绑定两块网卡"><a href="#绑定两块网卡" class="headerlink" title="绑定两块网卡"></a>绑定两块网卡</h4><p>一般生产环境是必须要保证7*24小时不间断提供网络传输服务的，使用网卡绑定技术不仅能够提高网卡带宽的传输速率，还能在其中一块网卡出现故障时，依然能够保证网络正常使用。简单来说，假设咱们对两块网卡实施了绑定技术，这样在正常工作中它们会共同传输数据，使得网络传输的速度变得更快，但只要其中有一块网卡突然出现了故障，另外一块网卡便会在0.1秒内自动顶替上去，保证数据传输不会中断。</p>
+<p>第1步：在虚拟机中额外添加1块网卡设备，但同学们请一定要保证两块网卡都处在同一个网卡模式下，如图所示，相同网卡模式的设备才可以做网卡绑定实验，否则这两块网卡本身就是不能互相传送数据的。<br><img src="/img/编辑虚拟机设置，添加网络适配器。.png" alt=""><br><img src="/img/保证两块网卡的连接类型都是相同的.png" alt=""></p>
+<p>第2步：通过vim文本编辑器来配置网卡设备的绑定参数，网卡绑定的理论很类似于前面学习的RAID磁盘阵列组，咱们需要先逐个对参与网卡绑定的设备进行“初始设置”，这些原本独立的网卡设备不需要再有自己的IP地址等信息，让它们支持网卡绑定设备就可以了，然后还需要将绑定后的设备取名为bond0以及把IP地址等信息填写进去，这样当用户访问到相应服务的时候，实际上就是由这两块网卡设备共同的在提供服务。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure></p>
+<p>第3步：让内核支持网卡绑定驱动，常见的网卡绑定驱动模式有三种——mode0、mode1和mode6。比如对于一个提供NFS或者SAMBA服务的文件服务器来讲，如果只能提供百兆网络的最大传输速率，但同时下载用户又特别多的情况下，那么网络压力一定是极大的。再比如是一个提供iscsi服务的网络存储服务器，在生产环境中网卡的可靠性是极为重要的，这种情况下就必须同时能够保证网络的传输速率以及网络的安全性，因此比较好的选择就是mode6方案了，因为mode6平衡负载模式能够让两块网卡同时一起工作，当其中一块网卡出现故障后能自动备援，提供了可靠的网络传输保障，并且不需要交换机设备支援。</p>
+<ul>
+<li>mode0平衡负载模式：时两块网卡均工作，且自动备援，采用交换机设备支援。</li>
+<li>mode1自动备援模式：平时只有一块网卡工作，故障后自动替换为另外的网卡。</li>
+<li>mode6平衡负载模式：平时两块网卡均工作，且自动备援，无须交换机设备支援。</li>
+</ul>
+<p>使用vim文本编辑器来创建一个网卡绑定内核驱动文件，使得bond0网卡设备能够支持绑定技术（bonding），同时定义网卡绑定为mode6平衡负载模式，且当出现故障时自动切换时间为100毫秒：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">```</div><div class="line">第4步：重启网络服务后网卡绑定操作即可顺利成功，正常情况下只有bond0网卡才会有IP地址等信息：</div></pre></td></tr></table></figure></p>
+<p>```</p>
 
       
     </div>
@@ -534,6 +547,8 @@
           
   <div class="comments" id="comments">
     
+      <div id="uyan_frame"></div>
+    
   </div>
 
 
@@ -641,7 +656,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置网卡服务"><span class="nav-number">1.</span> <span class="nav-text">配置网卡服务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#配置网卡参数"><span class="nav-number">1.1.</span> <span class="nav-text">配置网卡参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建网络会话"><span class="nav-number">1.2.</span> <span class="nav-text">创建网络会话</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置网卡服务"><span class="nav-number">1.</span> <span class="nav-text">配置网卡服务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#配置网卡参数"><span class="nav-number">1.1.</span> <span class="nav-text">配置网卡参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建网络会话"><span class="nav-number">1.2.</span> <span class="nav-text">创建网络会话</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#绑定两块网卡"><span class="nav-number">1.3.</span> <span class="nav-text">绑定两块网卡</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -798,6 +813,14 @@
 
 
 
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2146277"></script>
+      <!-- UY END -->
+    
   
 
 
