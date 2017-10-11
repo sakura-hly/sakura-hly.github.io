@@ -79,7 +79,7 @@
 <link href="/sakura-hly.github.io/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="jdk1.8,集合," />
 
 
 
@@ -95,16 +95,18 @@
 
 
 
-<meta name="description" content="一个Linux菜鸟的博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="破晓">
-<meta property="og:url" content="http://yoursite.com/tags/jdk1-8/index.html">
+<meta name="description" content="ArrayList是很常用的集合类了，底层实现是数组，所以访问效率比较高。">
+<meta name="keywords" content="jdk1.8,集合">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JDK1.8源码学习-ArrayList">
+<meta property="og:url" content="http://yoursite.com/2017/10/11/JDK1-8源码学习-5/index.html">
 <meta property="og:site_name" content="破晓">
-<meta property="og:description" content="一个Linux菜鸟的博客">
+<meta property="og:description" content="ArrayList是很常用的集合类了，底层实现是数组，所以访问效率比较高。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-10-11T12:42:25.161Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="破晓">
-<meta name="twitter:description" content="一个Linux菜鸟的博客">
+<meta name="twitter:title" content="JDK1.8源码学习-ArrayList">
+<meta name="twitter:description" content="ArrayList是很常用的集合类了，底层实现是数组，所以访问效率比较高。">
 
 
 
@@ -134,13 +136,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/jdk1-8/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/10/11/JDK1-8源码学习-5/"/>
 
 
 
 
 
-  <title>Tag: jdk1.8 | 破晓</title>
+  <title>JDK1.8源码学习-ArrayList | 破晓</title>
   
 
 
@@ -169,7 +171,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -277,166 +279,241 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block tag">
-
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>jdk1.8<small>Tag</small>
-        </h1>
-      </div>
-
-      
-        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/sakura-hly.github.io/2017/10/11/JDK1-8源码学习-5/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="caijy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/sakura-hly.github.io/images/dp.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="破晓">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/sakura-hly.github.io/2017/10/11/JDK1-8源码学习-5/" itemprop="url">
-              
-                <span itemprop="name">JDK1.8源码学习-ArrayList</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">JDK1.8源码学习-ArrayList</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-10-11T19:06:21+08:00"
-              content="2017-10-11" >
-          10-11
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-10-11T19:06:21+08:00">
+                2017-10-11
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/sakura-hly.github.io/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/sakura-hly.github.io/2017/10/11/JDK1-8源码学习-5/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count fb-comments-count" data-href="http://yoursite.com/2017/10/11/JDK1-8源码学习-5/" itemprop="commentCount">0</span> comments
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/sakura-hly.github.io/2017/10/11/JDK1-8源码学习-5/" class="leancloud_visitors" data-flag-title="JDK1.8源码学习-ArrayList">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/sakura-hly.github.io/2017/09/20/JDK1.8源码学习-4/" itemprop="url">
-              
-                <span itemprop="name">JDK1.8源码学习-集合框架</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-20T16:44:04+08:00"
-              content="2017-09-20" >
-          09-20
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/sakura-hly.github.io/2017/09/19/JDK1.8源码学习-3/" itemprop="url">
-              
-                <span itemprop="name">JDK1-8源码学习-Integer</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-19T15:38:25+08:00"
-              content="2017-09-19" >
-          09-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/sakura-hly.github.io/2017/09/19/JDK1.8源码学习-2/" itemprop="url">
-              
-                <span itemprop="name">JDK1-8源码学习-StringBUilder，StringBUffer</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-19T13:57:09+08:00"
-              content="2017-09-19" >
-          09-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/sakura-hly.github.io/2017/09/19/JDK1.8源码学习-1/" itemprop="url">
-              
-                <span itemprop="name">JDK1.8源码学习-String</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-19T10:31:14+08:00"
-              content="2017-09-19" >
-          09-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+        <p>ArrayList是很常用的集合类了，底层实现是数组，所以访问效率比较高。<br><a id="more"></a><br>来学习一下重要的属性和方法。</p>
+<p>ArrayList默认的初始化大小是10.<br><code>private static final int DEFAULT_CAPACITY = 10;</code><br>可以分配的最大长度：<br><code>private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;</code></p>
+<p>然后是一系列构造函数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public ArrayList(int initialCapacity) &#123;...&#125;//指定初始化大小</div><div class="line">public ArrayList() &#123;&#125;</div><div class="line">public ArrayList(Collection&lt;? extends E&gt; c) &#123;&#125;</div></pre></td></tr></table></figure></p>
+<p>trimToSize()方法用于将ArrayList固定到实际元素的大小，当动态数组元素确定不在添加的时候，可以调用这个方法来释放空余的内存。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public void trimToSize() &#123;</div><div class="line">        modCount++;//记录修改次数，继承自父类AbstractList：protected transient int modCount = 0;与线程安全有关</div><div class="line">        if (size &lt; elementData.length) &#123;</div><div class="line">            elementData = Arrays.copyOf(elementData, size);</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>add(E e)在尾部增加元素：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public boolean add(E e) &#123;</div><div class="line">    ensureCapacityInternal(size + 1);  // Increments modCount!!</div><div class="line">    elementData[size++] = e;</div><div class="line">    return true;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里还涉及到一个重要的方法ensureCapacityInternal(),确保容量足够，如果不够，会扩容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">private void grow(int minCapacity) &#123;</div><div class="line">    // overflow-conscious code</div><div class="line">    int oldCapacity = elementData.length;</div><div class="line">    int newCapacity = oldCapacity + (oldCapacity &gt;&gt; 1);//新容量为旧容量的1.5倍</div><div class="line">    if (newCapacity - minCapacity &lt; 0)</div><div class="line">        newCapacity = minCapacity;</div><div class="line">    if (newCapacity - MAX_ARRAY_SIZE &gt; 0)</div><div class="line">        newCapacity = hugeCapacity(minCapacity);</div><div class="line">    // minCapacity is usually close to size, so this is a win:</div><div class="line">    elementData = Arrays.copyOf(elementData, newCapacity);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>另外在ArrayList中频繁地调用了System.arraycopy()方法，这是一个native方法，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public static native void arraycopy(Object src,  int  srcPos,</div><div class="line">                                    Object dest, int destPos,</div><div class="line">                                    int length);</div></pre></td></tr></table></figure></p>
+<p>对于一维数组来说，这种复制属于值传递，修改副本不会影响原来的值。对于二维或者一维数组中存放的是对象时，复制结果是一维的引用变量传递给副本的一维数组，修改副本时，会影响原来的数组。</p>
+<p>ArrayList有一个内部类，实际上我们使用迭代器时返回的是这个内部类，实现了常用的hasNext()，next()，remove()。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">private class Itr implements Iterator&lt;E&gt; &#123;</div><div class="line">  int cursor;       // index of next element to return</div><div class="line">  int lastRet = -1; // index of last element returned; -1 if no such</div><div class="line">  int expectedModCount = modCount;</div><div class="line"></div><div class="line">  final void checkForComodification() &#123;</div><div class="line">      if (modCount != expectedModCount)</div><div class="line">          throw new ConcurrentModificationException();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>expectedModCount这个变量与线程安全有关，我们在使用迭代器遍历的时候，如果有其它线程改变了ArrayList的大小，可能引起迭代错误的add()或remove()等危险操作。此时会抛出ConcurrentModificationException异常。</p>
+<p>其它的不常用的方法就不仔细研究了。</p>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/sakura-hly.github.io/tags/jdk1-8/" rel="tag"># jdk1.8</a>
+          
+            <a href="/sakura-hly.github.io/tags/集合/" rel="tag"># 集合</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/sakura-hly.github.io/2017/09/21/Innodb索引和B-树/" rel="next" title="Innodb索引和B+树">
+                <i class="fa fa-chevron-left"></i> Innodb索引和B+树
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+        
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  //with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
 
 
           </div>
@@ -444,6 +521,12 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div id="uyan_frame"></div>
+    
+  </div>
+
 
         </div>
         
@@ -655,6 +738,10 @@
 
 
   
+  <script type="text/javascript" src="/sakura-hly.github.io/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/sakura-hly.github.io/js/src/post-details.js?v=5.1.2"></script>
+
+
 
   
 
@@ -680,6 +767,10 @@
   
     
 
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2146277"></script>
+      <!-- UY END -->
     
   
 
