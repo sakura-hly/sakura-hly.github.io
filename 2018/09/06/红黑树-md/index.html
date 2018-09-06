@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/sakura-hly.github.io/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/sakura-hly.github.io/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/sakura-hly.github.io/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="TreeMap,红黑树," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/sakura-hly.github.io/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="红黑树简介我们知道，二叉搜索树是个很好的数据结构，可以快速地找到一个给定关键字的数据项，并且可以快速地插入和删除数据项。但是二叉搜索树有个很麻烦的问题，如果树中插入的是随机数据，则执行效果很好，但如果插入的是有序或者逆序的数据，那么二叉搜索树的执行速度就变得很慢。因为当插入数值有序时，二叉树就是非平衡的了，排在一条线上，其实就变成了一个链表……">
+<meta name="keywords" content="TreeMap,红黑树">
+<meta property="og:type" content="article">
+<meta property="og:title" content="红黑树.md">
+<meta property="og:url" content="http://yoursite.com/2018/09/06/红黑树-md/index.html">
+<meta property="og:site_name" content="破晓">
+<meta property="og:description" content="红黑树简介我们知道，二叉搜索树是个很好的数据结构，可以快速地找到一个给定关键字的数据项，并且可以快速地插入和删除数据项。但是二叉搜索树有个很麻烦的问题，如果树中插入的是随机数据，则执行效果很好，但如果插入的是有序或者逆序的数据，那么二叉搜索树的执行速度就变得很慢。因为当插入数值有序时，二叉树就是非平衡的了，排在一条线上，其实就变成了一个链表……">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/img/红黑树-变色.png">
+<meta property="og:image" content="http://yoursite.com/img/红黑树-左旋.png">
+<meta property="og:image" content="http://yoursite.com/img/红黑树-左旋动态图.gif">
+<meta property="og:image" content="http://yoursite.com/img/红黑树-右旋.png">
+<meta property="og:image" content="http://yoursite.com/img/红黑树-右旋动态图.gif">
+<meta property="og:updated_time" content="2018-09-06T15:08:44.094Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="红黑树.md">
+<meta name="twitter:description" content="红黑树简介我们知道，二叉搜索树是个很好的数据结构，可以快速地找到一个给定关键字的数据项，并且可以快速地插入和删除数据项。但是二叉搜索树有个很麻烦的问题，如果树中插入的是随机数据，则执行效果很好，但如果插入的是有序或者逆序的数据，那么二叉搜索树的执行速度就变得很慢。因为当插入数值有序时，二叉树就是非平衡的了，排在一条线上，其实就变成了一个链表……">
+<meta name="twitter:image" content="http://yoursite.com/img/红黑树-变色.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/sakura-hly.github.io/',
+    scheme: 'Muse',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/09/06/红黑树-md/"/>
+
+
+
+
+
+  <title>红黑树.md | 破晓</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7f1817ded637839eb4e759c996071a39";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/sakura-hly.github.io/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">破晓</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">弱小和无知不是生存的障碍，傲慢才是。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/sakura-hly.github.io/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/sakura-hly.github.io/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/sakura-hly.github.io/2018/09/06/红黑树-md/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="caijy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/sakura-hly.github.io/images/dp.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="破晓">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">红黑树.md</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-06T20:18:01+08:00">
+                2018-09-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/sakura-hly.github.io/categories/算法，红黑树/" itemprop="url" rel="index">
+                    <span itemprop="name">算法，红黑树</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/sakura-hly.github.io/2018/09/06/红黑树-md/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count fb-comments-count" data-href="http://yoursite.com/2018/09/06/红黑树-md/" itemprop="commentCount">0</span> comments
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/sakura-hly.github.io/2018/09/06/红黑树-md/" class="leancloud_visitors" data-flag-title="红黑树.md">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="红黑树简介"><a href="#红黑树简介" class="headerlink" title="红黑树简介"></a>红黑树简介</h3><p>我们知道，二叉搜索树是个很好的数据结构，可以快速地找到一个给定关键字的数据项，并且可以快速地插入和删除数据项。但是二叉搜索树有个很麻烦的问题，如果树中插入的是随机数据，则执行效果很好，但如果插入的是有序或者逆序的数据，那么二叉搜索树的执行速度就变得很慢。因为当插入数值有序时，二叉树就是非平衡的了，排在一条线上，其实就变成了一个链表……<br><a id="more"></a><br>为了能以较快的时间 O(logN) 来搜索一棵树，需要保证树总是平衡的（或者至少大部分是平衡的），这就是说对树中的每个节点在它左边的后代数目和在它右边的后代数目应该大致相等。红-黑树的就是这样的一棵平衡树，对一个要插入的数据项，插入例程要检查会不会破坏树的特征，如果破坏了，程序就会进行纠正，根据需要改变树的结构，从而保持树的平衡。那么红-黑树都有哪些特征呢？</p>
+<hr>
+<h3 id="1-红黑树的特征"><a href="#1-红黑树的特征" class="headerlink" title="1. 红黑树的特征"></a>1. 红黑树的特征</h3><p>它主要有两个特征： 1.节点都有颜色；2.在插入和删除过程中，要遵循保持这些颜色的不同排列的规则。首先第一个特征很好解决，在节点类中添加一个数据字段，例如 boolean 型变量，以此来表示节点的颜色信息。第二个特征比较复杂，红-黑树有它的几个规则，如果遵循这些规则，那么树就是平衡的。红-黑树的主要规则如下：</p>
+<ol>
+<li>每个节点不是红色就是黑色的</li>
+<li>根节点总是黑色的</li>
+<li>如果节点事红色的，则它的子节点一定事黑色的（反之则不一定）</li>
+<li>从根节点到叶节点或空子节点的每条路径，必须包含相同数目的黑色节点（即相同的黑色高度）</li>
+</ol>
+<p>在红黑树中插入的节点都是红色的，这不是偶然，原因是：插入黑色节点总会改变黑色高度（即违背规则4）。但是插入红色节点只有一半的机会会违背规则3。另外违背规则3比违背规则4要更容易修正。当插入一个新的节点时，可能会破坏这种平衡性，那么红-黑树是如何修正的呢？</p>
+<h3 id="2-平衡树的修正"><a href="#2-平衡树的修正" class="headerlink" title="2. 平衡树的修正"></a>2. 平衡树的修正</h3><p>红黑树主要通过三种方式来修正平衡，变色、左旋和右旋。</p>
+<h4 id="2-1-变色"><a href="#2-1-变色" class="headerlink" title="2.1 变色"></a>2.1 变色</h4><p>变色比较容易理解，因为违背了规则3。假设现在有个节点E，然后插入节点A和节点S，节点A在左子节点，S在右子节点，目前是平衡的。如果此时再插一个节点，那么就不平衡了，因为红色节点的子节点必须为黑色，但是新插入的节点是红色。所以这时候就必须改变节点颜色了。所以我们将根的两个子节点从红色变为黑色（至于为什么都要变，下面插入的时候会详细介绍），将父节点会从黑色变成红色。可以用如下示意图表示一下：<br><img src="/img/红黑树-变色.png" alt=""></p>
+<h4 id="2-2-左旋"><a href="#2-2-左旋" class="headerlink" title="2.2 左旋"></a>2.2 左旋</h4><p>通常左旋操作用于将一个向右倾斜的红色链接旋转为向左链接。示意图如下：<br><img src="/img/红黑树-左旋.png" alt=""></p>
+<p>左旋有个很萌萌哒的动态示意图，可以方便理解：<br><img src="/img/红黑树-左旋动态图.gif" alt=""></p>
+<h4 id="2-3-右旋"><a href="#2-3-右旋" class="headerlink" title="2.3 右旋"></a>2.3 右旋</h4><p>右旋可左旋刚好相反，这里不再赘述，直接看示意图：<br><img src="/img/红黑树-右旋.png" alt=""></p>
+<p>当然咯，右旋也有个萌萌的动态图：<br><img src="/img/红黑树-右旋动态图.gif" alt=""></p>
+<p>这里主要介绍了红黑树的三种修正方式，具体如何修正才是接下来要探讨的问题。</p>
+<h3 id="3-红黑树的操作"><a href="#3-红黑树的操作" class="headerlink" title="3. 红黑树的操作"></a>3. 红黑树的操作</h3><p>红黑树的基本操作是添加、删除和旋转，对红黑树进行添加或删除后，可能会破坏其平衡性。</p>
+<h4 id="3-3-红黑树的节点"><a href="#3-3-红黑树的节点" class="headerlink" title="3.3 红黑树的节点"></a>3.3 红黑树的节点</h4><p>红黑树是对二叉查找树的改进，所以其节点和二叉查找树是差不多的，只不过在它基础上增加了一个boolean型变量来表示节点的颜色，具体看RBNode类：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">public class RBNode&lt;T extends Comparable&lt;T&gt;&gt; &#123;</div><div class="line">	private static final boolean RED = true;</div><div class="line">	boolean color;// 颜色</div><div class="line">	T key;// 关键字(键值)</div><div class="line">	RBNode&lt;T&gt; left;// 左子节点</div><div class="line">	RBNode&lt;T&gt; right;// 右子节点</div><div class="line">	RBNode&lt;T&gt; parent;// 父节点</div><div class="line"></div><div class="line">	public RBNode(boolean color, T key, RBNode&lt;T&gt; left, RBNode&lt;T&gt; right, RBNode&lt;T&gt; parent) &#123;</div><div class="line">		this.color = color;</div><div class="line">		this.key = key;</div><div class="line">		this.left = left;</div><div class="line">		this.right = right;</div><div class="line">		this.parent = parent;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public T getKey() &#123;</div><div class="line">		return key;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public String toString() &#123;</div><div class="line">		return &quot;&quot; + key + (this.color == RED ? &quot;R&quot; : &quot;B&quot;);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="3-2-左旋的具体实现"><a href="#3-2-左旋的具体实现" class="headerlink" title="3.2 左旋的具体实现"></a>3.2 左旋的具体实现</h4><p>上面对左旋的概念已经有了感性的认识，这里就不再赘述，我们从下面的代码中结合上面的示意图，探讨一下左旋的具体实现：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">/*************对红黑树节点x进行左旋操作 ******************/</div><div class="line">/*</div><div class="line"> * 左旋示意图：对节点x进行左旋</div><div class="line"> *     p               p</div><div class="line"> *    /               /</div><div class="line"> *   x               y</div><div class="line"> *  / \    ----&gt;    / \</div><div class="line"> * lx  y           x   ry</div><div class="line"> *    / \         / \</div><div class="line"> *   ly ry       lx ly</div><div class="line"> * 左旋做了三件事：</div><div class="line"> * 1. 将y的左子节点赋给x的右子节点,并将x赋给y左子节点的父节点(y左子节点非空时)</div><div class="line"> * 2. 将x的父节点p(非空时)赋给y的父节点，同时更新p的子节点为y(左或右)</div><div class="line"> * 3. 将y的左子节点设为x，将x的父节点设为y</div><div class="line"> */</div><div class="line">private void leftRotate(RBNode&lt;T&gt; x) &#123;</div><div class="line">  // 1. 将y的左子节点赋给x的右子节点,并将x赋给y左子节点的父节点(y左子节点非空时)</div><div class="line">  RBNode&lt;T&gt; y = x.right;</div><div class="line">  x.right = y.left;</div><div class="line">  if (y.left != null) &#123;</div><div class="line">    y.left.parent = x;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  // 2. 将x的父节点p(非空时)赋给y的父节点，同时更新p的子节点为y(左或右)</div><div class="line">  y.parent = x.parent;</div><div class="line">  if (x.parent == null) &#123;</div><div class="line">    this.root = y;// 如果x的父节点为空，则将y设为父节点</div><div class="line">  &#125; else &#123;</div><div class="line">    if (x == x.parent.left) &#123;// 如果x是左子节点</div><div class="line">      x.parent.left = y;// 则也将y设为左子节点</div><div class="line">    &#125; else &#123;</div><div class="line">      x.parent.right = y;// 否则将y设为右子节点</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  // 3. 将y的左子节点设为x，将x的父节点设为y</div><div class="line">  y.left = x;</div><div class="line">  x.parent = y;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="3-3-右旋的具体实现"><a href="#3-3-右旋的具体实现" class="headerlink" title="3.3 右旋的具体实现"></a>3.3 右旋的具体实现</h4><p>上面对右旋的概念已经有了感性的认识了，这里也不再赘述了，我们从下面的代码中结合上面的示意图，探讨一下右旋的具体实现：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">/*************对红黑树节点y进行右旋操作 ******************/</div><div class="line">	/*</div><div class="line">	 * 右旋示意图：对节点y进行右旋</div><div class="line">	 *        p               p</div><div class="line">	 *       /               /</div><div class="line">	 *      y               x</div><div class="line">	 *     / \    ----&gt;    / \</div><div class="line">	 *    x  ry           lx  y</div><div class="line">	 *   / \                 / \</div><div class="line">	 *  lx rx               rx ry</div><div class="line">	 * 右旋做了三件事：</div><div class="line">	 * 1. 将x的右子节点赋给y的左子节点,并将y赋给x右子节点的父节点(x右子节点非空时)</div><div class="line">	 * 2. 将y的父节点p(非空时)赋给x的父节点，同时更新p的子节点为x(左或右)</div><div class="line">	 * 3. 将x的右子节点设为y，将y的父节点设为x</div><div class="line">	 */</div><div class="line">	private void rightRotate(RBNode&lt;T&gt; y) &#123;</div><div class="line">		// 1. 将x的右子节点赋给y的左子节点,并将y赋给x右子节点的父节点(x右子节点非空时)</div><div class="line">		RBNode&lt;T&gt; x = y.left;</div><div class="line">		y.left = x.right;</div><div class="line">		if (x.right != null) &#123;</div><div class="line">			x.right.parent = y;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		// 2. 将y的父节点p(非空时)赋给x的父节点，同时更新p的子节点为x(左或右)</div><div class="line">		x.parent = y.parent;</div><div class="line">		if (y.parent == null) &#123;</div><div class="line">			this.root = x;// 如果x的父节点为空，则将y设为父节点</div><div class="line">		&#125; else &#123;</div><div class="line">			if (y == y.parent.right) &#123;// 如果x是右子节点</div><div class="line">				y.parent.right = x;// 则也将y设为右子节点</div><div class="line">			&#125; else &#123;</div><div class="line">				y.parent.left = x;// 否则将y设为左子节点</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		// 3. 将x的右子节点设为y，将y的父节点设为x</div><div class="line">		x.right = y;</div><div class="line">		y.parent = x;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="3-4-插入操作"><a href="#3-4-插入操作" class="headerlink" title="3.4 插入操作"></a>3.4 插入操作</h4><p>分析完了红-黑树中主要的旋转操作，接下来我们开始分析常见的插入、删除等操作了。这里先分析插入操作。 由于红-黑树是二叉搜索树的改进，所以插入操作的前半工作时相同的，即先找到待插入的位置，再将节点插入，先来看看插入的前半段代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">/*********************** 向红黑树中插入节点 **********************/</div><div class="line">public void insert(T key)&#123;</div><div class="line">  RBNode&lt;T&gt; node = new RBNode&lt;T&gt;(RED, key, null, null, null);</div><div class="line">  if (node != null) &#123;</div><div class="line">    insert(node);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 将节点插入到红黑树中，这个过程与二叉搜索树是一样的</div><div class="line">private void insert(RBNode&lt;T&gt; node) &#123;</div><div class="line">  RBNode&lt;T&gt; current = null; // 表示最后node的父节点</div><div class="line">  RBNode&lt;T&gt; x = this.root;</div><div class="line"></div><div class="line">  // 1.找到插入的位置</div><div class="line">  while (x != null) &#123;</div><div class="line">    current = x;</div><div class="line">    int cmp = node.key.compareTo(x.key);</div><div class="line">    if (cmp &lt; 0) &#123;</div><div class="line">      x = x.left;</div><div class="line">    &#125; else &#123;</div><div class="line">      x = x.right;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  node.parent = current;</div><div class="line"></div><div class="line">  // 2. 接下来判断node是插在左子节点还是右子节点</div><div class="line">  if (current != null) &#123;</div><div class="line">    int cmp = node.key.compareTo(current.key);</div><div class="line">    if (cmp &lt; 0) &#123;</div><div class="line">      current.left = node;</div><div class="line">    &#125; else &#123;</div><div class="line">      current.right = node;</div><div class="line">    &#125;</div><div class="line">  &#125; else &#123;</div><div class="line">    this.root = node;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  // 3. 将它重新修整为一棵红黑树</div><div class="line">  insertFixUp(node);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这与二叉搜索树中实现的思路一模一样，不再赘述，主要看看方法里面最后一步insertFixUp操作。因为插入后可能会导致树的不平衡，insertFixUp方法里主要是分情况讨论，分析何时变色，何时左旋，何时右旋。我们先从理论上分析具体的情况，然后再看insertFixUp方法的具体实现。</p>
+<p>如果是第一次插入，由于原树为空，所以只会违背红黑树的规则2，所以只要把根节点涂黑即可；如果插入节点的父节点为黑色，那不会违背红黑树的规则，什么都不用做；但是遇到如下三种情况时，我们就要开始变色和旋转了：</p>
+<ol>
+<li>插入节点的父节点和其叔叔节点都是红色</li>
+<li>插入节点的父节点是红色，叔叔节点是黑色，且插入节点是其父节点的右子节点</li>
+<li>插入节点的父节点是红色，叔叔节点是黑色，且插入节点是其父节点的左子节点</li>
+</ol>
+<p>下面我们先挨个分析这三种情况都需要如何操作，然后再给出实现代码。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/sakura-hly.github.io/tags/TreeMap/" rel="tag"># TreeMap</a>
+          
+            <a href="/sakura-hly.github.io/tags/红黑树/" rel="tag"># 红黑树</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/sakura-hly.github.io/2017/10/12/JDK1-8源码学习-7/" rel="next" title="JDK1.8源码学习-HashMap">
+                <i class="fa fa-chevron-left"></i> JDK1.8源码学习-HashMap
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  //with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="uyan_frame"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="/sakura-hly.github.io/images/dp.jpg"
+              alt="caijy" />
+          
+            <p class="site-author-name" itemprop="name">caijy</p>
+            <p class="site-description motion-element" itemprop="description">一个Linux菜鸟的博客</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/sakura-hly.github.io/archives/">
+            
+                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=448226072&auto=1&height=66"></iframe>
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#红黑树简介"><span class="nav-number">1.</span> <span class="nav-text">红黑树简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-红黑树的特征"><span class="nav-number">2.</span> <span class="nav-text">1. 红黑树的特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-平衡树的修正"><span class="nav-number">3.</span> <span class="nav-text">2. 平衡树的修正</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-变色"><span class="nav-number">3.1.</span> <span class="nav-text">2.1 变色</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-左旋"><span class="nav-number">3.2.</span> <span class="nav-text">2.2 左旋</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-右旋"><span class="nav-number">3.3.</span> <span class="nav-text">2.3 右旋</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-红黑树的操作"><span class="nav-number">4.</span> <span class="nav-text">3. 红黑树的操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-红黑树的节点"><span class="nav-number">4.1.</span> <span class="nav-text">3.3 红黑树的节点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-左旋的具体实现"><span class="nav-number">4.2.</span> <span class="nav-text">3.2 左旋的具体实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-右旋的具体实现"><span class="nav-number">4.3.</span> <span class="nav-text">3.3 右旋的具体实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-插入操作"><span class="nav-number">4.4.</span> <span class="nav-text">3.4 插入操作</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">caijy</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/sakura-hly.github.io/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/sakura-hly.github.io/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/sakura-hly.github.io/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/sakura-hly.github.io/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/sakura-hly.github.io/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/sakura-hly.github.io/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/sakura-hly.github.io/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2146277"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/sakura-hly.github.io/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("jsI2BP061jWWrjY7NlFVHOOQ-gzGzoHsz", "WQFdrAUtgTXisdJ8TFShl3a7");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+  
+</body>
+</html>
